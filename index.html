@@ -224,7 +224,7 @@ contribute together to analysis. By sharing the database, users in different loc
 multiple email with files, figures and code.  </p>
 <h3 id="installation">Installation</h3>
 <p>The AISY framework can be cloned from our github page:</p>
-<pre><code>git clone https://github.com/AISyLab/AISYFramework.git 
+<pre><code>git clone https://github.com/AISyLab/AISY_Framework.git
 </code></pre>
 <h2 id="framework-layout">Framework layout</h2>
 <pre><code>api/
@@ -234,6 +234,8 @@ custom/
     custom_callbacks/
         callbacks.py # file with user callbacks
     custom_metrics/  # each .py file contain a custom metric
+    custom_datasets/  # datasets.py file contains dataset details
+    custom_data_augmentation/  # file containing data augmentation method
     custom_tables/
         tables.py    # file containing custom sqlite tables
 databases/           # sqlite database with project information and analysis results
@@ -322,5 +324,5 @@ flask run
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2021-02-17 20:24:03.069481+00:00
+Build Date UTC : 2021-02-17 20:43:48.464413+00:00
 -->
