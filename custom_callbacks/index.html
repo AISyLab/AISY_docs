@@ -166,8 +166,7 @@
                  x_profiling, y_profiling, plaintexts_profiling,
                  x_validation, y_validation, plaintexts_validation,
                  x_attack, y_attack, plaintexts_attack,
-                 param, aes_leakage_model,
-                 key_rank_executions, key_rank_report_interval, key_rank_attack_traces,
+                 param, leakage_model, key_rank_executions, key_rank_report_interval, key_rank_attack_traces,
                  *args):
         my_args = args[0]  # this line is mandatory
         self.param1 = my_args[0]
@@ -219,15 +218,7 @@ pass these two parameters in the custom callback.</p>
         }
 </code></pre>
 <ul>
-<li><code>aes_leakage_model:</code> leakage model parameters. It is a dictionary as in the example below:</li>
-</ul>
-<pre><code class="language-python">aes_leakage_model = {
-            &quot;leakage_model&quot;: &quot;HW&quot;,  # &quot;HW&quot;, &quot;ID&quot; or &quot;bit&quot;
-            &quot;bit&quot;: bit,
-            &quot;byte&quot;: byte,
-        }
-</code></pre>
-<ul>
+<li><code>leakage_model:</code> leakage model parameters.: </li>
 <li><code>key_rank_executions:</code> number of key rank executions in the guessing entropy calculatioin.</li>
 <li><code>key_rank_report_interval:</code> report trace interval in metric calculations (e.g., guessing entropy, success rate, etc.)</li>
 <li><code>key_rank_attack_traces:</code> number of randomly selected traces from attack trace set to be used in each key rank calculation.</li>
