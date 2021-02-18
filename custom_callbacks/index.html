@@ -64,6 +64,10 @@
                     </li>
                 </ul>
                 <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../npz/">Saving to .npz files</a>
+                    </li>
+                </ul>
+                <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../neuralnetworks/">Neural Networks</a>
                     </li>
                 </ul>
@@ -164,8 +168,11 @@
 <pre><code class="language-python">class CustomCallback1(Callback):
     def __init__(self,
                  x_profiling, y_profiling, plaintexts_profiling,
+                 ciphertext_profiling, key_profiling,
                  x_validation, y_validation, plaintexts_validation,
+                 ciphertext_validation, key_validaton,
                  x_attack, y_attack, plaintexts_attack,
+                 ciphertext_attack, key_attack,
                  param, leakage_model, key_rank_executions, key_rank_report_interval, key_rank_attack_traces,
                  *args):
         my_args = args[0]  # this line is mandatory
@@ -191,14 +198,20 @@ pass these two parameters in the custom callback.</p>
 <p>Note that the custom callback <strong>must</strong> be provided with the following variables in the <code>__init__</code> function:</p>
 <ul>
 <li><code>x_profiling:</code> profiling trace set.</li>
-<li><code>y_profiling:</code> categorical profiling labels.</li>
-<li><code>plaintexts_profiling:</code> profiling plaintext.</li>
+<li><code>y_profiling:</code> categorical profiling set labels.</li>
+<li><code>plaintexts_profiling:</code> profiling set plaintext.</li>
+<li><code>ciphertexts_profiling:</code> profiling set ciphertexts.</li>
+<li><code>key_profiling:</code> profiling set key (can be a different key per trace).</li>
 <li><code>x_validation:</code> validation trace set.</li>
-<li><code>y_validation:</code> categorical validation labels.</li>
-<li><code>plaintexts_validation:</code> validation plaintexts.</li>
+<li><code>y_validation:</code> categorical validation set labels.</li>
+<li><code>plaintexts_validation:</code> validation set plaintexts.</li>
+<li><code>ciphertexts_validation:</code> validation set ciphertexts.</li>
+<li><code>key_validation:</code> validation set key.</li>
 <li><code>x_attack:</code> attack trace set.</li>
-<li><code>y_attack:</code> categorical attack labels.</li>
-<li><code>plaintexts_attack:</code> attack plaintexts.</li>
+<li><code>y_attack:</code> categorical attack set labels.</li>
+<li><code>plaintexts_attack:</code> attack set plaintexts.</li>
+<li><code>ciphertexts_attack:</code> attack set ciphertexts.</li>
+<li><code>key_attack:</code> attack set key.</li>
 <li><code>param:</code> target parameteres. It is a dictionary as in the example below:</li>
 </ul>
 <pre><code class="language-python">param = {

@@ -64,6 +64,10 @@
                     </li>
                 </ul>
                 <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../npz/">Saving to .npz files</a>
+                    </li>
+                </ul>
+                <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../neuralnetworks/">Neural Networks</a>
                     </li>
                 </ul>
@@ -217,8 +221,11 @@ from the above example, we create four python files inside <code>custom/custom_m
 <h5 id="standard-custom-metric-file-structure-standard-parameters">Standard custom metric file structure (standard parameters)</h5>
 <p>Inside each of this files, create the following basic method <code>run</code>:</p>
 <pre><code class="language-python">def run(x_profiling, y_profiling, plaintexts_profiling,
+        ciphertexts_profiling, key_profiling,
         x_validation, y_validation, plaintexts_validation,
+        ciphertexts_validation, key_validation,
         x_attack, y_attack, plaintexts_attack,
+        ciphertexts_attack, key_attack,
         param, aes_leakage_model,
         key_rank_executions, key_rank_report_interval, key_rank_attack_traces,
         model, *args):
@@ -227,14 +234,20 @@ from the above example, we create four python files inside <code>custom/custom_m
 <p>where parameters are explained below</p>
 <ul>
 <li><code>x_profiling:</code> profiling trace set.</li>
-<li><code>y_profiling:</code> categorical profiling labels.</li>
-<li><code>plaintexts_profiling:</code> profiling plaintext.</li>
+<li><code>y_profiling:</code> categorical profiling set labels.</li>
+<li><code>plaintexts_profiling:</code> profiling set plaintext.</li>
+<li><code>ciphertexts_profiling:</code> profiling set ciphertexts.</li>
+<li><code>key_profiling:</code> profiling set key (can be a different key per trace).</li>
 <li><code>x_validation:</code> validation trace set.</li>
-<li><code>y_validation:</code> categorical validation labels.</li>
-<li><code>plaintexts_validation:</code> validation plaintexts.</li>
+<li><code>y_validation:</code> categorical validation set labels.</li>
+<li><code>plaintexts_validation:</code> validation set plaintexts.</li>
+<li><code>ciphertexts_validation:</code> validation set ciphertexts.</li>
+<li><code>key_validation:</code> validation set key.</li>
 <li><code>x_attack:</code> attack trace set.</li>
-<li><code>y_attack:</code> categorical attack labels.</li>
-<li><code>plaintexts_attack:</code> attack plaintexts.</li>
+<li><code>y_attack:</code> categorical attack set labels.</li>
+<li><code>plaintexts_attack:</code> attack set plaintexts.</li>
+<li><code>ciphertexts_attack:</code> attack set ciphertexts.</li>
+<li><code>key_attack:</code> attack set key.</li>
 <li><code>param:</code> target parameteres. It is a dictionary as in the example below:</li>
 </ul>
 <pre><code class="language-python">param = {
@@ -272,19 +285,25 @@ from the above example, we create four python files inside <code>custom/custom_m
 <h5 id="examples-of-custom-metric-files">Examples of custom metric files</h5>
 <p>For <code>accuracy.py</code> metric, the code can be defined as in the example below:</p>
 <pre><code class="language-python">def run(x_profiling, y_profiling, plaintexts_profiling,
+        ciphertexts_profiling, key_profiling,
         x_validation, y_validation, plaintexts_validation,
+        ciphertexts_validation, key_validation,
         x_attack, y_attack, plaintexts_attack,
+        ciphertexts_attack, key_attack,
         param, aes_leakage_model,
         key_rank_executions, key_rank_report_interval, key_rank_attack_traces,
         model, *args):
 
-    _, acc = model.evaluate(x_validation, y_validation, verbose=0)
+    loss, acc = model.evaluate(x_validation, y_validation, verbose=0)
     return acc
 </code></pre>
 <p>For <code>loss.py</code> metric, the code can be defined as in the example below:</p>
 <pre><code class="language-python">def run(x_profiling, y_profiling, plaintexts_profiling,
+        ciphertexts_profiling, key_profiling,
         x_validation, y_validation, plaintexts_validation,
+        ciphertexts_validation, key_validation,
         x_attack, y_attack, plaintexts_attack,
+        ciphertexts_attack, key_attack,
         param, aes_leakage_model,
         key_rank_executions, key_rank_report_interval, key_rank_attack_traces,
         model, *args):
@@ -334,12 +353,14 @@ def aes_labelize_ge_sr(plt_attack, byte, key, leakage):
 
 
 def run(x_profiling, y_profiling, plaintexts_profiling,
+        ciphertexts_profiling, key_profiling,
         x_validation, y_validation, plaintexts_validation,
+        ciphertexts_validation, key_validation,
         x_attack, y_attack, plaintexts_attack,
+        ciphertexts_attack, key_attack,
         param, aes_leakage_model,
         key_rank_executions, key_rank_report_interval, key_rank_attack_traces,
         model, *args):
-
     leakage_model = aes_leakage_model[&quot;leakage_model&quot;]
     target_byte = aes_leakage_model[&quot;byte&quot;]
     key = param[&quot;key&quot;]
@@ -370,7 +391,7 @@ def run(x_profiling, y_profiling, plaintexts_profiling,
             np.asarray([int(leakage[index]) for leakage in labels_key_hypothesis[:]])  # array with 256 leakage values (1 per key guess)
         ]
 
-    for key_rank_execution in range(1, key_rank_executions + 1):
+    for key_rank_execution in range(key_rank_executions):
 
         probabilities_kg_all_traces_shuffled = shuffle(probabilities_kg_all_traces, random_state=random.randint(0, 100000))
         key_probabilities = np.zeros(256)
@@ -387,11 +408,13 @@ def run(x_profiling, y_profiling, plaintexts_profiling,
                 kr_count += 1
 
         final_kr = key_ranking_sum[nt_interval - 1]
-        print(&quot;KR run: {} | final GE for correct key ({}): {})&quot;.format(key_rank_execution, good_key, final_kr / key_rank_execution + 1))
+        print(&quot;KR run: {} | final Guessing Entropy for correct key ({}): {})&quot;.format(key_rank_execution + 1, good_key,
+                                                                                     final_kr / (key_rank_execution + 1)))
 
     guessing_entropy = key_ranking_sum / key_rank_executions
 
     return guessing_entropy[nt_interval - 1]
+
 </code></pre>
 <h3 id="step-2-calling-early-stopping-custom-metrics-from-script">Step 2: Calling early stopping custom metrics from script</h3>
 <p>The code below provides an example of how to call early stopping custom metrics from the main script:</p>
