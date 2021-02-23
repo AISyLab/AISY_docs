@@ -94,6 +94,8 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#confusionmatrix">ConfusionMatrix</a>
     </li>
+    <li class="toctree-l3"><a class="reference internal" href="#probabilityrank">ProbabilityRank</a>
+    </li>
         </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#adding-custom-tables">Adding Custom Tables</a>
@@ -152,7 +154,7 @@
                     </li>
                 </ul>
                 <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../generating_scripts/">Automatic Generating Scripts</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../generating_scripts/">Automatically Generating Scripts</a>
                     </li>
                 </ul>
                 <ul>
@@ -209,7 +211,7 @@
 <p>The user is free to change this location.</p>
 <h5 id="defining-database-location-in-script-file">Defining database location in script file</h5>
 <p>The user can also easily set the database location in the main script, as in the example below:</p>
-<pre><code class="language-python">aisy = Aisy()
+<pre><code class="language-python">aisy = AisyAes()
 aisy.set_database_root_folder(&quot;my_location/&quot;)
 aisy.set_database_name(&quot;my_database.sqlite&quot;)
 </code></pre>
@@ -218,7 +220,7 @@ exists, then a new entry is stored for the deployed analysis. Otherwise, the <em
 <h2 id="skipping-database-usage">Skipping Database Usage</h2>
 <p>By default, database is automatically set be used in the framework. However, users are free to skip the usage of databases in the AISY 
 framework. To skip or avoid database storage, simply set the parameter <code>save_database=False</code> in the <code>run</code> method:</p>
-<pre><code class="language-python">aisy = Aisy()
+<pre><code class="language-python">aisy = AisyAes()
 ...
 aisy.run(save_database=False)
 </code></pre>
@@ -307,6 +309,16 @@ SQLAlchemy package.</p>
 <li><code>key_byte (Integer):</code> target key byte related to the results.</li>
 <li><code>analysis_id (Integer, ForeignKey):</code> id from Analysis Table.</li>
 </ul>
+<h5 id="probabilityrank">ProbabilityRank</h5>
+<ul>
+<li><code>id (Integer):</code> primary key id for entry.</li>
+<li><code>ranks (JSON):</code> list of <code>ranks</code> values (one row per <code>key guess</code>).</li>
+<li><code>classes (Integer):</code> number of classes in the classification.</li>
+<li><code>correct_key_byte (Integer):</code> value of correct key byte.</li>
+<li><code>key_guess (Integer):</code> value of key guess.</li>
+<li><code>key_byte (Integer):</code> target key byte related to the results.</li>
+<li><code>analysis_id (Integer, ForeignKey):</code> id from Analysis Table.</li>
+</ul>
 <h2 id="adding-custom-tables">Adding Custom Tables</h2>
 <p>User can also add custom SQLite tables to the analysis. The process is rather simple and requires the following steps:</p>
 <h6 id="step-1-define-custom-table-in-customcustom_tablestablespy">Step 1: Define custom table in <code>custom/custom_tables/tables.py</code></h6>
@@ -338,7 +350,7 @@ we provide an example of <code>CustomTable</code> class with the following colum
 <pre><code class="language-python">import datetime
 from sqlalchemy import *
 from sqlalchemy.orm import relationship
-from commons.sca_tables import Analysis, Base
+from aisy.sca_tables import Analysis, Base
 
 
 def base():
@@ -359,10 +371,9 @@ class CustomTable(Base):
         return &quot;&lt;CustomTable(id=%d)&gt;&quot; % self.id
 </code></pre>
 <h6 id="step-2-inserting-entries-to-your-custom-table">Step 2: Inserting entries to your custom table</h6>
-<p>Firstly, in your script file (located at <code>scripts/</code>), create the <code>Aisy()</code> object and set <em>dataset folder</em>, <em>dataset name</em> and 
+<p>Firstly, in your script file (located at <code>scripts/</code>), create the <code>AisyAes()</code> object and set <em>dataset folder</em>, <em>dataset name</em> and 
 <em>database name</em>:</p>
-<pre><code class="language-python">aisy = Aisy()
-aisy.set_datasets_root_folder(&quot;D:/traces/&quot;)
+<pre><code class="language-python">aisy = AisyAes()
 aisy.set_dataset(&quot;ascad-variable.h5&quot;)
 aisy.set_database_name(&quot;database_ascad.sqlite&quot;)
 </code></pre>
@@ -374,11 +385,11 @@ aisy.set_database_name(&quot;database_ascad.sqlite&quot;)
 db_inserts.custom_insert(new_insert)
 </code></pre>
 <p>A full script example will look like this:</p>
-<pre><code class="language-python">from neural_networks.neural_networks import *
-from commons.sca_aisy_aes import Aisy
+<pre><code class="language-python">from custom.custom_models.neural_networks import *
+from aisy.sca_deep_learning_aes import AisyAes
 from custom.custom_tables.tables import *
 
-aisy = Aisy()
+aisy = AisyAes()
 aisy.set_datasets_root_folder(&quot;D:/traces/&quot;)
 aisy.set_dataset(&quot;ascad-variable.h5&quot;)
 aisy.set_database_name(&quot;database_ascad.sqlite&quot;)
@@ -392,11 +403,7 @@ aisy.set_batch_size(400)
 aisy.set_epochs(50)
 aisy.set_neural_network(mlp)
 
-aisy.run(
-    key_rank_executions=100,
-    key_rank_report_interval=10,
-    key_rank_attack_traces=1000
-)
+aisy.run()
 
 new_insert = CustomTable(value1=10, value2=20, value3=30)
 db_inserts.custom_insert(new_insert)

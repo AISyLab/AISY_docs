@@ -110,7 +110,7 @@
                     </li>
                 </ul>
                 <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../generating_scripts/">Automatic Generating Scripts</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../generating_scripts/">Automatically Generating Scripts</a>
                     </li>
                 </ul>
                 <ul>
@@ -159,10 +159,10 @@
               
                 <h1 id="saving-to-npz-files">Saving to .npz files</h1>
 <p>AISY Framework also allows to save analysis results to .npz files. This is automatically done when the user sets the option <code>save_to_npz</code> in the the <code>run()</code> method from the main script. Below, we provide an example code of how to save results to a .npz file.</p>
-<pre><code class="language-python">from neural_networks.neural_networks import *
-from commons.sca_aisy_aes import Aisy
+<pre><code class="language-python">from custom.custom_models.neural_networks import *
+from aisy.sca_deep_learning_aes import AisyAes
 
-aisy = Aisy()
+aisy = AisyAes()
 aisy.set_database_name(&quot;database_ascad.sqlite&quot;)
 aisy.set_dataset(&quot;ascad-variable.h5&quot;)
 aisy.set_aes_leakage_model(leakage_model=&quot;HW&quot;, byte=2)

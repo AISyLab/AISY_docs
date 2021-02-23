@@ -130,7 +130,7 @@
                     </li>
                 </ul>
                 <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../generating_scripts/">Automatic Generating Scripts</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../generating_scripts/">Automatically Generating Scripts</a>
                     </li>
                 </ul>
                 <ul>
@@ -251,7 +251,7 @@ attack_key = in_file['Attack_traces/metadata']['key']
 <p>The user is free to change this location.</p>
 <h5 id="defining-database-location-in-script-file">Defining database location in script file</h5>
 <p>The user can also easily set the dataset location in the main script, as in the example below:</p>
-<pre><code class="language-python">aisy = Aisy()
+<pre><code class="language-python">aisy = AisyAes()
 aisy.set_datasets_root_folder(&quot;my_location/datasets/&quot;)
 aisy.set_dataset(&quot;ascad-variable.h5&quot;)
 </code></pre>
@@ -268,7 +268,7 @@ six specifications for all datasets in <code>custom/custom_datasets/datasets.py<
 </ul>
 <p>If the user decides to set the dataset specification in <code>custom/custom_datasets/datasets.py</code> file, the dataset is called from the main 
 script according to the name defined in the dictionary. In the main script:</p>
-<pre><code class="language-python">aisy = Aisy()
+<pre><code class="language-python">aisy = AisyAes()
 aisy.set_dataset(&quot;ascad-variable.h5&quot;)
 </code></pre>
 <p>And in the dictionary in <code>custom/custom_datasets/datasets.py</code>:</p>
@@ -284,7 +284,7 @@ aisy.set_dataset(&quot;ascad-variable.h5&quot;)
 }
 </code></pre>
 <p>Alternatively, the user can completely ignore <code>custom/custom_datasets/datasets.py</code> file and set all the specifications in the main script:</p>
-<pre><code class="language-python">aisy = Aisy()
+<pre><code class="language-python">aisy = AisyAes()
 aisy.set_dataset_filename(&quot;ascad-variable.h5&quot;)
 aisy.set_key(&quot;00112233445566778899AABBCCDDEEFF&quot;)
 aisy.set_number_of_profiling_traces(200000)

@@ -114,7 +114,7 @@
                     </li>
                 </ul>
                 <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../generating_scripts/">Automatic Generating Scripts</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../generating_scripts/">Automatically Generating Scripts</a>
                     </li>
                 </ul>
                 <ul>
@@ -204,11 +204,11 @@ def mlp(classes, number_of_samples):
 <li><code>number_of_samples:</code> number of samples in each trace. This is important in order to define the length of the input layer.</li>
 </ul>
 <p>Following, the defined neural network models can be easily called from the main script, as in the example below:</p>
-<pre><code class="language-python">from neural_networks.neural_networks import *
-from commons.sca_aisy_aes import Aisy
+<pre><code class="language-python">from custom.custom_models.neural_networks import *
+from aisy.sca_deep_learning_aes import AisyAes
 
 
-aisy = Aisy()
+aisy = AisyAes()
 aisy.set_dataset(&quot;ascad-variable.h5&quot;)
 aisy.set_database_name(&quot;database_ascad.sqlite&quot;)
 aisy.set_aes_leakage_model(leakage_model=&quot;HW&quot;, byte=2)
@@ -228,9 +228,8 @@ passed. They will be automatically set according to the defined dataset paramete
 <h3 id="passing-custom-parameters-to-the-neural-network-definition">Passing Custom Parameters to the Neural Network Definition</h3>
 <p>The user is also able to define and set a neural network model with special parameters, as in the example below, where we can create models 
 with flexible hyper-parameters:</p>
-<pre><code class="language-python">from neural_networks.neural_networks import *
-from commons.sca_aisy_aes import Aisy
-from custom.custom_callbacks.callbacks import *
+<pre><code class="language-python">from custom.custom_models.neural_networks import *
+from aisy.sca_deep_learning_aes import AisyAes
 
 
 def mlp(classes, number_of_samples, neuron, layer, activation, learning_rate):
@@ -248,14 +247,12 @@ def mlp(classes, number_of_samples, neuron, layer, activation, learning_rate):
     return model
 
 
-aisy = Aisy()
+aisy = AisyAes()
 aisy.set_dataset(&quot;ascad-variable.h5&quot;)
 aisy.set_database_name(&quot;database_ascad.sqlite&quot;)
 aisy.set_aes_leakage_model(leakage_model=&quot;HW&quot;, byte=2)
-aisy.set_number_of_profiling_traces(2000)
-aisy.set_number_of_attack_traces(5000)
 aisy.set_batch_size(400)
-aisy.set_epochs(1)
+aisy.set_epochs(50)
 aisy.set_neural_network(mlp(9, 1400, 200, 3, &quot;relu&quot;, 0.001))
 aisy.run()
 </code></pre>

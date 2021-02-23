@@ -114,7 +114,7 @@
                     </li>
                 </ul>
                 <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../generating_scripts/">Automatic Generating Scripts</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../generating_scripts/">Automatically Generating Scripts</a>
                     </li>
                 </ul>
                 <ul>
@@ -240,11 +240,12 @@ callback. </li>
 </ul>
 <h6 id="step-2-using-custom-callback">Step 2: Using Custom Callback</h6>
 <p>The example below show how to use the custom callback in a script:</p>
-<pre><code class="language-python">from neural_networks.neural_networks import *
-from commons.sca_aisy_aes import Aisy
+<pre><code class="language-python">from custom.custom_models.neural_networks import *
+from aisy.sca_deep_learning_aes import AisyAes
 from custom.custom_callbacks.callbacks import *
 
-aisy = Aisy()
+aisy = AisyAes()
+aisy.set_datasets_root_folder(&quot;D:/traces/&quot;)
 aisy.set_dataset(&quot;ascad-variable.h5&quot;)
 aisy.set_database_name(&quot;database_ascad.sqlite&quot;)
 aisy.set_aes_leakage_model(leakage_model=&quot;HW&quot;, byte=2)

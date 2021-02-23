@@ -114,7 +114,7 @@
                     </li>
                 </ul>
                 <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../generating_scripts/">Automatic Generating Scripts</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../generating_scripts/">Automatically Generating Scripts</a>
                     </li>
                 </ul>
                 <ul>
@@ -168,9 +168,9 @@ AISY Framework provides easy and efficient functionalities for hyperparameters s
 <p>Hyperparameter random search is the most common choice for finding efficient deep neural network architectures.
 Due to the very large search space, it is very likely that we have no enough computation power (and time) to cover all the search space.
 AISY Framework provides easy solution to run random search for profiled side-channel attacks.</p>
-<pre><code class="language-python">from commons.sca_aisy_aes import Aisy
+<pre><code class="language-python">from aisy.sca_aisy_aes import AisyAes
 
-aisy = Aisy()
+aisy = AisyAes()
 aisy.set_dataset(&quot;ascad-variable.h5&quot;)
 aisy.set_database_name(&quot;database_ascad.sqlite&quot;)
 aisy.set_aes_leakage_model(leakage_model=&quot;HW&quot;, byte=2)
@@ -254,9 +254,9 @@ a <code>BatchNormalization</code> layer is defined after the pooling layer.  </p
 The hyperparameter grid search in the AISY Framework supports two types of neural networks: MLP and CNN.
 Below we provide examples.</p>
 <p>MLP example: </p>
-<pre><code class="language-python">from commons.sca_aisy_aes import Aisy
+<pre><code class="language-python">from aisy.sca_aisy_aes import AisyAes
 
-aisy = Aisy()
+aisy = AisyAes()
 aisy.set_dataset(&quot;ascad-variable.h5&quot;)
 aisy.set_database_name(&quot;database_ascad.sqlite&quot;)
 aisy.set_aes_leakage_model(leakage_model=&quot;HW&quot;, byte=2)
@@ -285,9 +285,9 @@ aisy.run(
 )
 </code></pre>
 <p>CNN example:</p>
-<pre><code class="language-python">from commons.sca_aisy_aes import Aisy
+<pre><code class="language-python">from aisy.sca_aisy_aes import AisyAes
 
-aisy = Aisy()
+aisy = AisyAes()
 aisy.set_dataset(&quot;ascad-variable.h5&quot;)
 aisy.set_database_name(&quot;database_ascad.sqlite&quot;)
 aisy.set_aes_leakage_model(leakage_model=&quot;HW&quot;, byte=2)

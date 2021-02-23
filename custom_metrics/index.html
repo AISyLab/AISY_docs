@@ -126,7 +126,7 @@
                     </li>
                 </ul>
                 <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../generating_scripts/">Automatic Generating Scripts</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../generating_scripts/">Automatically Generating Scripts</a>
                     </li>
                 </ul>
                 <ul>
@@ -418,17 +418,17 @@ def run(x_profiling, y_profiling, plaintexts_profiling,
 </code></pre>
 <h3 id="step-2-calling-early-stopping-custom-metrics-from-script">Step 2: Calling early stopping custom metrics from script</h3>
 <p>The code below provides an example of how to call early stopping custom metrics from the main script:</p>
-<pre><code class="language-python">from neural_networks.neural_networks import *
-from commons.sca_aisy_aes import Aisy
+<pre><code class="language-python">from custom.custom_models.neural_networks import *
+from aisy.sca_deep_learning_aes import AisyAes
 
-aisy = Aisy()
+aisy = AisyAes()
 aisy.set_dataset(&quot;ascad-variable.h5&quot;)
 aisy.set_database_name(&quot;database_ascad_early_stopping.sqlite&quot;)
 aisy.set_aes_leakage_model(leakage_model=&quot;HW&quot;, byte=2)
 aisy.set_number_of_profiling_traces(100000)
 aisy.set_number_of_attack_traces(2000)
 aisy.set_batch_size(400)
-aisy.set_epochs(10)
+aisy.set_epochs(25)
 aisy.set_neural_network(mlp)
 
 early_stopping = {
@@ -443,9 +443,9 @@ early_stopping = {
             &quot;class&quot;: &quot;loss&quot;,
             &quot;parameters&quot;: []
         },
-        &quot;guessing_entropy&quot;: {
+        &quot;number_of_traces&quot;: {
             &quot;direction&quot;: &quot;min&quot;,
-            &quot;class&quot;: &quot;guessing_entropy&quot;,
+            &quot;class&quot;: &quot;number_of_traces&quot;,
             &quot;parameters&quot;: []
         },
         &quot;success_rate&quot;: {
@@ -457,7 +457,8 @@ early_stopping = {
 }
 
 aisy.run(
-    early_stopping=early_stopping
+    early_stopping=early_stopping,
+    key_rank_attack_traces=1000
 )
 
 metrics_validation = aisy.get_metrics_validation()
