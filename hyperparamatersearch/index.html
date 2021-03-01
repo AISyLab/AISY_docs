@@ -199,7 +199,8 @@ random_search = {
         'neurons': {&quot;min&quot;: 10, &quot;max&quot;: 1000, &quot;step&quot;: 10},
         'layers': {&quot;min&quot;: 1, &quot;max&quot;: 10, &quot;step&quot;: 1},
         'learning_rate': [0.001, 0.005, 0.0001, 0.0005, 0.00001, 0.00005],
-        'activation': [&quot;relu&quot;, &quot;selu&quot;, &quot;elu&quot;, &quot;tanh&quot;]
+        'activation': [&quot;relu&quot;, &quot;selu&quot;, &quot;elu&quot;, &quot;tanh&quot;],
+        'optimizer': [&quot;Adam&quot;, &quot;SGD&quot;]
     },
     &quot;metric&quot;: &quot;guessing_entropy&quot;,
     &quot;stop_condition&quot;: True,
@@ -247,7 +248,8 @@ a <code>BatchNormalization</code> layer is defined after the pooling layer.  </p
 <p>Besides those specific hyperparameters for MLPs and CNNs, the user can also search for number of epochs and batch size:</p>
 <ul>
 <li><code>epochs:</code> dictionary containing the ranges for the epochs. Example: <code>'epochs': {"min": 50, "max": 150, "step": 50}</code>.</li>
-<li><code>mini_batch</code> dictionary containing the ranges for the batch size. Example: <code>'mini_batch': {"min": 100, "max": 4000, "step": 100}</code>.</li>
+<li><code>mini_batch:</code> dictionary containing the ranges for the batch size. Example: <code>'mini_batch': {"min": 100, "max": 4000, "step": 100}</code>.</li>
+<li><code>optimizer:</code> list of options for optimizers (must be Strings).</li>
 </ul>
 <h2 id="grid-search">Grid Search</h2>
 <p>To perform a hyperparameter grid search, the main script needs to defined the ranges to be searched. 
@@ -272,7 +274,8 @@ grid_search = {
         'neurons': [100, 200],
         'layers': [3, 4],
         'learning_rate': [0.001, 0.0001],
-        'activation': [&quot;relu&quot;, &quot;selu&quot;]
+        'activation': [&quot;relu&quot;, &quot;selu&quot;],
+        'optimizer': [&quot;Adam&quot;, &quot;SGD&quot;]
     },
     &quot;metric&quot;: &quot;guessing_entropy&quot;,
     &quot;stop_condition&quot;: False,
@@ -363,7 +366,8 @@ a <code>BatchNormalization</code> layer is defined after the pooling layer.  </p
 <p>Besides those specific hyperparameters for MLPs and CNNs, the user can also search for number of epochs and batch size:</p>
 <ul>
 <li><code>epochs:</code> list containing the options for the epochs. Example: <code>'epochs': [50, 100, 150]</code>.</li>
-<li><code>mini_batch</code> list containing the option for the batch size. Example: <code>'mini_batch': [100, 200]</code>.</li>
+<li><code>mini_batch:</code> list containing the option for the batch size. Example: <code>'mini_batch': [100, 200]</code>.</li>
+<li><code>optimizer:</code> list of options for optimizers (must be Strings).</li>
 </ul>
               
             </div>

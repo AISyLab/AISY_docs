@@ -242,10 +242,8 @@ callback. </li>
 <p>The example below show how to use the custom callback in a script:</p>
 <pre><code class="language-python">from custom.custom_models.neural_networks import *
 from aisy.sca_deep_learning_aes import AisyAes
-from custom.custom_callbacks.callbacks import *
 
 aisy = AisyAes()
-aisy.set_datasets_root_folder(&quot;D:/traces/&quot;)
 aisy.set_dataset(&quot;ascad-variable.h5&quot;)
 aisy.set_database_name(&quot;database_ascad.sqlite&quot;)
 aisy.set_aes_leakage_model(leakage_model=&quot;HW&quot;, byte=2)
@@ -260,13 +258,11 @@ param2 = &quot;my_string&quot;
 
 custom_callbacks = [
     {
-        &quot;class&quot;: CustomCallback1,
-        &quot;name&quot;: &quot;CustomCallback1&quot;,
+        &quot;class&quot;: &quot;CustomCallback1&quot;,
         &quot;parameters&quot;: [param1, param2]
     },
     {
-        &quot;class&quot;: CustomCallback2,
-        &quot;name&quot;: &quot;CustomCallback2&quot;,
+        &quot;class&quot;: &quot;CustomCallback2&quot;,
         &quot;parameters&quot;: []
     }
 ]
@@ -287,14 +283,12 @@ custom_callback2 = custom_callbacks[&quot;CustomCallback2&quot;]
 following parameters must be defined:</p>
 <ul>
 <li><code>class:</code> custom callback class.</li>
-<li><code>name:</code> name of the custom callback class.</li>
 <li><code>parameters:</code> list of parameters to be passed to the custom callback. If no parameters are passed, the item <code>parameters</code> in the 
 dictionary of an element of <code>custom_callbacks</code> must be assigned with <code>[]</code> (empty list), as in the example below:</li>
 </ul>
 <pre><code class="language-python">custom_callbacks = [
     {
-        &quot;class&quot;: CustomCallback2,
-        &quot;name&quot;: &quot;CustomCallback2&quot;,
+        &quot;class&quot;: &quot;CustomCallback2&quot;,
         &quot;parameters&quot;: []
     }
 ]
