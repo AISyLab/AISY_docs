@@ -72,6 +72,8 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#main-features">Main Features</a>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#running-scripts">Running Scripts</a>
+    </li>
     <li class="toctree-l2"><a class="reference internal" href="#starting-the-webapp">Starting the WebApp</a>
     </li>
     </ul>
@@ -210,7 +212,7 @@ databases. </p>
 <h6 id="reason-3-web-application">Reason 3: Web Application</h6>
 <p>AISY Framework is built on top of the <a href="https://flask.palletsprojects.com/en/1.1.x/">Flask</a> python-based web framework. A web application is 
 integrated with a web-based user interface.</p>
-<p>The web application provide a nice way to visualize analysis, plots, results and tables.  </p>
+<p>The web application provide a user-friendly way to visualize analysis, plots, results and tables.  </p>
 <h6 id="reason-4-one-click-script-generation">Reason 4: One-Click Script Generation</h6>
 <p>In the Web Application, an user can generate the full script that was used to produce results stored in the database. This is particularly 
 important when the user wishes to reproduce results after he or she changed the script. Another advantage of this feature can be seen when 
@@ -237,7 +239,7 @@ custom/                               # folder containing customized definitions
     custom_datasets/datasets.py       # file with dataset details
     custom_data_augmentation/         # file containing data augmentation method
     custom_tables/tables.py           # file containing custom sqlite tables 
-resources/                            # folder to store user resources
+resources/                            # folder to store user resources (it will be created when first analysis is executed)
     databases/                        # .sqlite database files with project information and analysis results
     figures/                          # .png figure generated from user
     models/                           # .h5 models
@@ -261,12 +263,35 @@ app.py                                # main flask application
 <li>Easy Neural Network Definitions</li>
 <li>Data Augmentation</li>
 <li>GUI - plots, tables</li>
-<li>Automatic generate scripts     </li>
+<li>Automatically generate scripts    </li>
 </ul>
+<h2 id="running-scripts">Running Scripts</h2>
+<p>The project structure is provided in a way that all scripts are placed inside <code>scripts</code> folder. To run a python file script
+(e.g., <code>script_aes.py</code>), the user might use an IDE (like PyCharm, where we simply right-click in the script file and then <em>run</em>) or,
+more likely, from command line. To run script from command line, user must follow one of the two options:</p>
+<p>1) Place the script inside project root folder.
+2) Place the script inside <code>scripts</code> folder and use <strong>sys</strong> python package to indicate the project root folder, as in the example below:</p>
+<pre><code class="language-python">import sys
+sys.path.append('my_path/AISY_framework')
+
+from custom.custom_models.neural_networks import *
+from aisy.sca_deep_learning_aes import AisyAes
+
+aisy = AisyAes()
+aisy.set_database_name(&quot;database_ascad.sqlite&quot;)
+aisy.set_dataset(&quot;ascad-variable.h5&quot;)
+aisy.set_aes_leakage_model(leakage_model=&quot;HW&quot;, byte=2)
+aisy.set_batch_size(400)
+aisy.set_epochs(50)
+aisy.set_neural_network(mlp)
+
+aisy.run()
+</code></pre>
+<p>Then, simply put the path location of your AISY_framework project and run the script: <code>python scripts/script_aes.py</code>.</p>
 <h2 id="starting-the-webapp">Starting the WebApp</h2>
 <p>The Web Application is built on top of Flask web framework. To start the web homepage and visualize project results, simply run the 
 following command on the terminal: </p>
-<pre><code>cd AISYFramework/
+<pre><code>cd AISY_Framework/
 flask run
 </code></pre>
               
@@ -322,5 +347,5 @@ flask run
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2021-03-01 15:33:08.275073+00:00
+Build Date UTC : 2021-03-01 20:50:43.799714+00:00
 -->
