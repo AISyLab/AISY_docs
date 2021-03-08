@@ -349,12 +349,27 @@ we provide an example of <code>CustomTable</code> class with the following colum
 <p>The full code for <code>custom/custom_tables/tables.py</code> will look like this:</p>
 <pre><code class="language-python">import datetime
 from sqlalchemy import *
+from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-from aisy.sca_tables import Analysis, Base
+from aisy.sca_tables import Analysis
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
+Base = declarative_base()
 
 
 def base():
     return Base
+
+
+def start_custom_tables(database_name):
+    engine = create_engine('sqlite:///{}'.format(database_name), echo=False)
+    base().metadata.create_all(engine)
+
+
+def start_custom_tables_session(database_name):
+    engine = create_engine('sqlite:///{}'.format(database_name), echo=False)
+    return sessionmaker(bind=engine)()
 
 
 class CustomTable(Base):
@@ -369,44 +384,61 @@ class CustomTable(Base):
 
     def __repr__(self):
         return &quot;&lt;CustomTable(id=%d)&gt;&quot; % self.id
+
 </code></pre>
 <h6 id="step-2-inserting-entries-to-your-custom-table">Step 2: Inserting entries to your custom table</h6>
-<p>Firstly, in your script file (located at <code>scripts/</code>), create the <code>AisyAes()</code> object and set <em>dataset folder</em>, <em>dataset name</em> and 
-<em>database name</em>:</p>
-<pre><code class="language-python">aisy = AisyAes()
+<p>First, in your script file (located at <code>scripts/</code>), create the <code>AisyAes()</code> object and set <em>dataset folder</em>, <em>dataset name</em> and 
+<em>database name</em> and run the analysis as usual (look at the imports):</p>
+<pre><code class="language-python">from custom.custom_models.neural_networks import *
+from aisy.sca_deep_learning_aes import AisyAes
+from custom.custom_tables.tables import *
+from app import databases_root_folder
+
+aisy = AisyAes()
 aisy.set_dataset(&quot;ascad-variable.h5&quot;)
 aisy.set_database_name(&quot;database_ascad.sqlite&quot;)
+aisy.set_aes_leakage_model(leakage_model=&quot;HW&quot;, byte=2)
+aisy.set_number_of_profiling_traces(10000)
+aisy.set_number_of_attack_traces(1000)
+aisy.set_batch_size(400)
+aisy.set_epochs(20)
+aisy.set_neural_network(mlp)
 </code></pre>
-<p>Second, retrieve the <code>db_inserts</code>:</p>
+<p>Next, start the custom table session:</p>
+<pre><code class="language-python">start_custom_tables(databases_root_folder + &quot;database_ascad.sqlite&quot;)
+session = start_custom_tables_session(databases_root_folder + &quot;database_ascad.sqlite&quot;)
+</code></pre>
+<p>Then, insert your entries to your CustomTable as soon as you define the values to be inserted:</p>
 <pre><code class="language-python">db_inserts = aisy.get_db_inserts()
-</code></pre>
-<p>Finally, insert your entries to your CustomTable as soon as you define the values to be inserted:</p>
-<pre><code class="language-python">new_insert = CustomTable(value1=10, value2=20, value3=30)
-db_inserts.custom_insert(new_insert)
+new_insert = CustomTable(value1=10, value2=20, value3=30, analysis_id=aisy.get_analysis_id())
+session.add(new_insert)
+session.commit()
 </code></pre>
 <p>A full script example will look like this:</p>
 <pre><code class="language-python">from custom.custom_models.neural_networks import *
 from aisy.sca_deep_learning_aes import AisyAes
 from custom.custom_tables.tables import *
+from app import databases_root_folder
 
 aisy = AisyAes()
-aisy.set_datasets_root_folder(&quot;D:/traces/&quot;)
 aisy.set_dataset(&quot;ascad-variable.h5&quot;)
 aisy.set_database_name(&quot;database_ascad.sqlite&quot;)
-
-db_inserts = aisy.get_db_inserts()
-
 aisy.set_aes_leakage_model(leakage_model=&quot;HW&quot;, byte=2)
 aisy.set_number_of_profiling_traces(10000)
 aisy.set_number_of_attack_traces(1000)
 aisy.set_batch_size(400)
-aisy.set_epochs(50)
+aisy.set_epochs(20)
 aisy.set_neural_network(mlp)
 
 aisy.run()
 
-new_insert = CustomTable(value1=10, value2=20, value3=30)
-db_inserts.custom_insert(new_insert)
+start_custom_tables(databases_root_folder + &quot;database_ascad.sqlite&quot;)
+session = start_custom_tables_session(databases_root_folder + &quot;database_ascad.sqlite&quot;)
+
+db_inserts = aisy.get_db_inserts()
+new_insert = CustomTable(value1=10, value2=20, value3=30, analysis_id=aisy.get_analysis_id())
+session.add(new_insert)
+session.commit()
 </code></pre>
               
             </div>
