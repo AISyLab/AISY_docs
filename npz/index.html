@@ -114,10 +114,6 @@
                     </li>
                 </ul>
                 <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../api/">API</a>
-                    </li>
-                </ul>
-                <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../errors/">Errors</a>
                     </li>
                 </ul>
@@ -186,7 +182,6 @@ aisy.run(
 <li><code>settings:</code> dictionary containing the settings defined in the script.</li>
 <li><code>hyperparameters:</code> some hyperparameters associated to the training process (does not include all neural network hyperparameters).</li>
 <li><code>leakage_model:</code> dictionary containing the definitions of the leakage model.</li>
-<li><code>model_description:</code> string containing the python code description of Keras model.</li>
 </ul>
 <p>The code below provides an example of how to read the saved .npz file:</p>
 <pre><code class="language-python">import numpy as np
@@ -236,10 +231,6 @@ print(hyperparameters)
 # obtaining leakage model
 leakage_model = npz_file[&quot;leakage_model&quot;]
 print(leakage_model)
-
-# obtaining keras model description
-model_description = npz_file[&quot;model_description&quot;]
-print(model_description)
 </code></pre>
               
             </div>

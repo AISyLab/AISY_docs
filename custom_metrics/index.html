@@ -130,10 +130,6 @@
                     </li>
                 </ul>
                 <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../api/">API</a>
-                    </li>
-                </ul>
-                <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../errors/">Errors</a>
                     </li>
                 </ul>
@@ -251,19 +247,12 @@ from the above example, we create four python files inside <code>custom/custom_m
 <li><code>param:</code> target parameteres. It is a dictionary as in the example below:</li>
 </ul>
 <pre><code class="language-python">param = {
-            &quot;file&quot;: &quot;ascad-variable.h5&quot;,
+            &quot;filename&quot;: &quot;ascad-variable.h5&quot;,
             &quot;key&quot;: &quot;00112233445566778899AABBCCDDEEFF&quot;,
-            &quot;key_offset&quot;: 16,
-            &quot;input_offset&quot;: 0,
-            &quot;data_length&quot;: 50,
             &quot;first_sample&quot;: 0,
             &quot;number_of_samples&quot;: 1400,
-            &quot;n_profiling&quot;: 100000,
-            &quot;n_attack&quot;: 1000,
-            &quot;classes&quot;: 9,
-            &quot;good_key&quot;: 34,
-            &quot;epochs&quot;: 50,
-            &quot;mini_batch&quot;: 400
+            &quot;number_of_profiling_traces&quot;: 100000,
+            &quot;number_of_attack_traces&quot;: 2000
         }
 </code></pre>
 <ul>
@@ -271,7 +260,6 @@ from the above example, we create four python files inside <code>custom/custom_m
 </ul>
 <pre><code class="language-python">aes_leakage_model = {
             &quot;leakage_model&quot;: &quot;HW&quot;,  # &quot;HW&quot;, &quot;ID&quot; or &quot;bit&quot;
-            &quot;bit&quot;: bit,
             &quot;byte&quot;: byte,
         }
 </code></pre>
@@ -418,39 +406,41 @@ def run(x_profiling, y_profiling, plaintexts_profiling,
 </code></pre>
 <h3 id="step-2-calling-early-stopping-custom-metrics-from-script">Step 2: Calling early stopping custom metrics from script</h3>
 <p>The code below provides an example of how to call early stopping custom metrics from the main script:</p>
-<pre><code class="language-python">from custom.custom_models.neural_networks import *
-from aisy.sca_deep_learning_aes import AisyAes
+<pre><code class="language-python">import aisy_sca
+from app import *
+from custom.custom_models.neural_networks import *
 
-aisy = AisyAes()
-aisy.set_dataset(&quot;ascad-variable.h5&quot;)
-aisy.set_database_name(&quot;database_ascad_early_stopping.sqlite&quot;)
+aisy = aisy_sca.Aisy()
+aisy.set_resources_root_folder(resources_root_folder)
+aisy.set_database_root_folder(databases_root_folder)
+aisy.set_datasets_root_folder(datasets_root_folder)
+aisy.set_database_name(&quot;database_ascad.sqlite&quot;)
+aisy.set_dataset(datasets_dict[&quot;ascad-variable.h5&quot;])
 aisy.set_aes_leakage_model(leakage_model=&quot;HW&quot;, byte=2)
-aisy.set_number_of_profiling_traces(100000)
-aisy.set_number_of_attack_traces(2000)
 aisy.set_batch_size(400)
-aisy.set_epochs(25)
+aisy.set_epochs(10)
 aisy.set_neural_network(mlp)
 
 early_stopping = {
     &quot;metrics&quot;: {
         &quot;accuracy&quot;: {
             &quot;direction&quot;: &quot;max&quot;,
-            &quot;class&quot;: &quot;accuracy&quot;,
+            &quot;class&quot;: &quot;custom.custom_metrics.accuracy&quot;,
             &quot;parameters&quot;: []
         },
         &quot;loss&quot;: {
             &quot;direction&quot;: &quot;min&quot;,
-            &quot;class&quot;: &quot;loss&quot;,
+            &quot;class&quot;: &quot;custom.custom_metrics.loss&quot;,
             &quot;parameters&quot;: []
         },
         &quot;number_of_traces&quot;: {
             &quot;direction&quot;: &quot;min&quot;,
-            &quot;class&quot;: &quot;number_of_traces&quot;,
+            &quot;class&quot;: &quot;custom.custom_metrics.number_of_traces&quot;,
             &quot;parameters&quot;: []
         },
         &quot;success_rate&quot;: {
             &quot;direction&quot;: &quot;max&quot;,
-            &quot;class&quot;: &quot;success_rate&quot;,
+            &quot;class&quot;: &quot;custom.custom_metrics.success_rate&quot;,
             &quot;parameters&quot;: []
         }
     }
@@ -458,7 +448,7 @@ early_stopping = {
 
 aisy.run(
     early_stopping=early_stopping,
-    key_rank_attack_traces=1000
+    key_rank_attack_traces=500
 )
 
 metrics_validation = aisy.get_metrics_validation()

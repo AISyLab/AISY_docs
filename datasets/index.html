@@ -134,10 +134,6 @@
                     </li>
                 </ul>
                 <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../api/">API</a>
-                    </li>
-                </ul>
-                <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../errors/">Errors</a>
                     </li>
                 </ul>
@@ -284,7 +280,7 @@ aisy.set_dataset(&quot;ascad-variable.h5&quot;)
 }
 </code></pre>
 <p>Alternatively, the user can completely ignore <code>custom/custom_datasets/datasets.py</code> file and set all the specifications in the main script:</p>
-<pre><code class="language-python">aisy = AisyAes()
+<pre><code class="language-python">aisy = aisy_sca.Aisy()
 aisy.set_dataset_filename(&quot;ascad-variable.h5&quot;)
 aisy.set_key(&quot;00112233445566778899AABBCCDDEEFF&quot;)
 aisy.set_number_of_profiling_traces(200000)

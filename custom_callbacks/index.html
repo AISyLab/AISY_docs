@@ -118,10 +118,6 @@
                     </li>
                 </ul>
                 <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../api/">API</a>
-                    </li>
-                </ul>
-                <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../errors/">Errors</a>
                     </li>
                 </ul>
@@ -215,19 +211,12 @@ pass these two parameters in the custom callback.</p>
 <li><code>param:</code> target parameteres. It is a dictionary as in the example below:</li>
 </ul>
 <pre><code class="language-python">param = {
-            &quot;file&quot;: &quot;ascad-variable.h5&quot;,
+            &quot;filename&quot;: &quot;ascad-variable.h5&quot;,
             &quot;key&quot;: &quot;00112233445566778899AABBCCDDEEFF&quot;,
-            &quot;key_offset&quot;: 16,
-            &quot;input_offset&quot;: 0,
-            &quot;data_length&quot;: 50,
             &quot;first_sample&quot;: 0,
             &quot;number_of_samples&quot;: 1400,
-            &quot;n_profiling&quot;: 100000,
-            &quot;n_attack&quot;: 1000,
-            &quot;classes&quot;: 9,
-            &quot;good_key&quot;: 34,
-            &quot;epochs&quot;: 50,
-            &quot;mini_batch&quot;: 400
+            &quot;number_of_profiling_traces&quot;: 100000,
+            &quot;number_of_attack_traces&quot;: 2000
         }
 </code></pre>
 <ul>
@@ -240,17 +229,19 @@ callback. </li>
 </ul>
 <h6 id="step-2-using-custom-callback">Step 2: Using Custom Callback</h6>
 <p>The example below show how to use the custom callback in a script:</p>
-<pre><code class="language-python">from custom.custom_models.neural_networks import *
-from aisy.sca_deep_learning_aes import AisyAes
+<pre><code class="language-python">import aisy_sca
+from app import *
+from custom.custom_models.neural_networks import *
 
-aisy = AisyAes()
-aisy.set_dataset(&quot;ascad-variable.h5&quot;)
+aisy = aisy_sca.Aisy()
+aisy.set_resources_root_folder(resources_root_folder)
+aisy.set_database_root_folder(databases_root_folder)
+aisy.set_datasets_root_folder(datasets_root_folder)
 aisy.set_database_name(&quot;database_ascad.sqlite&quot;)
+aisy.set_dataset(datasets_dict[&quot;ascad-variable.h5&quot;])
 aisy.set_aes_leakage_model(leakage_model=&quot;HW&quot;, byte=2)
-aisy.set_number_of_profiling_traces(10000)
-aisy.set_number_of_attack_traces(1000)
 aisy.set_batch_size(400)
-aisy.set_epochs(50)
+aisy.set_epochs(10)
 aisy.set_neural_network(mlp)
 
 param1 = [1, 2, 3]
@@ -258,11 +249,13 @@ param2 = &quot;my_string&quot;
 
 custom_callbacks = [
     {
-        &quot;class&quot;: &quot;CustomCallback1&quot;,
+        &quot;class&quot;: &quot;custom.custom_callbacks.callbacks.CustomCallback1&quot;,
+        &quot;name&quot;: &quot;CustomCallback1&quot;,
         &quot;parameters&quot;: [param1, param2]
     },
     {
-        &quot;class&quot;: &quot;CustomCallback2&quot;,
+        &quot;class&quot;: &quot;custom.custom_callbacks.callbacks.CustomCallback2&quot;,
+        &quot;name&quot;: &quot;CustomCallback2&quot;,
         &quot;parameters&quot;: []
     }
 ]
@@ -282,13 +275,15 @@ custom_callback2 = custom_callbacks[&quot;CustomCallback2&quot;]
 <p>Note how the structure for custom callback is declared (variable <code>custom_callbacks</code>). For each custom callback, a dictionary with the 
 following parameters must be defined:</p>
 <ul>
-<li><code>class:</code> custom callback class.</li>
+<li><code>class:</code> path to custom callback class.
+= <code>name:</code> name for the custom callback.</li>
 <li><code>parameters:</code> list of parameters to be passed to the custom callback. If no parameters are passed, the item <code>parameters</code> in the 
 dictionary of an element of <code>custom_callbacks</code> must be assigned with <code>[]</code> (empty list), as in the example below:</li>
 </ul>
 <pre><code class="language-python">custom_callbacks = [
     {
-        &quot;class&quot;: &quot;CustomCallback2&quot;,
+        &quot;class&quot;: &quot;custom.custom_callbacks.callbacks.CustomCallback2&quot;,
+        &quot;name&quot;: &quot;CustomCallback2&quot;,
         &quot;parameters&quot;: []
     }
 ]

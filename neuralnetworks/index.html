@@ -118,10 +118,6 @@
                     </li>
                 </ul>
                 <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../api/">API</a>
-                    </li>
-                </ul>
-                <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../errors/">Errors</a>
                     </li>
                 </ul>
@@ -204,21 +200,22 @@ def mlp(classes, number_of_samples):
 <li><code>number_of_samples:</code> number of samples in each trace. This is important in order to define the length of the input layer.</li>
 </ul>
 <p>Following, the defined neural network models can be easily called from the main script, as in the example below:</p>
-<pre><code class="language-python">from custom.custom_models.neural_networks import *
-from aisy.sca_deep_learning_aes import AisyAes
+<pre><code class="language-python">import aisy_sca
+from app import *
+from custom.custom_models.neural_networks import *
 
-
-aisy = AisyAes()
-aisy.set_dataset(&quot;ascad-variable.h5&quot;)
+aisy = aisy_sca.Aisy()
+aisy.set_resources_root_folder(resources_root_folder)
+aisy.set_database_root_folder(databases_root_folder)
+aisy.set_datasets_root_folder(datasets_root_folder)
 aisy.set_database_name(&quot;database_ascad.sqlite&quot;)
+aisy.set_dataset(datasets_dict[&quot;ascad-variable.h5&quot;])
 aisy.set_aes_leakage_model(leakage_model=&quot;HW&quot;, byte=2)
-aisy.set_number_of_profiling_traces(200000)
-aisy.set_number_of_attack_traces(1000)
 aisy.set_batch_size(400)
-aisy.set_epochs(50)
+aisy.set_epochs(20)
 aisy.set_neural_network(mlp)
-
 aisy.run()
+
 </code></pre>
 <p>The neural network model is defined by setting the method:</p>
 <pre><code class="language-python">aisy.set_neural_network(mlp)
@@ -228,8 +225,9 @@ passed. They will be automatically set according to the defined dataset paramete
 <h3 id="passing-custom-parameters-to-the-neural-network-definition">Passing Custom Parameters to the Neural Network Definition</h3>
 <p>The user is also able to define and set a neural network model with special parameters, as in the example below, where we can create models 
 with flexible hyper-parameters:</p>
-<pre><code class="language-python">from custom.custom_models.neural_networks import *
-from aisy.sca_deep_learning_aes import AisyAes
+<pre><code class="language-python">import aisy_sca
+from app import *
+from custom.custom_models.neural_networks import *
 
 
 def mlp(classes, number_of_samples, neuron, layer, activation, learning_rate):
@@ -247,13 +245,17 @@ def mlp(classes, number_of_samples, neuron, layer, activation, learning_rate):
     return model
 
 
-aisy = AisyAes()
-aisy.set_dataset(&quot;ascad-variable.h5&quot;)
+aisy = aisy_sca.Aisy()
+aisy.set_resources_root_folder(resources_root_folder)
+aisy.set_database_root_folder(databases_root_folder)
+aisy.set_datasets_root_folder(datasets_root_folder)
 aisy.set_database_name(&quot;database_ascad.sqlite&quot;)
+aisy.set_dataset(datasets_dict[&quot;ascad-variable.h5&quot;])
 aisy.set_aes_leakage_model(leakage_model=&quot;HW&quot;, byte=2)
 aisy.set_batch_size(400)
-aisy.set_epochs(50)
-aisy.set_neural_network(mlp(9, 1400, 200, 3, &quot;relu&quot;, 0.001))
+aisy.set_epochs(40)
+my_mlp = mlp(9, 1400, 200, 6, &quot;relu&quot;, 0.001)
+aisy.set_neural_network(my_mlp)
 aisy.run()
 </code></pre>
 <p>Note that in this case, <strong>it is necessary to pass all function parameters, including <code>classes</code> and <code>number_of_samples</code></strong>.</p>

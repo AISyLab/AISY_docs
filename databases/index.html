@@ -158,10 +158,6 @@
                     </li>
                 </ul>
                 <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../api/">API</a>
-                    </li>
-                </ul>
-                <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../errors/">Errors</a>
                     </li>
                 </ul>
@@ -231,6 +227,7 @@ SQLAlchemy package.</p>
 <ul>
 <li><code>id (Integer):</code> primary key id for entry.</li>
 <li><code>datetime (DateTime):</code> data and time for the entry.</li>
+<li><code>settings (JSON):</code> dictionary of analysis settings.</li>
 <li><code>script (String):</code> the name of script (script location: <code>/scripts</code>).</li>
 <li><code>db_filename (String):</code> the name of <em>sqlite</em> file.</li>
 <li><code>dataset (String):</code> the name of evaluated SCA dataset.</li>
@@ -258,17 +255,15 @@ SQLAlchemy package.</p>
 <h5 id="metric">Metric</h5>
 <ul>
 <li><code>id (Integer):</code> primary key id for entry.</li>
-<li><code>value (Float):</code> value of the metric.</li>
-<li><code>key_byte (Integer):</code> target key byte related to the metric value.</li>
-<li><code>metric (String):</code> name of the metric.</li>
+<li><code>values (JSON):</code> value of the metric.</li>
+<li><code>label (String):</code> name of the metric.</li>
 <li><code>analysis_id (Integer, ForeignKey):</code> id from Analysis Table.</li>
 </ul>
 <h5 id="keyrank">KeyRank</h5>
 <ul>
 <li><code>id (Integer):</code> primary key id for entry.</li>
 <li><code>values (JSON):</code> list of values.</li>
-<li><code>name (String):</code> name of the key rank result.</li>
-<li><code>key_byte (Integer):</code> target key byte related to the key rank.</li>
+<li><code>label (String):</code> name of the key rank result.</li>
 <li><code>report_interval (Intger):</code> report interval (step in the number of side channel traces or measurements) which key rank is stored.</li>
 <li><code>metric (String):</code> name of the metric.</li>
 <li><code>analysis_id (Integer, ForeignKey):</code> id from Analysis Table.</li>
@@ -277,8 +272,7 @@ SQLAlchemy package.</p>
 <ul>
 <li><code>id (Integer):</code> primary key id for entry.</li>
 <li><code>values (JSON):</code> list of values.</li>
-<li><code>name (String):</code> name of the key rank result.</li>
-<li><code>key_byte (Integer):</code> target key byte related to the success rate.</li>
+<li><code>label (String):</code> name of the key rank result.</li>
 <li><code>report_interval (Intger):</code> report interval (step in the number of side channel traces or measurements) which success rate is stored.</li>
 <li><code>metric (String):</code> name of the metric.</li>
 <li><code>analysis_id (Integer, ForeignKey):</code> id from Analysis Table.</li>
@@ -288,7 +282,6 @@ SQLAlchemy package.</p>
 <li><code>id (Integer):</code> primary key id for entry.</li>
 <li><code>values (JSON):</code> list of values.</li>
 <li><code>epoch (Integer):</code> epoch value for visualization results. </li>
-<li><code>key_byte (Integer):</code> target key byte related to the visualization results.</li>
 <li><code>report_interval (Intger):</code> report interval (step in the number of side channel traces or measurements) which visualization is stored.</li>
 <li><code>metric (String):</code> name of the metric.</li>
 <li><code>analysis_id (Integer, ForeignKey):</code> id from Analysis Table.</li>
@@ -306,7 +299,6 @@ SQLAlchemy package.</p>
 <li><code>id (Integer):</code> primary key id for entry.</li>
 <li><code>y_pred (JSON):</code> list of <code>y_pred</code> values.</li>
 <li><code>y_true (Integer):</code> index of <code>y_true</code> label.</li>
-<li><code>key_byte (Integer):</code> target key byte related to the results.</li>
 <li><code>analysis_id (Integer, ForeignKey):</code> id from Analysis Table.</li>
 </ul>
 <h5 id="probabilityrank">ProbabilityRank</h5>
@@ -316,7 +308,6 @@ SQLAlchemy package.</p>
 <li><code>classes (Integer):</code> number of classes in the classification.</li>
 <li><code>correct_key_byte (Integer):</code> value of correct key byte.</li>
 <li><code>key_guess (Integer):</code> value of key guess.</li>
-<li><code>key_byte (Integer):</code> target key byte related to the results.</li>
 <li><code>analysis_id (Integer, ForeignKey):</code> id from Analysis Table.</li>
 </ul>
 <h2 id="adding-custom-tables">Adding Custom Tables</h2>
@@ -387,45 +378,48 @@ class CustomTable(Base):
 
 </code></pre>
 <h6 id="step-2-inserting-entries-to-your-custom-table">Step 2: Inserting entries to your custom table</h6>
-<p>First, in your script file (located at <code>scripts/</code>), create the <code>AisyAes()</code> object and set <em>dataset folder</em>, <em>dataset name</em> and 
+<p>First, in your script file (located at <code>scripts/</code>), create the <code>Aisy()</code> object and set <em>dataset folder</em>, <em>dataset name</em> and 
 <em>database name</em> and run the analysis as usual (look at the imports):</p>
-<pre><code class="language-python">from custom.custom_models.neural_networks import *
-from aisy.sca_deep_learning_aes import AisyAes
+<pre><code class="language-python">import aisy_sca
+from app import *
+from custom.custom_models.neural_networks import *
 from custom.custom_tables.tables import *
-from app import databases_root_folder
 
-aisy = AisyAes()
-aisy.set_dataset(&quot;ascad-variable.h5&quot;)
+aisy = aisy_sca.Aisy()
+aisy.set_resources_root_folder(resources_root_folder)
+aisy.set_database_root_folder(databases_root_folder)
+aisy.set_datasets_root_folder(datasets_root_folder)
 aisy.set_database_name(&quot;database_ascad.sqlite&quot;)
+aisy.set_dataset(datasets_dict[&quot;ascad-variable.h5&quot;])
 aisy.set_aes_leakage_model(leakage_model=&quot;HW&quot;, byte=2)
-aisy.set_number_of_profiling_traces(10000)
-aisy.set_number_of_attack_traces(1000)
 aisy.set_batch_size(400)
 aisy.set_epochs(20)
 aisy.set_neural_network(mlp)
+
+aisy.run()
 </code></pre>
 <p>Next, start the custom table session:</p>
 <pre><code class="language-python">start_custom_tables(databases_root_folder + &quot;database_ascad.sqlite&quot;)
 session = start_custom_tables_session(databases_root_folder + &quot;database_ascad.sqlite&quot;)
 </code></pre>
 <p>Then, insert your entries to your CustomTable as soon as you define the values to be inserted:</p>
-<pre><code class="language-python">db_inserts = aisy.get_db_inserts()
-new_insert = CustomTable(value1=10, value2=20, value3=30, analysis_id=aisy.get_analysis_id())
+<pre><code class="language-python">new_insert = CustomTable(value1=10, value2=20, value3=30, analysis_id=aisy.get_analysis_id())
 session.add(new_insert)
 session.commit()
 </code></pre>
 <p>A full script example will look like this:</p>
-<pre><code class="language-python">from custom.custom_models.neural_networks import *
-from aisy.sca_deep_learning_aes import AisyAes
+<pre><code class="language-python">import aisy_sca
+from app import *
+from custom.custom_models.neural_networks import *
 from custom.custom_tables.tables import *
-from app import databases_root_folder
 
-aisy = AisyAes()
-aisy.set_dataset(&quot;ascad-variable.h5&quot;)
+aisy = aisy_sca.Aisy()
+aisy.set_resources_root_folder(resources_root_folder)
+aisy.set_database_root_folder(databases_root_folder)
+aisy.set_datasets_root_folder(datasets_root_folder)
 aisy.set_database_name(&quot;database_ascad.sqlite&quot;)
+aisy.set_dataset(datasets_dict[&quot;ascad-variable.h5&quot;])
 aisy.set_aes_leakage_model(leakage_model=&quot;HW&quot;, byte=2)
-aisy.set_number_of_profiling_traces(10000)
-aisy.set_number_of_attack_traces(1000)
 aisy.set_batch_size(400)
 aisy.set_epochs(20)
 aisy.set_neural_network(mlp)
@@ -435,7 +429,6 @@ aisy.run()
 start_custom_tables(databases_root_folder + &quot;database_ascad.sqlite&quot;)
 session = start_custom_tables_session(databases_root_folder + &quot;database_ascad.sqlite&quot;)
 
-db_inserts = aisy.get_db_inserts()
 new_insert = CustomTable(value1=10, value2=20, value3=30, analysis_id=aisy.get_analysis_id())
 session.add(new_insert)
 session.commit()

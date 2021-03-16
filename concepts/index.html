@@ -118,10 +118,6 @@
                     </li>
                 </ul>
                 <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../api/">API</a>
-                    </li>
-                </ul>
-                <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../errors/">Errors</a>
                     </li>
                 </ul>
@@ -171,6 +167,11 @@ execute). In light orange, we depict the optional features.</p>
 <h3 id="web-application">Web Application</h3>
 <p>AISY Framework provides a web application to visualize results when they are stored in database files. To start the web application on localhost, user must run the following command in the project root folder:</p>
 <pre><code>flask run
+</code></pre>
+<p>The user must set the main paths in <code>app.py</code> file:</p>
+<pre><code class="language-python">databases_root_folder = &quot;my_path/AISY_framework/resources/databases/&quot;
+datasets_root_folder = &quot;my_dataset_folder/&quot;
+resources_root_folder = &quot;my_path/AISY_framework/resources/&quot;
 </code></pre>
               
             </div>

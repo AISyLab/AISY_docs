@@ -116,10 +116,6 @@
                     </li>
                 </ul>
                 <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../api/">API</a>
-                    </li>
-                </ul>
-                <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../errors/">Errors</a>
                     </li>
                 </ul>
@@ -162,18 +158,22 @@
                 <h1 id="simple-example">Simple Example</h1>
 <p>Breaking ASCAD Random Keys with AISY Framework.</p>
 <h2 id="code">Code</h2>
-<pre><code class="language-python">from custom.custom_models.neural_networks import *
-from aisy.sca_deep_learning_aes import AisyAes
+<pre><code class="language-python">import aisy_sca
+from app import *
+from custom.custom_models.neural_networks import *
 
-aisy = AisyAes()
+aisy = aisy_sca.Aisy()
+aisy.set_resources_root_folder(resources_root_folder)
+aisy.set_database_root_folder(databases_root_folder)
+aisy.set_datasets_root_folder(datasets_root_folder)
 aisy.set_database_name(&quot;database_ascad.sqlite&quot;)
-aisy.set_dataset(&quot;ascad-variable.h5&quot;)
+aisy.set_dataset(datasets_dict[&quot;ascad-variable.h5&quot;])
 aisy.set_aes_leakage_model(leakage_model=&quot;HW&quot;, byte=2)
 aisy.set_batch_size(400)
 aisy.set_epochs(20)
 aisy.set_neural_network(mlp)
-
 aisy.run()
+
 </code></pre>
               
             </div>

@@ -118,10 +118,6 @@
                     </li>
                 </ul>
                 <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../api/">API</a>
-                    </li>
-                </ul>
-                <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../errors/">Errors</a>
                     </li>
                 </ul>
@@ -168,16 +164,18 @@ AISY Framework provides easy and efficient functionalities for hyperparameters s
 <p>Hyperparameter random search is the most common choice for finding efficient deep neural network architectures.
 Due to the very large search space, it is very likely that we have no enough computation power (and time) to cover all the search space.
 AISY Framework provides easy solution to run random search for profiled side-channel attacks.</p>
-<pre><code class="language-python">from aisy.sca_aisy_aes import AisyAes
+<pre><code class="language-python">import aisy_sca
+from app import *
 
-aisy = AisyAes()
-aisy.set_dataset(&quot;ascad-variable.h5&quot;)
+aisy = aisy_sca.Aisy()
+aisy.set_resources_root_folder(resources_root_folder)
+aisy.set_database_root_folder(databases_root_folder)
+aisy.set_datasets_root_folder(datasets_root_folder)
 aisy.set_database_name(&quot;database_ascad.sqlite&quot;)
+aisy.set_dataset(datasets_dict[&quot;ascad-variable.h5&quot;])
 aisy.set_aes_leakage_model(leakage_model=&quot;HW&quot;, byte=2)
-aisy.set_number_of_profiling_traces(200000)
-aisy.set_number_of_attack_traces(1000)
 aisy.set_batch_size(400)
-aisy.set_epochs(50)
+aisy.set_epochs(10)
 
 # for each hyper-parameter, specify the min, max and step or the possible options
 random_search = {
@@ -186,31 +184,34 @@ random_search = {
         'conv_layers': {&quot;min&quot;: 1, &quot;max&quot;: 2, &quot;step&quot;: 1},
         'kernel_1': {&quot;min&quot;: 2, &quot;max&quot;: 8, &quot;step&quot;: 1},
         'kernel_2': {&quot;min&quot;: 2, &quot;max&quot;: 8, &quot;step&quot;: 1},
-        'stride_1': {&quot;min&quot;: 1, &quot;max&quot;: 2, &quot;step&quot;: 1},
-        'stride_2': {&quot;min&quot;: 1, &quot;max&quot;: 2, &quot;step&quot;: 1},
-        'filters_1': {&quot;min&quot;: 8, &quot;max&quot;: 8, &quot;step&quot;: 8},
-        'filters_2': {&quot;min&quot;: 16, &quot;max&quot;: 16, &quot;step&quot;: 16},
+        'stride_1': {&quot;min&quot;: 5, &quot;max&quot;: 10, &quot;step&quot;: 5},
+        'stride_2': {&quot;min&quot;: 5, &quot;max&quot;: 10, &quot;step&quot;: 5},
+        'filters_1': {&quot;min&quot;: 8, &quot;max&quot;: 32, &quot;step&quot;: 4},
+        'filters_2': {&quot;min&quot;: 8, &quot;max&quot;: 32, &quot;step&quot;: 4},
         'pooling_type_1': [&quot;Average&quot;, &quot;Max&quot;],
         'pooling_type_2': [&quot;Average&quot;, &quot;Max&quot;],
-        'pooling_size_1': {&quot;min&quot;: 2, &quot;max&quot;: 2, &quot;step&quot;: 1},
-        'pooling_size_2': {&quot;min&quot;: 2, &quot;max&quot;: 2, &quot;step&quot;: 1},
-        'pooling_stride_1': {&quot;min&quot;: 2, &quot;max&quot;: 2, &quot;step&quot;: 1},
-        'pooling_stride_2': {&quot;min&quot;: 2, &quot;max&quot;: 2, &quot;step&quot;: 1},
-        'neurons': {&quot;min&quot;: 10, &quot;max&quot;: 1000, &quot;step&quot;: 10},
-        'layers': {&quot;min&quot;: 1, &quot;max&quot;: 10, &quot;step&quot;: 1},
-        'learning_rate': [0.001, 0.005, 0.0001, 0.0005, 0.00001, 0.00005],
+        'pooling_size_1': {&quot;min&quot;: 1, &quot;max&quot;: 1, &quot;step&quot;: 1},
+        'pooling_size_2': {&quot;min&quot;: 1, &quot;max&quot;: 1, &quot;step&quot;: 1},
+        'pooling_stride_1': {&quot;min&quot;: 1, &quot;max&quot;: 1, &quot;step&quot;: 1},
+        'pooling_stride_2': {&quot;min&quot;: 1, &quot;max&quot;: 1, &quot;step&quot;: 1},
+        'neurons': {&quot;min&quot;: 100, &quot;max&quot;: 1000, &quot;step&quot;: 100},
+        'layers': {&quot;min&quot;: 2, &quot;max&quot;: 3, &quot;step&quot;: 1},
+        'learning_rate': [0.001, 0.0009, 0.0008, 0.0007, 0.0006, 0.0005, 0.0004, 0.0003, 0.0002, 0.0001],
         'activation': [&quot;relu&quot;, &quot;selu&quot;, &quot;elu&quot;, &quot;tanh&quot;],
-        'optimizer': [&quot;Adam&quot;, &quot;SGD&quot;]
+        'epochs': {&quot;min&quot;: 5, &quot;max&quot;: 5, &quot;step&quot;: 1},
+        'batch_size': {&quot;min&quot;: 100, &quot;max&quot;: 1000, &quot;step&quot;: 100},
+        'optimizer': [&quot;Adam&quot;, &quot;RMSprop&quot;, &quot;Adagrad&quot;, &quot;Adadelta&quot;, &quot;SGD&quot;]
     },
     &quot;metric&quot;: &quot;guessing_entropy&quot;,
-    &quot;stop_condition&quot;: True,
+    &quot;stop_condition&quot;: False,
     &quot;stop_value&quot;: 1.0,
-    &quot;max_trials&quot;: 100,
+    &quot;max_trials&quot;: 10,
     &quot;train_after_search&quot;: True
 }
 
 aisy.run(
-    random_search=random_search
+    random_search=random_search,
+    key_rank_attack_traces=500
 )
 </code></pre>
 <p>As specified in the above examples, we need to pass a dictionary with the following parameters:</p>
@@ -248,7 +249,7 @@ a <code>BatchNormalization</code> layer is defined after the pooling layer.  </p
 <p>Besides those specific hyperparameters for MLPs and CNNs, the user can also search for number of epochs and batch size:</p>
 <ul>
 <li><code>epochs:</code> dictionary containing the ranges for the epochs. Example: <code>'epochs': {"min": 50, "max": 150, "step": 50}</code>.</li>
-<li><code>mini_batch:</code> dictionary containing the ranges for the batch size. Example: <code>'mini_batch': {"min": 100, "max": 4000, "step": 100}</code>.</li>
+<li><code>batch_size:</code> dictionary containing the ranges for the batch size. Example: <code>'batch_size': {"min": 100, "max": 4000, "step": 100}</code>.</li>
 <li><code>optimizer:</code> list of options for optimizers (must be Strings).</li>
 </ul>
 <h2 id="grid-search">Grid Search</h2>
@@ -288,18 +289,20 @@ aisy.run(
 )
 </code></pre>
 <p>CNN example:</p>
-<pre><code class="language-python">from aisy.sca_aisy_aes import AisyAes
+<pre><code class="language-python">import aisy_sca
+from app import *
 
-aisy = AisyAes()
-aisy.set_dataset(&quot;ascad-variable.h5&quot;)
+aisy = aisy_sca.Aisy()
+aisy.set_resources_root_folder(resources_root_folder)
+aisy.set_database_root_folder(databases_root_folder)
+aisy.set_datasets_root_folder(datasets_root_folder)
 aisy.set_database_name(&quot;database_ascad.sqlite&quot;)
+aisy.set_dataset(datasets_dict[&quot;ascad-variable.h5&quot;])
 aisy.set_aes_leakage_model(leakage_model=&quot;HW&quot;, byte=2)
-aisy.set_number_of_profiling_traces(100000)
-aisy.set_number_of_attack_traces(2000)
 aisy.set_batch_size(400)
-aisy.set_epochs(50)
+aisy.set_epochs(20)
 
-# # for each hyper-parameter, specify the options in the grid search
+# for each hyper-parameter, specify the options in the grid search
 grid_search = {
     &quot;neural_network&quot;: &quot;cnn&quot;,
     &quot;hyper_parameters_search&quot;: {
@@ -318,17 +321,19 @@ grid_search = {
         'pooling_stride_2': [1, 2],
         'neurons': [100, 200],
         'layers': [3, 4],
-        'learning_rate': [0.001, 0.002],
-        'activation': [&quot;relu&quot;, &quot;selu&quot;]
+        'learning_rate': [0.001],
+        'activation': [&quot;selu&quot;, &quot;elu&quot;],
+        'optimizer': [&quot;Adam&quot;, &quot;SGD&quot;]
     },
     &quot;metric&quot;: &quot;guessing_entropy&quot;,
-    &quot;stop_condition&quot;: True,
+    &quot;stop_condition&quot;: False,
     &quot;stop_value&quot;: 1.0,
     &quot;train_after_search&quot;: True
 }
 
 aisy.run(
-    grid_search=grid_search
+    grid_search=grid_search,
+    key_rank_attack_traces=500
 )
 </code></pre>
 <p>As specified in the above examples, we need to pass a dictionary with the following parameters:</p>
@@ -366,7 +371,7 @@ a <code>BatchNormalization</code> layer is defined after the pooling layer.  </p
 <p>Besides those specific hyperparameters for MLPs and CNNs, the user can also search for number of epochs and batch size:</p>
 <ul>
 <li><code>epochs:</code> list containing the options for the epochs. Example: <code>'epochs': [50, 100, 150]</code>.</li>
-<li><code>mini_batch:</code> list containing the option for the batch size. Example: <code>'mini_batch': [100, 200]</code>.</li>
+<li><code>batch_size:</code> list containing the option for the batch size. Example: <code>'batch_size': [100, 200]</code>.</li>
 <li><code>optimizer:</code> list of options for optimizers (must be Strings).</li>
 </ul>
               
