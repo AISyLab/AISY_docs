@@ -58,6 +58,14 @@
                 <ul class="current">
                     <li class="toctree-l1 current"><a class="reference internal current" href="./">Datasets</a>
     <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#downloading-supported-datasetes">Downloading supported datasetes</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#windows-10">Windows 10</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#linux">Linux</a>
+    </li>
+        </ul>
+    </li>
     <li class="toctree-l2"><a class="reference internal" href="#creating-datasets-for-aisy-framework">Creating datasets for AISY Framework</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#h5-datasets">.h5 datasets</a>
@@ -65,8 +73,6 @@
     <li class="toctree-l3"><a class="reference internal" href="#npz-datasets">.npz datasets</a>
     </li>
         </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#open-source-datasets">Open-Source Datasets</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#dataset-root-folder">Dataset root folder</a>
         <ul>
@@ -174,6 +180,26 @@
             <div class="section">
               
                 <h1 id="datasets">Datasets</h1>
+<h2 id="downloading-supported-datasetes">Downloading supported datasetes</h2>
+<p>The standard version of AISY Framework comes with the definitions of open-source side-channel analysis datasets.</p>
+<ul>
+<li><a href="https://github.com/ANSSI-FR/ASCAD/tree/master/ATMEGA_AES_v1/ATM_AES_v1_fixed_key">ASCAD Fixed Key</a>  </li>
+<li><a href="https://github.com/ANSSI-FR/ASCAD/tree/master/ATMEGA_AES_v1/ATM_AES_v1_variable_key">ASCAD Random Keys</a></li>
+<li><a href="http://aisylabdatasets.ewi.tudelft.nl/">CHES CTF 2018</a></li>
+<li><a href="http://aisylabdatasets.ewi.tudelft.nl/">AES_HD</a></li>
+<li><a href="http://aisylabdatasets.ewi.tudelft.nl/">AES_HD_ext</a></li>
+</ul>
+<p>The user can download the datasets by running the following commands in a terminal:</p>
+<h3 id="windows-10">Windows 10</h3>
+<pre><code>curl.exe -o aes_hd.h5 http://aisylabdatasets.ewi.tudelft.nl/aes_hd.h5
+curl.exe -o aes_hd_ext.h5 http://aisylabdatasets.ewi.tudelft.nl/aes_hd_ext.h5
+curl.exe -o ches_ctf.h5 http://aisylabdatasets.ewi.tudelft.nl/ches_ctf.h5
+</code></pre>
+<h3 id="linux">Linux</h3>
+<pre><code>wget http://aisylabdatasets.ewi.tudelft.nl/aes_hd.h5
+wget http://aisylabdatasets.ewi.tudelft.nl/aes_hd_ext.h5
+wget http://aisylabdatasets.ewi.tudelft.nl/ches_ctf.h5
+</code></pre>
 <h2 id="creating-datasets-for-aisy-framework">Creating datasets for AISY Framework</h2>
 <h4 id="h5-datasets">.h5 datasets</h4>
 <p>In the academic community, the most used datasets in deep learning-based SCA are <a href="https://github.com/ANSSI-FR/ASCAD">ASCAD</a> trace sets from 
@@ -229,15 +255,6 @@ attack_key = in_file['Attack_traces/metadata']['key']
 </code></pre>
 <h4 id="npz-datasets">.npz datasets</h4>
 <p><code>.npz</code> dataset format will be available in future releases.</p>
-<h2 id="open-source-datasets">Open-Source Datasets</h2>
-<p>The standard version of AISY Framework comes with the definitions of open-source side-channel analysis datasets.</p>
-<ul>
-<li><a href="https://github.com/ANSSI-FR/ASCAD/tree/master/ATMEGA_AES_v1/ATM_AES_v1_fixed_key">ASCAD Fixed Key</a>  </li>
-<li><a href="https://github.com/ANSSI-FR/ASCAD/tree/master/ATMEGA_AES_v1/ATM_AES_v1_variable_key">ASCAD Random Keys</a></li>
-<li><a href="http://aisylabdatasets.ewi.tudelft.nl/">CHES CTF 2018</a></li>
-<li><a href="http://aisylabdatasets.ewi.tudelft.nl/">AES_HD</a></li>
-<li><a href="http://aisylabdatasets.ewi.tudelft.nl/">AES_HD_ext</a></li>
-</ul>
 <h2 id="dataset-root-folder">Dataset root folder</h2>
 <p>The root location of datasets can be defined in two ways.</p>
 <h5 id="defining-datasets-location-inapppy-file">Defining datasets location in<code>app.py</code> file</h5>

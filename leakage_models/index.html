@@ -84,6 +84,8 @@
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#definiting-leakage-models">Definiting Leakage Models</a>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#supported-aes-states-for-leakage-models">Supported AES States for Leakage Models</a>
+    </li>
     <li class="toctree-l2"><a class="reference internal" href="#default-values">Default Values</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a>
@@ -190,6 +192,9 @@ The attributes are:</p>
 <li><code>direction:</code> string defining the AES direction. Supported values are "Encryption" and "Decryption".</li>
 <li><code>attack_direction:</code> string defining the attack direction to create the leakage models. Supported values are "input" and "output", both lowercase.</li>
 </ul>
+<h3 id="supported-aes-states-for-leakage-models">Supported AES States for Leakage Models</h3>
+<p>Figure below illustrates the AES states that the user can target in leakage model definitions. </p>
+<p><img alt="Screenshot" src="../images/aes_leakage_models.png" /></p>
 <h3 id="default-values">Default Values</h3>
 <p>The framework set the following as default ones:</p>
 <pre><code class="language-python">leakage_model = {
