@@ -154,9 +154,3 @@ aisy.run()
 
 Note in the above example that the labels (*y_profiling, y_validation, y_attack*) are generated before the method **run()** from main **Aisy** class is
 called.
-
-## Datasets for multi-label
-
-Using **Dataset** object, users can also create multi-label approaches. 
-This task must be combined with the definition of a neural network with multiple outputs.
-The following code provides a full example of dataset creation for multi-label in AISY. 
