@@ -1,0 +1,23 @@
+site_name: AISY Framework v0.1
+nav:
+    - Home: index.md
+    - Concepts: concepts.md
+    - Simple Example: simple_example.md
+    - Datasets: datasets.md
+    - Custom Dataset: custom_dataset.md
+    - Databases: databases.md
+    - Saving to .npz files: npz.md
+    - Neural Networks: neuralnetworks.md
+    - Ciphers: ciphers.md
+    - Leakage Models: leakage_models.md
+    - Visualization: visualization.md
+    - Hyperparameter Search: hyperparamatersearch.md
+    - Ensembles: ensembles.md
+    - Custom loss functions: custom_loss.md
+    - Custom Callbacks: custom_callbacks.md
+    - Custom Early Stopping Metrics: custom_metrics.md
+    - Data Augmentation: data_augmentation.md
+    - Automatically Generating Scripts: generating_scripts.md
+    - Errors: errors.md
+    - Feature Request: feature_request.md
+theme: readthedocs
