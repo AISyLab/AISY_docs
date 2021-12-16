@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Data Augmentation - AISY Framework v0.1</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Data Augmentation";
+    var mkdocs_page_input_path = "data_augmentation.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> AISY Framework v0.1</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../concepts/">Concepts</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../simple_example/">Simple Example</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../datasets/">Datasets</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../custom_dataset/">Custom Dataset</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../databases/">Databases</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../npz/">Saving to .npz files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../neuralnetworks/">Neural Networks</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../ciphers/">Ciphers</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../leakage_models/">Leakage Models</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../visualization/">Visualization</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../hyperparamatersearch/">Hyperparameter Search</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../ensembles/">Ensembles</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../custom_loss/">Custom loss functions</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../custom_callbacks/">Custom Callbacks</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../custom_metrics/">Custom Early Stopping Metrics</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Data Augmentation</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#creating-data-augmentation-methods">Creating Data Augmentation Methods</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#calling-data-augmentation-in-the-main-script">Calling Data Augmentation in the Main Script</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../generating_scripts/">Automatically Generating Scripts</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../errors/">Errors</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../feature_request/">Feature Request</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">AISY Framework v0.1</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Data Augmentation</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="data-augmentation">Data Augmentation</h1>
+<p>AISY Framework also allows easy configuration of data augmentation techniques during model training.
+Data augmentation is common machine learning technique and it is widely applied in side-channel analysis in order to improve model 
+learnability. Basically, data augmentation allows small modifications in side-channel traces during training, which makes the model to reduce
+overfitting and, as a consequence, to improve generalization.</p>
+<h3 id="creating-data-augmentation-methods">Creating Data Augmentation Methods</h3>
+<p>THe user may define data augmentation methods in any location. 
+For better code organization, we recommend to write the methods in the file <code>custom/custom_data_augmentation/data_augmentation.py</code> 
+Code below provides two examples of data augmentation methods: <code>data_augmentation_shifts</code> and <code>data_augmentation_gaussian_noise</code>:</p>
+<pre><code class="language-python">import random
+import numpy as np
+
+
+def data_augmentation_shifts(data_set_samples, data_set_labels, batch_size, input_layer_shape):
+    ns = len(data_set_samples[0])
+
+    while True:
+
+        x_train_shifted = np.zeros((batch_size, ns))
+        rnd = random.randint(0, len(data_set_samples) - batch_size)
+        x_mini_batch = data_set_samples[rnd:rnd + batch_size]
+
+        for trace_index in range(batch_size):
+            x_train_shifted[trace_index] = x_mini_batch[trace_index]
+            shift = random.randint(-5, 5)
+            if shift &gt; 0:
+                x_train_shifted[trace_index][0:ns - shift] = x_mini_batch[trace_index][shift:ns]
+                x_train_shifted[trace_index][ns - shift:ns] = x_mini_batch[trace_index][0:shift]
+            else:
+                x_train_shifted[trace_index][0:abs(shift)] = x_mini_batch[trace_index][ns - abs(shift):ns]
+                x_train_shifted[trace_index][abs(shift):ns] = x_mini_batch[trace_index][0:ns - abs(shift)]
+
+        if len(input_layer_shape) == 3:
+            x_train_shifted_reshaped = x_train_shifted.reshape((x_train_shifted.shape[0], x_train_shifted.shape[1], 1))
+            yield x_train_shifted_reshaped, data_set_labels[rnd:rnd + batch_size]
+        else:
+            yield x_train_shifted, data_set_labels[rnd:rnd + batch_size]
+
+
+def data_augmentation_gaussian_noise(data_set_samples, data_set_labels, batch_size, input_layer_shape):
+    ns = len(data_set_samples[0])
+
+    while True:
+
+        x_train_augmented = np.zeros((batch_size, ns))
+        rnd = random.randint(0, len(data_set_samples) - batch_size)
+        x_mini_batch = data_set_samples[rnd:rnd + batch_size]
+
+        noise = np.random.normal(0, 1, ns)
+
+        for trace_index in range(batch_size):
+            x_train_augmented[trace_index] = x_mini_batch[trace_index] + noise
+
+        if len(input_layer_shape) == 3:
+            x_train_augmented_reshaped = x_train_augmented.reshape((x_train_augmented.shape[0], x_train_augmented.shape[1], 1))
+            yield x_train_augmented_reshaped, data_set_labels[rnd:rnd + batch_size]
+        else:
+            yield x_train_augmented, data_set_labels[rnd:rnd + batch_size]
+</code></pre>
+<p>As we can see, the method <strong>must</strong> be created with four input parameters:</p>
+<ul>
+<li><code>data_set_samples:</code>: array containing the profiling traces.</li>
+<li><code>data_set_labels:</code>: array containing the profiling <em>categorical</em> labels.</li>
+<li><code>batch_size:</code>: integer defining the batch size.</li>
+<li><code>input_layer_shape:</code>: shape of the input layer.</li>
+</ul>
+<p>When data augmentation is considered, the model training is done with <code>fit_generator</code> method from Keras.</p>
+<h3 id="calling-data-augmentation-in-the-main-script">Calling Data Augmentation in the Main Script</h3>
+<p>To pass data augmentation to the <code>run</code> method, user must enter two parameter in a list, as in the example below:</p>
+<pre><code class="language-python">import aisy_sca
+from app import *
+from custom.custom_models.neural_networks import *
+from custom.custom_data_augmentation.data_augmentation import *
+
+aisy = aisy_sca.Aisy()
+aisy.set_resources_root_folder(resources_root_folder)
+aisy.set_database_root_folder(databases_root_folder)
+aisy.set_datasets_root_folder(datasets_root_folder)
+aisy.set_database_name(&quot;database_ascad.sqlite&quot;)
+aisy.set_dataset(datasets_dict[&quot;ascad-variable.h5&quot;])
+aisy.set_aes_leakage_model(leakage_model=&quot;HW&quot;, byte=2)
+aisy.set_batch_size(400)
+aisy.set_epochs(10)
+aisy.set_neural_network(mlp)
+aisy.run(data_augmentation=[data_augmentation_gaussian_noise, 100])
+</code></pre>
+<p>The first parameter indicates the name of the data augmentation method, as defined in the <code>custom/custom_data_augmentation/data_augmentation.py</code> file.
+The second parameter indicates the number of data augmentation iterarions in a single epochs. Each iteration will apply data augmentation 
+method to a defined amount of profiling traces. In our examples above, each iteration randomly select a number of profiling traces equivalent 
+to the batch size and applies the modifications. </p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../generating_scripts/" class="btn btn-neutral float-right" title="Automatically Generating Scripts">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../custom_metrics/" class="btn btn-neutral" title="Custom Early Stopping Metrics"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../custom_metrics/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../generating_scripts/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

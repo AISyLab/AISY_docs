@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Custom Early Stopping Metrics - AISY Framework v0.1</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Custom Early Stopping Metrics";
+    var mkdocs_page_input_path = "custom_metrics.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> AISY Framework v0.1</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../concepts/">Concepts</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../simple_example/">Simple Example</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../datasets/">Datasets</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../custom_dataset/">Custom Dataset</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../databases/">Databases</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../npz/">Saving to .npz files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../neuralnetworks/">Neural Networks</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../ciphers/">Ciphers</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../leakage_models/">Leakage Models</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../visualization/">Visualization</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../hyperparamatersearch/">Hyperparameter Search</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../ensembles/">Ensembles</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../custom_loss/">Custom loss functions</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../custom_callbacks/">Custom Callbacks</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Custom Early Stopping Metrics</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#step-1-creating-custom-metric-py-file">Step 1: Creating custom metric .py file</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#standard-custom-metric-file-structure-standard-parameters">Standard custom metric file structure (standard parameters)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#examples-of-custom-metric-files">Examples of custom metric files</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#step-2-calling-early-stopping-custom-metrics-from-script">Step 2: Calling early stopping custom metrics from script</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#returning-a-tuple-or-list-of-values-in-the-custom-metric">Returning a tuple (or list of values) in the custom metric</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#retrieving-the-early-stopping-metric-values">Retrieving the early stopping metric values</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#visualizing-metric-results-in-the-web-application">Visualizing metric results in the Web Application</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../data_augmentation/">Data Augmentation</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../generating_scripts/">Automatically Generating Scripts</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../errors/">Errors</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../feature_request/">Feature Request</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">AISY Framework v0.1</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Custom Early Stopping Metrics</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="custom-early-stopping-metrics">Custom Early Stopping Metrics</h1>
+<p>AISY Framework allows easy definition of custom metrics to be monitored during training. This is specially important when <em>early stopping</em> 
+is considered in the profiled SCA.</p>
+<p>Custom metrics are processed in a standard callback, <code>EarlyStoppingCallback</code>.  Therefore, an <code>early_stopping</code> dictionary is passed
+to the <code>run</code> method:</p>
+<pre><code class="language-python">early_stopping = {
+    &quot;metrics&quot;: {
+        &quot;accuracy&quot;: {
+            &quot;direction&quot;: &quot;max&quot;,
+            &quot;class&quot;: &quot;accuracy&quot;,
+            &quot;parameters&quot;: []
+        },
+        &quot;loss&quot;: {
+            &quot;direction&quot;: &quot;min&quot;,
+            &quot;class&quot;: &quot;loss&quot;,
+            &quot;parameters&quot;: []
+        },
+        &quot;guessing_entropy&quot;: {
+            &quot;direction&quot;: &quot;min&quot;,
+            &quot;class&quot;: &quot;guessing_entropy&quot;,
+            &quot;parameters&quot;: []
+        },
+        &quot;success_rate&quot;: {
+            &quot;direction&quot;: &quot;max&quot;,
+            &quot;class&quot;: &quot;success_rate&quot;,
+            &quot;parameters&quot;: []
+        }
+    }
+}
+</code></pre>
+<p>In the example above, we have four custom metrics. Of course, these four metrics are already implemented as standard metrics in the AISY
+Framework. However, these standard metrics will only be used in the early stopping mechanism if included in the <code>early_stopping</code> 
+dictionary.</p>
+<p>Note that for each metric we have three attributes: <code>direction</code>, <code>class</code> and <code>parameters</code>. The <code>direction</code> indicates what is 
+the reference (min or max) to be detected as best achieved value. The <code>class</code> indicates the name of the python file containing the code for the metric 
+and <strong>must be placed in</strong> <code>custom/custom_metrics/</code> directory.</p>
+<h3 id="step-1-creating-custom-metric-py-file">Step 1: Creating custom metric .py file</h3>
+<p>Create a new .py file named with the attribute <code>class</code> as defined in <code>early_stopping</code>. Following the <code>early_stopping</code> dictionary
+from the above example, we create four python files inside <code>custom/custom_metrics/</code> directory: </p>
+<ul>
+<li><code>accuracy.py</code>   </li>
+<li><code>loss.py</code>   </li>
+<li><code>guessing_entropy.py</code>   </li>
+<li><code>success_rate.py</code></li>
+</ul>
+<h5 id="standard-custom-metric-file-structure-standard-parameters">Standard custom metric file structure (standard parameters)</h5>
+<p>Inside each of this files, create the following basic method <code>run</code>:</p>
+<pre><code class="language-python">def run(x_profiling, y_profiling, plaintexts_profiling,
+        ciphertexts_profiling, key_profiling,
+        x_validation, y_validation, plaintexts_validation,
+        ciphertexts_validation, key_validation,
+        x_attack, y_attack, plaintexts_attack,
+        ciphertexts_attack, key_attack,
+        param, aes_leakage_model,
+        key_rank_executions, key_rank_report_interval, key_rank_attack_traces,
+        model, *args):
+    pass
+</code></pre>
+<p>where parameters are explained below</p>
+<ul>
+<li><code>x_profiling:</code> profiling trace set.</li>
+<li><code>y_profiling:</code> categorical profiling set labels.</li>
+<li><code>plaintexts_profiling:</code> profiling set plaintext.</li>
+<li><code>ciphertexts_profiling:</code> profiling set ciphertexts.</li>
+<li><code>key_profiling:</code> profiling set key (can be a different key per trace).</li>
+<li><code>x_validation:</code> validation trace set.</li>
+<li><code>y_validation:</code> categorical validation set labels.</li>
+<li><code>plaintexts_validation:</code> validation set plaintexts.</li>
+<li><code>ciphertexts_validation:</code> validation set ciphertexts.</li>
+<li><code>key_validation:</code> validation set key.</li>
+<li><code>x_attack:</code> attack trace set.</li>
+<li><code>y_attack:</code> categorical attack set labels.</li>
+<li><code>plaintexts_attack:</code> attack set plaintexts.</li>
+<li><code>ciphertexts_attack:</code> attack set ciphertexts.</li>
+<li><code>key_attack:</code> attack set key.</li>
+<li><code>param:</code> target parameteres. It is a dictionary as in the example below:</li>
+</ul>
+<pre><code class="language-python">param = {
+            &quot;filename&quot;: &quot;ascad-variable.h5&quot;,
+            &quot;key&quot;: &quot;00112233445566778899AABBCCDDEEFF&quot;,
+            &quot;first_sample&quot;: 0,
+            &quot;number_of_samples&quot;: 1400,
+            &quot;number_of_profiling_traces&quot;: 100000,
+            &quot;number_of_attack_traces&quot;: 2000
+        }
+</code></pre>
+<ul>
+<li><code>aes_leakage_model:</code> leakage model parameters. It is a dictionary as in the example below:</li>
+</ul>
+<pre><code class="language-python">aes_leakage_model = {
+            &quot;leakage_model&quot;: &quot;HW&quot;,  # &quot;HW&quot;, &quot;ID&quot; or &quot;bit&quot;
+            &quot;byte&quot;: byte,
+        }
+</code></pre>
+<ul>
+<li><code>key_rank_executions:</code> number of key rank executions in the guessing entropy calculatioin.</li>
+<li><code>key_rank_report_interval:</code> report trace interval in metric calculations (e.g., guessing entropy, success rate, etc.)</li>
+<li><code>key_rank_attack_traces:</code> number of randomly selected traces from attack trace set to be used in each key rank calculation.</li>
+<li><code>model:</code> keras (neural network) model.</li>
+<li><code>*args:</code> list of additional and optional <code>parameters</code> to be passed with <code>early_stopping</code> dictionary. </li>
+</ul>
+<h5 id="examples-of-custom-metric-files">Examples of custom metric files</h5>
+<p>For <code>accuracy.py</code> metric, the code can be defined as in the example below:</p>
+<pre><code class="language-python">def run(x_profiling, y_profiling, plaintexts_profiling,
+        ciphertexts_profiling, key_profiling,
+        x_validation, y_validation, plaintexts_validation,
+        ciphertexts_validation, key_validation,
+        x_attack, y_attack, plaintexts_attack,
+        ciphertexts_attack, key_attack,
+        param, aes_leakage_model,
+        key_rank_executions, key_rank_report_interval, key_rank_attack_traces,
+        model, *args):
+
+    loss, acc = model.evaluate(x_validation, y_validation, verbose=0)
+    return acc
+</code></pre>
+<p>For <code>loss.py</code> metric, the code can be defined as in the example below:</p>
+<pre><code class="language-python">def run(x_profiling, y_profiling, plaintexts_profiling,
+        ciphertexts_profiling, key_profiling,
+        x_validation, y_validation, plaintexts_validation,
+        ciphertexts_validation, key_validation,
+        x_attack, y_attack, plaintexts_attack,
+        ciphertexts_attack, key_attack,
+        param, aes_leakage_model,
+        key_rank_executions, key_rank_report_interval, key_rank_attack_traces,
+        model, *args):
+
+    loss, _ = model.evaluate(x_validation, y_validation, verbose=0)
+    return loss
+</code></pre>
+<p>Below, we provide a full example for <code>guessing_entropy.py</code> where guessing entropy is calculated for the validation trace set having one 
+byte of S-Box output of first AES encryption round as target state. The <code>run</code> method returns the guessing entropy after processing 
+<code>key_rank_attack_traces</code> validation traces.</p>
+<pre><code class="language-python">import numpy as np
+import random
+from sklearn.utils import shuffle
+
+sbox = np.array([
+    0x63, 0x7C, 0x77, 0x7B, 0xF2, 0x6B, 0x6F, 0xC5, 0x30, 0x01, 0x67, 0x2B, 0xFE, 0xD7, 0xAB, 0x76,
+    0xCA, 0x82, 0xC9, 0x7D, 0xFA, 0x59, 0x47, 0xF0, 0xAD, 0xD4, 0xA2, 0xAF, 0x9C, 0xA4, 0x72, 0xC0,
+    0xB7, 0xFD, 0x93, 0x26, 0x36, 0x3F, 0xF7, 0xCC, 0x34, 0xA5, 0xE5, 0xF1, 0x71, 0xD8, 0x31, 0x15,
+    0x04, 0xC7, 0x23, 0xC3, 0x18, 0x96, 0x05, 0x9A, 0x07, 0x12, 0x80, 0xE2, 0xEB, 0x27, 0xB2, 0x75,
+    0x09, 0x83, 0x2C, 0x1A, 0x1B, 0x6E, 0x5A, 0xA0, 0x52, 0x3B, 0xD6, 0xB3, 0x29, 0xE3, 0x2F, 0x84,
+    0x53, 0xD1, 0x00, 0xED, 0x20, 0xFC, 0xB1, 0x5B, 0x6A, 0xCB, 0xBE, 0x39, 0x4A, 0x4C, 0x58, 0xCF,
+    0xD0, 0xEF, 0xAA, 0xFB, 0x43, 0x4D, 0x33, 0x85, 0x45, 0xF9, 0x02, 0x7F, 0x50, 0x3C, 0x9F, 0xA8,
+    0x51, 0xA3, 0x40, 0x8F, 0x92, 0x9D, 0x38, 0xF5, 0xBC, 0xB6, 0xDA, 0x21, 0x10, 0xFF, 0xF3, 0xD2,
+    0xCD, 0x0C, 0x13, 0xEC, 0x5F, 0x97, 0x44, 0x17, 0xC4, 0xA7, 0x7E, 0x3D, 0x64, 0x5D, 0x19, 0x73,
+    0x60, 0x81, 0x4F, 0xDC, 0x22, 0x2A, 0x90, 0x88, 0x46, 0xEE, 0xB8, 0x14, 0xDE, 0x5E, 0x0B, 0xDB,
+    0xE0, 0x32, 0x3A, 0x0A, 0x49, 0x06, 0x24, 0x5C, 0xC2, 0xD3, 0xAC, 0x62, 0x91, 0x95, 0xE4, 0x79,
+    0xE7, 0xC8, 0x37, 0x6D, 0x8D, 0xD5, 0x4E, 0xA9, 0x6C, 0x56, 0xF4, 0xEA, 0x65, 0x7A, 0xAE, 0x08,
+    0xBA, 0x78, 0x25, 0x2E, 0x1C, 0xA6, 0xB4, 0xC6, 0xE8, 0xDD, 0x74, 0x1F, 0x4B, 0xBD, 0x8B, 0x8A,
+    0x70, 0x3E, 0xB5, 0x66, 0x48, 0x03, 0xF6, 0x0E, 0x61, 0x35, 0x57, 0xB9, 0x86, 0xC1, 0x1D, 0x9E,
+    0xE1, 0xF8, 0x98, 0x11, 0x69, 0xD9, 0x8E, 0x94, 0x9B, 0x1E, 0x87, 0xE9, 0xCE, 0x55, 0x28, 0xDF,
+    0x8C, 0xA1, 0x89, 0x0D, 0xBF, 0xE6, 0x42, 0x68, 0x41, 0x99, 0x2D, 0x0F, 0xB0, 0x54, 0xBB, 0x16
+])
+
+
+def aes_labelize_ge_sr(plt_attack, byte, key, leakage):
+    pt_ct = [row[byte] for row in plt_attack]
+
+    key_byte = np.full(len(pt_ct), key[byte])
+    state = [int(x) ^ int(k) for x, k in zip(np.asarray(pt_ct[:]), key_byte)]
+
+    intermediate_values = sbox[state]
+
+    if leakage == &quot;HW&quot;:
+        return [bin(iv).count(&quot;1&quot;) for iv in intermediate_values]
+    else:
+        return intermediate_values
+
+
+def run(x_profiling, y_profiling, plaintexts_profiling,
+        ciphertexts_profiling, key_profiling,
+        x_validation, y_validation, plaintexts_validation,
+        ciphertexts_validation, key_validation,
+        x_attack, y_attack, plaintexts_attack,
+        ciphertexts_attack, key_attack,
+        param, aes_leakage_model,
+        key_rank_executions, key_rank_report_interval, key_rank_attack_traces,
+        model, *args):
+    leakage_model = aes_leakage_model[&quot;leakage_model&quot;]
+    target_byte = aes_leakage_model[&quot;byte&quot;]
+    key = param[&quot;key&quot;]
+
+    nt = len(x_validation)
+    nt_interval = int(key_rank_attack_traces / key_rank_report_interval)
+    key_ranking_sum = np.zeros(nt_interval)
+
+    # ---------------------------------------------------------------------------------------------------------#
+    # compute labels for key hypothesis
+    # ---------------------------------------------------------------------------------------------------------#
+    labels_key_hypothesis = np.zeros((256, nt))
+    for key_byte_hypothesis in range(0, 256):
+        key_h = bytearray.fromhex(key)
+        key_h[target_byte] = key_byte_hypothesis
+        labels_key_hypothesis[key_byte_hypothesis][:] = aes_labelize_ge_sr(plaintexts_validation, target_byte, key_h, leakage_model)
+
+    good_key = [int(x) for x in bytearray.fromhex(key)][target_byte]
+
+    # ---------------------------------------------------------------------------------------------------------#
+    # predict output probabilities for shuffled test or validation set
+    # ---------------------------------------------------------------------------------------------------------#
+    output_probabilities = model.predict(x_validation)
+
+    probabilities_kg_all_traces = np.zeros((nt, 256))
+    for index in range(nt):
+        probabilities_kg_all_traces[index] = output_probabilities[index][
+            np.asarray([int(leakage[index]) for leakage in labels_key_hypothesis[:]])  # array with 256 leakage values (1 per key guess)
+        ]
+
+    for key_rank_execution in range(key_rank_executions):
+
+        probabilities_kg_all_traces_shuffled = shuffle(probabilities_kg_all_traces, random_state=random.randint(0, 100000))
+        key_probabilities = np.zeros(256)
+
+        kr_count = 0
+        for index in range(key_rank_attack_traces):
+
+            key_probabilities += np.log(probabilities_kg_all_traces_shuffled[index] + 1e-36)
+            key_probabilities_sorted = np.argsort(key_probabilities)[::-1]
+
+            if (index + 1) % key_rank_report_interval == 0:
+                key_ranking_good_key = list(key_probabilities_sorted).index(good_key) + 1
+                key_ranking_sum[kr_count] += key_ranking_good_key
+                kr_count += 1
+
+        final_kr = key_ranking_sum[nt_interval - 1]
+        print(&quot;KR run: {} | final Guessing Entropy for correct key ({}): {})&quot;.format(key_rank_execution + 1, good_key,
+                                                                                     final_kr / (key_rank_execution + 1)))
+
+    guessing_entropy = key_ranking_sum / key_rank_executions
+
+    return guessing_entropy[nt_interval - 1]
+
+</code></pre>
+<h3 id="step-2-calling-early-stopping-custom-metrics-from-script">Step 2: Calling early stopping custom metrics from script</h3>
+<p>The code below provides an example of how to call early stopping custom metrics from the main script:</p>
+<pre><code class="language-python">import aisy_sca
+from app import *
+from custom.custom_models.neural_networks import *
+
+aisy = aisy_sca.Aisy()
+aisy.set_resources_root_folder(resources_root_folder)
+aisy.set_database_root_folder(databases_root_folder)
+aisy.set_datasets_root_folder(datasets_root_folder)
+aisy.set_database_name(&quot;database_ascad.sqlite&quot;)
+aisy.set_dataset(datasets_dict[&quot;ascad-variable.h5&quot;])
+aisy.set_aes_leakage_model(leakage_model=&quot;HW&quot;, byte=2)
+aisy.set_batch_size(400)
+aisy.set_epochs(10)
+aisy.set_neural_network(mlp)
+
+early_stopping = {
+    &quot;metrics&quot;: {
+        &quot;accuracy&quot;: {
+            &quot;direction&quot;: &quot;max&quot;,
+            &quot;class&quot;: &quot;custom.custom_metrics.accuracy&quot;,
+            &quot;parameters&quot;: []
+        },
+        &quot;loss&quot;: {
+            &quot;direction&quot;: &quot;min&quot;,
+            &quot;class&quot;: &quot;custom.custom_metrics.loss&quot;,
+            &quot;parameters&quot;: []
+        },
+        &quot;number_of_traces&quot;: {
+            &quot;direction&quot;: &quot;min&quot;,
+            &quot;class&quot;: &quot;custom.custom_metrics.number_of_traces&quot;,
+            &quot;parameters&quot;: []
+        },
+        &quot;success_rate&quot;: {
+            &quot;direction&quot;: &quot;max&quot;,
+            &quot;class&quot;: &quot;custom.custom_metrics.success_rate&quot;,
+            &quot;parameters&quot;: []
+        }
+    }
+}
+
+aisy.run(
+    early_stopping=early_stopping,
+    key_rank_attack_traces=500
+)
+
+metrics_validation = aisy.get_metrics_validation()
+for metric in metrics_validation:
+    print(&quot;{}: {}&quot;.format(metric['metric'], metric['values']))
+</code></pre>
+<h3 id="returning-a-tuple-or-list-of-values-in-the-custom-metric">Returning a tuple (or list of values) in the custom metric</h3>
+<p>In the metric examples above (<code>accuracy.py</code>, <code>loss.py</code> and <code>guessing_entropy.py</code>), each metric returns a single (float) value. It
+also possible to return a tuple or a list of values instead of a single value.  </p>
+<h3 id="retrieving-the-early-stopping-metric-values">Retrieving the early stopping metric values</h3>
+<p>As in the example above, the method</p>
+<pre><code class="language-python">metrics_validation = aisy.get_metrics_validation()
+</code></pre>
+<p>returns the list of defined early stopping metrics and their values for each epoch. Running the above code, the user should get a results 
+similar to the following one:</p>
+<pre><code>val_accuracy: [0.269, 0.288, 0.27, 0.248, 0.263, 0.248, 0.241, 0.248, 0.264, 0.232]
+val_loss: [1.7930998115539551, 1.7487744626998902, 1.7676906442642213, 1.7654361686706543, 1.7366435260772706, 1.7864224281311034, 1.7834029178619384, 1.8150662136077882, 1.8051397848129271, 1.8797064323425292]
+val_guessing_entropy: [203.0, 182.0, 94.0, 86.0, 104.0, 72.0, 82.0, 125.0, 141.0, 129.0]
+val_success_rate: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+</code></pre>
+<h3 id="visualizing-metric-results-in-the-web-application">Visualizing metric results in the Web Application</h3>
+<p>It is also important to note that custom metric retuls are also stored in the defined SQLite database file. 
+Plots can also be observed in the web application interface that runs on <code>localhost</code>. </p>
+<p>The plots can be seen as in the example below:</p>
+<p><img alt="Screenshot" src="../images/acc_loss.png" /> 
+<img alt="Screenshot" src="../images/ge_sr.png" /> </p>
+<p>For each early stopping metric, the framework computes the guessing entropy:</p>
+<p><img alt="Screenshot" src="../images/es_ge.png" />  </p>
+<p>In the above plot, the <code>Attack</code> label (in blue) denotes the guessing entropy of a single key byte computed after all processed epochs (end of training).
+The other lines refer to the guessing entropy at the epoch where the correspondent metric achieves the best value.
+The same type of result is provided for success rates:</p>
+<p><img alt="Screenshot" src="../images/es_sr.png" />  </p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../data_augmentation/" class="btn btn-neutral float-right" title="Data Augmentation">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../custom_callbacks/" class="btn btn-neutral" title="Custom Callbacks"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../custom_callbacks/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../data_augmentation/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

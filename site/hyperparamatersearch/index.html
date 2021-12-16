@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Hyperparameter Search - AISY Framework v0.1</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Hyperparameter Search";
+    var mkdocs_page_input_path = "hyperparamatersearch.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> AISY Framework v0.1</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../concepts/">Concepts</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../simple_example/">Simple Example</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../datasets/">Datasets</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../custom_dataset/">Custom Dataset</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../databases/">Databases</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../npz/">Saving to .npz files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../neuralnetworks/">Neural Networks</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../ciphers/">Ciphers</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../leakage_models/">Leakage Models</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../visualization/">Visualization</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Hyperparameter Search</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#random-search">Random Search</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#grid-search">Grid Search</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../ensembles/">Ensembles</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../custom_loss/">Custom loss functions</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../custom_callbacks/">Custom Callbacks</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../custom_metrics/">Custom Early Stopping Metrics</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../data_augmentation/">Data Augmentation</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../generating_scripts/">Automatically Generating Scripts</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../errors/">Errors</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../feature_request/">Feature Request</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">AISY Framework v0.1</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Hyperparameter Search</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="hyperparameter-search">Hyperparameter Search</h1>
+<p>Hyperparameter search a fundamental procedure in the application of deep learning to profiled side-channel analysis.
+AISY Framework provides easy and efficient functionalities for hyperparameters search for MLP and CNN models. </p>
+<h2 id="random-search">Random Search</h2>
+<p>Hyperparameter random search is the most common choice for finding efficient deep neural network architectures.
+Due to the very large search space, it is very likely that we have no enough computation power (and time) to cover all the search space.
+AISY Framework provides easy solution to run random search for profiled side-channel attacks.</p>
+<pre><code class="language-python">import aisy_sca
+from app import *
+
+aisy = aisy_sca.Aisy()
+aisy.set_resources_root_folder(resources_root_folder)
+aisy.set_database_root_folder(databases_root_folder)
+aisy.set_datasets_root_folder(datasets_root_folder)
+aisy.set_database_name(&quot;database_ascad.sqlite&quot;)
+aisy.set_dataset(datasets_dict[&quot;ascad-variable.h5&quot;])
+aisy.set_aes_leakage_model(leakage_model=&quot;HW&quot;, byte=2)
+aisy.set_batch_size(400)
+aisy.set_epochs(10)
+
+# for each hyper-parameter, specify the min, max and step or the possible options
+random_search = {
+    &quot;neural_network&quot;: &quot;cnn&quot;,
+    &quot;hyper_parameters_search&quot;: {
+        'conv_layers': {&quot;min&quot;: 1, &quot;max&quot;: 2, &quot;step&quot;: 1},
+        'kernel_1': {&quot;min&quot;: 2, &quot;max&quot;: 8, &quot;step&quot;: 1},
+        'kernel_2': {&quot;min&quot;: 2, &quot;max&quot;: 8, &quot;step&quot;: 1},
+        'stride_1': {&quot;min&quot;: 5, &quot;max&quot;: 10, &quot;step&quot;: 5},
+        'stride_2': {&quot;min&quot;: 5, &quot;max&quot;: 10, &quot;step&quot;: 5},
+        'filters_1': {&quot;min&quot;: 8, &quot;max&quot;: 32, &quot;step&quot;: 4},
+        'filters_2': {&quot;min&quot;: 8, &quot;max&quot;: 32, &quot;step&quot;: 4},
+        'pooling_type_1': [&quot;Average&quot;, &quot;Max&quot;],
+        'pooling_type_2': [&quot;Average&quot;, &quot;Max&quot;],
+        'pooling_size_1': {&quot;min&quot;: 1, &quot;max&quot;: 1, &quot;step&quot;: 1},
+        'pooling_size_2': {&quot;min&quot;: 1, &quot;max&quot;: 1, &quot;step&quot;: 1},
+        'pooling_stride_1': {&quot;min&quot;: 1, &quot;max&quot;: 1, &quot;step&quot;: 1},
+        'pooling_stride_2': {&quot;min&quot;: 1, &quot;max&quot;: 1, &quot;step&quot;: 1},
+        'neurons': {&quot;min&quot;: 100, &quot;max&quot;: 1000, &quot;step&quot;: 100},
+        'layers': {&quot;min&quot;: 2, &quot;max&quot;: 3, &quot;step&quot;: 1},
+        'learning_rate': [0.001, 0.0009, 0.0008, 0.0007, 0.0006, 0.0005, 0.0004, 0.0003, 0.0002, 0.0001],
+        'activation': [&quot;relu&quot;, &quot;selu&quot;, &quot;elu&quot;, &quot;tanh&quot;],
+        'epochs': {&quot;min&quot;: 5, &quot;max&quot;: 5, &quot;step&quot;: 1},
+        'batch_size': {&quot;min&quot;: 100, &quot;max&quot;: 1000, &quot;step&quot;: 100},
+        'optimizer': [&quot;Adam&quot;, &quot;RMSprop&quot;, &quot;Adagrad&quot;, &quot;Adadelta&quot;, &quot;SGD&quot;]
+    },
+    &quot;metric&quot;: &quot;guessing_entropy&quot;,
+    &quot;stop_condition&quot;: False,
+    &quot;stop_value&quot;: 1.0,
+    &quot;max_trials&quot;: 10,
+    &quot;train_after_search&quot;: True
+}
+
+aisy.run(
+    random_search=random_search,
+    key_rank_attack_traces=500
+)
+</code></pre>
+<p>As specified in the above examples, we need to pass a dictionary with the following parameters:</p>
+<ul>
+<li><code>neural_network:</code> type of neural network. It can be <code>"mlp"</code> or <code>cnn</code>.</li>
+<li>
+<p><code>hyper_parameters_search:</code> dictionary containing the hyper-parameters to be search. Hyperparameters for MLP can be:</p>
+<ul>
+<li><code>neurons</code>: dictionary containing the ranges for the number of neurons to be searched in dense layers. Example: <code>'neurons': {"min": 10, "max": 1000, "step": 10}</code>,</li>
+<li><code>layers</code>: dictionary containing the ranges for the number of dense layers. Example: <code>'layers': {"min": 1, "max": 10, "step": 1}</code>,</li>
+<li><code>learning_rate</code>: list containing the options for learning rate. Example: <code>'learning_rate': [0.001, 0.0001]</code>,</li>
+<li><code>activation</code>: list containing the options for activation functions. Example: <code>'activation': ["relu", "selu"]</code>.</li>
+</ul>
+<p>Hyperparameters for CNN are the same as for MLP, expect for convolution and pooling layers:</p>
+<ul>
+<li><code>conv_layers:</code> dictionary containing the ranges for the number of convolution layers. Example: <code>'conv_layers': {"min": 1, "max": 2, "step": 1}</code>,</li>
+<li><code>kernel_1:</code> dictionary containing the ranges for the kernel size in the <code>conv_layer_1</code>. Example: <code>'kernel_1': {"min": 2, "max": 8, "step": 1}</code>,</li>
+<li><code>kernel_2:</code> dictionary containing the ranges for the kernel size in the <code>conv_layer_2</code>. Example: <code>'kernel_2': {"min": 2, "max": 8, "step": 1}</code>,</li>
+<li><code>stride_1:</code> dictionary containing the ranges for the stride size in the <code>conv_layer_1</code>. Example: <code>'stride_1': {"min": 1, "max": 2, "step": 1}</code>,</li>
+<li><code>stride_2:</code> dictionary containing the ranges for the stride size in the <code>conv_layer_2</code>. Example: <code>'stride_2': {"min": 1, "max": 2, "step": 1}</code>,</li>
+<li><code>filters_1:</code> dictionary containing the ranges for the number of filters in the <code>conv_layer_1</code>. Example: <code>'filters_1': {"min": 8, "max": 16, "step": 8}</code>,</li>
+<li><code>filters_2:</code> dictionary containing the ranges for the number of filters in the <code>conv_layer_2</code>. Example: <code>'filters_2': {"min": 8, "max": 16, "step": 8}</code>,</li>
+<li><code>pooling_type_1:</code> list containing the options for pooling type in the <code>pooling_layer_1</code>. Example: <code>'pooling_type_1': ["Average", "Max"]</code>,</li>
+<li><code>pooling_type_2:</code> list containing the options for pooling type in the <code>pooling_layer_2</code>. Example: <code>'pooling_type_2': ["Average", "Max"]</code>,</li>
+<li><code>pooling_size_1:</code> dictionary containing the ranges for the pooling size in the <code>pooling_layer_1</code>. Example: <code>'pooling_size_1': {"min": 1, "max": 2, "step": 1}</code>,</li>
+<li><code>pooling_size_2:</code> dictionary containing the ranges for the pooling size in the <code>pooling_layer_2</code>. Example: <code>'pooling_size_2': {"min": 1, "max": 2, "step": 1}</code>,</li>
+<li><code>pooling_stride_1:</code> dictionary containing the ranges for the pooling stride in the <code>pooling_layer_1</code>. Example: <code>'pooling_stride_1': {"min": 1, "max": 2, "step": 1}</code>,</li>
+<li><code>pooling_stride_2:</code> dictionary containing the ranges for the pooling stride in the <code>pooling_layer_2</code>. Example: <code>'pooling_stride_2': {"min": 1, "max": 2, "step": 1}</code>,</li>
+</ul>
+</li>
+</ul>
+<p>Note that <code>activation</code> is set for convolution and dense layers. The structure of randomly generated CNNs follows the sequence with: 
+<code>conv_layer_1 -&gt; pool_layer_1 -&gt; batch_normalization_layer_1 -&gt;conv_layer_2 -&gt; pool_layer_2 -&gt; batch_normalization_layer_2 -&gt; ...</code> where 
+a <code>BatchNormalization</code> layer is defined after the pooling layer.  </p>
+<p>Besides those specific hyperparameters for MLPs and CNNs, the user can also search for number of epochs and batch size:</p>
+<ul>
+<li><code>epochs:</code> dictionary containing the ranges for the epochs. Example: <code>'epochs': {"min": 50, "max": 150, "step": 50}</code>.</li>
+<li><code>batch_size:</code> dictionary containing the ranges for the batch size. Example: <code>'batch_size': {"min": 100, "max": 4000, "step": 100}</code>.</li>
+<li><code>optimizer:</code> list of options for optimizers (must be Strings).</li>
+</ul>
+<h2 id="grid-search">Grid Search</h2>
+<p>To perform a hyperparameter grid search, the main script needs to defined the ranges to be searched. 
+The hyperparameter grid search in the AISY Framework supports two types of neural networks: MLP and CNN.
+Below we provide examples.</p>
+<p>MLP example: </p>
+<pre><code class="language-python">from aisy.sca_aisy_aes import AisyAes
+
+aisy = AisyAes()
+aisy.set_dataset(&quot;ascad-variable.h5&quot;)
+aisy.set_database_name(&quot;database_ascad.sqlite&quot;)
+aisy.set_aes_leakage_model(leakage_model=&quot;HW&quot;, byte=2)
+aisy.set_number_of_profiling_traces(100000)
+aisy.set_number_of_attack_traces(2000)
+aisy.set_batch_size(400)
+aisy.set_epochs(50)
+
+# for each hyper-parameter, specify the options in the grid search
+grid_search = {
+    &quot;neural_network&quot;: &quot;mlp&quot;,
+    &quot;hyper_parameters_search&quot;: {
+        'neurons': [100, 200],
+        'layers': [3, 4],
+        'learning_rate': [0.001, 0.0001],
+        'activation': [&quot;relu&quot;, &quot;selu&quot;],
+        'optimizer': [&quot;Adam&quot;, &quot;SGD&quot;]
+    },
+    &quot;metric&quot;: &quot;guessing_entropy&quot;,
+    &quot;stop_condition&quot;: False,
+    &quot;stop_value&quot;: 1.0,
+    &quot;train_after_search&quot;: True
+}
+
+aisy.run(
+    grid_search=grid_search
+)
+</code></pre>
+<p>CNN example:</p>
+<pre><code class="language-python">import aisy_sca
+from app import *
+
+aisy = aisy_sca.Aisy()
+aisy.set_resources_root_folder(resources_root_folder)
+aisy.set_database_root_folder(databases_root_folder)
+aisy.set_datasets_root_folder(datasets_root_folder)
+aisy.set_database_name(&quot;database_ascad.sqlite&quot;)
+aisy.set_dataset(datasets_dict[&quot;ascad-variable.h5&quot;])
+aisy.set_aes_leakage_model(leakage_model=&quot;HW&quot;, byte=2)
+aisy.set_batch_size(400)
+aisy.set_epochs(20)
+
+# for each hyper-parameter, specify the options in the grid search
+grid_search = {
+    &quot;neural_network&quot;: &quot;cnn&quot;,
+    &quot;hyper_parameters_search&quot;: {
+        'conv_layers': [1, 2],
+        'kernel_1': [4, 8],
+        'kernel_2': [2, 4],
+        'stride_1': [1],
+        'stride_2': [1],
+        'filters_1': [8, 16],
+        'filters_2': [8, 16],
+        'pooling_type_1': [&quot;Average&quot;, &quot;Max&quot;],
+        'pooling_type_2': [&quot;Average&quot;, &quot;Max&quot;],
+        'pooling_size_1': [1, 2],
+        'pooling_size_2': [1, 2],
+        'pooling_stride_1': [1, 2],
+        'pooling_stride_2': [1, 2],
+        'neurons': [100, 200],
+        'layers': [3, 4],
+        'learning_rate': [0.001],
+        'activation': [&quot;selu&quot;, &quot;elu&quot;],
+        'optimizer': [&quot;Adam&quot;, &quot;SGD&quot;]
+    },
+    &quot;metric&quot;: &quot;guessing_entropy&quot;,
+    &quot;stop_condition&quot;: False,
+    &quot;stop_value&quot;: 1.0,
+    &quot;train_after_search&quot;: True
+}
+
+aisy.run(
+    grid_search=grid_search,
+    key_rank_attack_traces=500
+)
+</code></pre>
+<p>As specified in the above examples, we need to pass a dictionary with the following parameters:</p>
+<ul>
+<li><code>neural_network:</code> type of neural network. It can be <code>"mlp"</code> or <code>cnn</code>.</li>
+<li>
+<p><code>hyper_parameters_search:</code> dictionary containing the hyper-parameters to be search. Hyperparameters for MLP can be:</p>
+<ul>
+<li><code>neurons</code>: list containing the options for the number of neurons to be searched in dense layers. Example: <code>'neurons': [100, 200]</code>,</li>
+<li><code>layers</code>: list containing the options for the number of dense layers. Example: <code>'layers': [3, 4]</code>,</li>
+<li><code>learning_rate</code>: list containing the options for learning rate. Example: <code>'learning_rate': [0.001, 0.0001]</code>,</li>
+<li><code>activation</code>: list containing the options for activation functions. Example: <code>'activation': ["relu", "selu"]</code>.</li>
+</ul>
+<p>Hyperparameters for CNN are the same as for MLP, expect for convolution and pooling layers:</p>
+<ul>
+<li><code>conv_layers:</code> list containing the options for the number of convolution layers. Example: <code>'conv_layers': [1, 2]</code>,</li>
+<li><code>kernel_1:</code> list containing the options for the kernel size in the <code>conv_layer_1</code>. Example: <code>'kernel_1': [4, 8]</code>,</li>
+<li><code>kernel_2:</code> list containing the options for the kernel size in the <code>conv_layer_2</code>. Example: <code>'kernel_2': [2, 4]</code>,</li>
+<li><code>stride_1:</code> list containing the options for the stride size in the <code>conv_layer_1</code>. Example: <code>'stride_1': [1, 2]</code>,</li>
+<li><code>stride_2:</code> list containing the options for the stride size in the <code>conv_layer_2</code>. Example: <code>'stride_2': [1, 2]</code>,</li>
+<li><code>filters_1:</code> list containing the options for the number of filters in the <code>conv_layer_1</code>. Example: <code>'filters_1': [8, 16]</code>,</li>
+<li><code>filters_2:</code> list containing the options for the number of filters in the <code>conv_layer_2</code>. Example: <code>'filters_2': [8, 16]</code>,</li>
+<li><code>pooling_type_1:</code> list containing the options for pooling type in the <code>pooling_layer_1</code>. Example: <code>'pooling_type_1': ["Average", "Max"]</code>,</li>
+<li><code>pooling_type_2:</code> list containing the options for pooling type in the <code>pooling_layer_2</code>. Example: <code>'pooling_type_2': ["Average", "Max"]</code>,</li>
+<li><code>pooling_size_1:</code> list containing the options for the pooling size in the <code>pooling_layer_1</code>. Example: <code>'pooling_size_1': [1, 2]</code>,</li>
+<li><code>pooling_size_2:</code> list containing the options for the pooling size in the <code>pooling_layer_2</code>. Example: <code>'pooling_size_2': [1, 2]</code>,</li>
+<li><code>pooling_stride_1:</code> list containing the options for the pooling stride in the <code>pooling_layer_1</code>. Example: <code>'pooling_stride_1': [1, 2]</code>,</li>
+<li><code>pooling_stride_2:</code> list containing the options for the pooling stride in the <code>pooling_layer_2</code>. Example: <code>'pooling_stride_2': [1, 2]</code>,</li>
+</ul>
+</li>
+</ul>
+<p>Note that <code>activation</code> is set for convolution and dense layers. The structure of randomly generated CNNs follows the sequence with: 
+<code>conv_layer_1 -&gt; pool_layer_1 -&gt; batch_normalization_layer_1 -&gt;conv_layer_2 -&gt; pool_layer_2 -&gt; batch_normalization_layer_2 -&gt; ...</code> where 
+a <code>BatchNormalization</code> layer is defined after the pooling layer.  </p>
+<p>Besides those specific hyperparameters for MLPs and CNNs, the user can also search for number of epochs and batch size:</p>
+<ul>
+<li><code>epochs:</code> list containing the options for the epochs. Example: <code>'epochs': [50, 100, 150]</code>.</li>
+<li><code>batch_size:</code> list containing the option for the batch size. Example: <code>'batch_size': [100, 200]</code>.</li>
+<li><code>optimizer:</code> list of options for optimizers (must be Strings).</li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../ensembles/" class="btn btn-neutral float-right" title="Ensembles">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../visualization/" class="btn btn-neutral" title="Visualization"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../visualization/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../ensembles/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

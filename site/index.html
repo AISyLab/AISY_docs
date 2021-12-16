@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="None">
+  
+  
+  <link rel="shortcut icon" href="img/favicon.ico">
+  <title>AISY Framework v0.1</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="css/theme.css" />
+  <link rel="stylesheet" href="css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Home";
+    var mkdocs_page_input_path = "index.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="js/jquery-2.1.1.min.js" defer></script>
+  <script src="js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="." class="icon icon-home"> AISY Framework v0.1</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href=".">Home</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#example-script">Example script</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#integrated-sqlite-database">Integrated SQLite Database</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#web-application">Web Application</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#reproducible-results-with-one-click-script-generation">Reproducible results with one-click script generation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#state-of-the-art-deep-learning-based-sca">State-of-the-art deep learning-based SCA</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#framework-layout">Framework layout</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#main-features">Main Features</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#running-scripts">Running Scripts</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#starting-the-webapp">Starting the WebApp</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="concepts/">Concepts</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="simple_example/">Simple Example</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="datasets/">Datasets</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="custom_dataset/">Custom Dataset</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="databases/">Databases</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="npz/">Saving to .npz files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="neuralnetworks/">Neural Networks</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="ciphers/">Ciphers</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="leakage_models/">Leakage Models</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="visualization/">Visualization</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="hyperparamatersearch/">Hyperparameter Search</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="ensembles/">Ensembles</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="custom_loss/">Custom loss functions</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="custom_callbacks/">Custom Callbacks</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="custom_metrics/">Custom Early Stopping Metrics</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="data_augmentation/">Data Augmentation</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="generating_scripts/">Automatically Generating Scripts</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="errors/">Errors</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="feature_request/">Feature Request</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href=".">AISY Framework v0.1</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Home</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="welcome-to-aisy-framework-deep-learning-for-side-channel-analysis">Welcome to AISY Framework - Deep Learning for Side-Channel Analysis</h1>
+<p>AISY framework is a python-based framework that allows efficient and scalable applications of deep learning to profiling side-channel analysis (SCA). This project was implemented as a result 
+of several years of research on deep learning and side-channel analysis by AisyLab at TU Delft (The Netherlands).</p>
+<h3 id="example-script">Example script</h3>
+<p>AISY Framework allows very easy execution of deep learning in profiled side-channel attacks.
+Here is an example of all the code that is needed to run a profiled SCA attack on key byte 2 of an AES implementation from well-known ASCAD 
+dabatase:</p>
+<pre><code class="language-python">import aisy_sca
+from app import *
+from custom.custom_models.neural_networks import *
+
+aisy = aisy_sca.Aisy()
+aisy.set_resources_root_folder(resources_root_folder)
+aisy.set_database_root_folder(databases_root_folder)
+aisy.set_datasets_root_folder(datasets_root_folder)
+aisy.set_database_name(&quot;database_ascad.sqlite&quot;)
+aisy.set_dataset(datasets_dict[&quot;ascad-variable.h5&quot;])
+aisy.set_aes_leakage_model(leakage_model=&quot;HW&quot;, byte=2)
+aisy.set_batch_size(400)
+aisy.set_epochs(20)
+aisy.set_neural_network(mlp)
+aisy.run()
+
+</code></pre>
+<h3 id="integrated-sqlite-database">Integrated SQLite Database</h3>
+<p>AISY Framework comes with the option to store all analysis results in a SQLite database. Standard libraries are implemented in the framework
+and users can easily add custom tables to the framework. The creation of custom tables does not require any specific background knowlegde on 
+databases. </p>
+<h3 id="web-application">Web Application</h3>
+<p>AISY Framework is built on top of the <a href="https://flask.palletsprojects.com/en/1.1.x/">Flask</a> python-based web framework. A web application is 
+integrated with a web-based user interface.</p>
+<p>The web application provides a user-friendly way to visualize analysis, plots, results and tables.  </p>
+<h3 id="reproducible-results-with-one-click-script-generation">Reproducible results with one-click script generation</h3>
+<p>In the Web Application, an user can generate the full script that was used to produce results stored in the database. This is particularly 
+important when the user wishes to reproduce results after he or she changed the script. Another advantage of this feature can be seen when 
+an user shares the database with a second user. The latter generate all the scripts from database.  </p>
+<h3 id="state-of-the-art-deep-learning-based-sca">State-of-the-art deep learning-based SCA</h3>
+<p>AISY Framework brings state-of-the-art deep learning-based side-channel attacks. We follow recent publications and keep the framework 
+updated accordingly. The current version is 0.2 and it that already provides state-of-the-art features such as custom loss functions, 
+hyperparameter search, visualization, custom metrics and data augmentation. </p>
+<h3 id="installation">Installation</h3>
+<p>The AISY framework can be cloned from our github page:</p>
+<pre><code>git clone https://github.com/AISyLab/AISY_Framework.git
+cd AISY_framework
+pip install -r requirements.txt
+</code></pre>
+<h2 id="framework-layout">Framework layout</h2>
+<pre><code>custom/                               # folder containing customized definitions 
+    custom_callbacks/callbacks.py     # file with user callbacks
+    custom_metrics/                   # each .py file contain a custom metric
+    custom_models/neural_networks.py  # file to insert user neural networks (keras models)
+    custom_loss/                      # each .py file contain a custom loss
+    custom_datasets/datasets.py       # file with dataset details
+    custom_data_augmentation/         # file containing data augmentation method
+    custom_tables/tables.py           # file containing custom sqlite tables 
+resources/                            # folder to store user resources (it will be created when first analysis is executed)
+    databases/                        # .sqlite database files with project information and analysis results
+    figures/                          # .png figure generated from user
+    models/                           # .h5 models
+    npz/                              # .npz files with project information and analysis results 
+scripts/                              # folder to store main user scripts
+webapp/                               # flask web application files (html, js, css)
+app.py                                # main flask application
+</code></pre>
+<h2 id="main-features">Main Features</h2>
+<ul>
+<li>SCA Metrics (guessing entropy and success rate)</li>
+<li>Gradient Visualization</li>
+<li>Data Augmentation </li>
+<li>Grid Search</li>
+<li>Random Search</li>
+<li>Early Stopping</li>
+<li>Ensemble</li>
+<li>Custom Metrics</li>
+<li>Custom Callbacks</li>
+<li>Confusion Matrix</li>
+<li>Easy Neural Network Definitions</li>
+<li>Data Augmentation</li>
+<li>GUI - plots, tables</li>
+<li>Automatically generate scripts </li>
+<li>Fully reproducible scripts   </li>
+</ul>
+<h2 id="running-scripts">Running Scripts</h2>
+<p>The project structure is provided in a way that all scripts are placed inside <code>scripts</code> folder. To run a python file script
+(e.g., <code>script_aes.py</code>), the user might use an IDE (like PyCharm, where we simply right-click in the script file and then <em>run</em>) or,
+more likely, from command line. To run script from command line, user must follow one of the two options:</p>
+<p>1) Place the script inside project root folder.
+2) Place the script inside <code>scripts</code> folder and use <strong>sys</strong> python package to indicate the project root folder, as in the example below:</p>
+<pre><code class="language-python">import sys
+sys.path.append('my_path/AISY_framework')
+
+import aisy_sca
+from app import *
+from custom.custom_models.neural_networks import *
+
+aisy = aisy_sca.Aisy()
+aisy.set_resources_root_folder(resources_root_folder)
+aisy.set_database_root_folder(databases_root_folder)
+aisy.set_datasets_root_folder(datasets_root_folder)
+aisy.set_database_name(&quot;database_ascad.sqlite&quot;)
+aisy.set_dataset(datasets_dict[&quot;ascad-variable.h5&quot;])
+aisy.set_aes_leakage_model(leakage_model=&quot;HW&quot;, byte=2)
+aisy.set_batch_size(400)
+aisy.set_epochs(20)
+aisy.set_neural_network(mlp)
+aisy.run()
+
+</code></pre>
+<p>Then, simply put the path location of your AISY_framework project and run the script: <code>python scripts/script_aes.py</code>.</p>
+<h2 id="starting-the-webapp">Starting the WebApp</h2>
+<p>The Web Application is built on top of Flask web framework. To start the web homepage and visualize project results, simply run the 
+following command on the terminal: </p>
+<pre><code>cd AISY_Framework/
+flask run
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="concepts/" class="btn btn-neutral float-right" title="Concepts">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+      
+        <span style="margin-left: 15px"><a href="concepts/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '.';</script>
+    <script src="js/theme.js" defer></script>
+      <script src="search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
+
+<!--
+MkDocs version : 1.1.2
+Build Date UTC : 2021-12-16 10:28:54.078020+00:00
+-->
