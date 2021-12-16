@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Automatically Generating Scripts - AISY Framework v0.1</title>
+  <title>Profiling Analyzer - AISY Framework v0.1</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../css/theme.css" />
@@ -18,8 +18,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Automatically Generating Scripts";
-    var mkdocs_page_input_path = "generating_scripts.md";
+    var mkdocs_page_name = "Profiling Analyzer";
+    var mkdocs_page_input_path = "profiling_analyzer.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -99,8 +99,10 @@
                     <li class="toctree-l1"><a class="reference internal" href="../ensembles/">Ensembles</a>
                     </li>
                 </ul>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../profiling_analyzer/">Profiling Analyzer</a>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Profiling Analyzer</a>
+    <ul class="current">
+    </ul>
                     </li>
                 </ul>
                 <ul>
@@ -119,10 +121,8 @@
                     <li class="toctree-l1"><a class="reference internal" href="../data_augmentation/">Data Augmentation</a>
                     </li>
                 </ul>
-                <ul class="current">
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Automatically Generating Scripts</a>
-    <ul class="current">
-    </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../generating_scripts/">Automatically Generating Scripts</a>
                     </li>
                 </ul>
                 <ul>
@@ -154,7 +154,7 @@
     
       
     
-    <li>Automatically Generating Scripts</li>
+    <li>Profiling Analyzer</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -165,17 +165,7 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="automatically-generating-scripts">Automatically Generating Scripts</h1>
-<p>One of the main features in AISY Framework is the one-click script generation.</p>
-<p>By clicking on <strong>Databases</strong> on the side-bar, the list of analysis separated per database file name is displayed in the screen.</p>
-<p><img alt="Screenshot" src="../images/tables.png" /></p>
-<p>The user then clicks on the chart icon in the <strong>Results</strong> column. The page then displays something similar to the image below:</p>
-<p><img alt="Screenshot" src="../images/result.png" /></p>
-<p>In the top right part of the screen, there is a button called <em>Generate Script</em>. If the user clicks on this button, the script used to 
-produce results displayed in the current page is automatically generated and placed in <code>scripts/</code> folder under the name 
-<code>script_[analysis_id]_[database_name].py</code>.</p>
-<p>The advantage of this feature is the possibility to reproduce results from older analysis when script is updated or even modified by accident.
-Another advantage is that is databases are shared between users, the <em>Generate Script</em> button allows different users to reproduce same analysis.</p>
+                <h1 id="profiling-analyzer">Profiling Analyzer</h1>
               
             </div>
           </div>
@@ -183,10 +173,10 @@ Another advantage is that is databases are shared between users, the <em>Generat
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../errors/" class="btn btn-neutral float-right" title="Errors">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../custom_loss/" class="btn btn-neutral float-right" title="Custom loss functions">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../data_augmentation/" class="btn btn-neutral" title="Data Augmentation"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../ensembles/" class="btn btn-neutral" title="Ensembles"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -212,10 +202,10 @@ Another advantage is that is databases are shared between users, the <em>Generat
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../data_augmentation/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../ensembles/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../errors/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../custom_loss/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

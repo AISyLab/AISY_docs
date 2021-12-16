@@ -13,6 +13,7 @@ nav:
     - Visualization: visualization.md
     - Hyperparameter Search: hyperparamatersearch.md
     - Ensembles: ensembles.md
+    - Profiling Analyzer: profiling_analyzer.md
     - Custom loss functions: custom_loss.md
     - Custom Callbacks: custom_callbacks.md
     - Custom Early Stopping Metrics: custom_metrics.md
