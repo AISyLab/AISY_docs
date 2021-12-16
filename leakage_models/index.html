@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Leakage Models - AISY Framework v0.1</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Leakage Models";
+    var mkdocs_page_input_path = "leakage_models.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> AISY Framework v0.1</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../concepts/">Concepts</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../simple_example/">Simple Example</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../datasets/">Datasets</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../custom_dataset/">Custom Dataset</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../databases/">Databases</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../npz/">Saving to .npz files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../neuralnetworks/">Neural Networks</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../ciphers/">Ciphers</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Leakage Models</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#definiting-leakage-models">Definiting Leakage Models</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#supported-aes-states-for-leakage-models">Supported AES States for Leakage Models</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#default-values">Default Values</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#hamming-weight-model-s-box-output-round-1-aes-encryption">Hamming weight model, S-Box Output Round 1, AES Encryption</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#hamming-weight-model-s-box-input-round-10-aes-encryption">Hamming weight model, S-Box Input Round 10, AES Encryption</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#identity-model-s-box-output-round-1-aes-encryption">Identity model, S-Box Output Round 1, AES Encryption</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#bit-3-byte-5-s-box-output-round-1-aes-encryption">Bit 3, Byte 5,  S-Box Output Round 1, AES Encryption</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#hamming-distance-between-s-box-input-in-round-10-and-output-ciphertext-aes-encryption-byte-0">Hamming distance between S-Box Input in round 10 and output (ciphertext), AES Encryption, byte 0</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../visualization/">Visualization</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../hyperparamatersearch/">Hyperparameter Search</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../ensembles/">Ensembles</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../custom_loss/">Custom loss functions</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../custom_callbacks/">Custom Callbacks</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../custom_metrics/">Custom Early Stopping Metrics</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../data_augmentation/">Data Augmentation</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../generating_scripts/">Automatically Generating Scripts</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../errors/">Errors</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../feature_request/">Feature Request</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">AISY Framework v0.1</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Leakage Models</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="leakage-models">Leakage Models</h2>
+<p>AISY Framework v0.1 only has support for AES128 leakage models. 
+Future releases will include leakage models support for additional ciphers.</p>
+<h3 id="definiting-leakage-models">Definiting Leakage Models</h3>
+<p>In the main script, the user needs to call the method <code>set_aes_leakage_model()</code> and pass AES leakage model attributes.
+The attributes are:</p>
+<ul>
+<li><code>leakage_model:</code> Hamming weight ("HW"), Hamming distance ("HD"), Identity ("ID") or "bit".</li>
+<li><code>bit:</code> index of the target bit in a byte (the <code>byte</code> attribute also has to be defined if bit model is set).</li>
+<li><code>byte:</code> index of the target byte in a AES state.</li>
+<li><code>round:</code> index of the target round in AES.</li>
+<li><code>round_first:</code> index of the first target round in AES when Hamming distance is set as leakage model.</li>
+<li><code>round_second:</code> index of the second target round in AES when Hamming distance is set as leakage model. Intermediates obtained from round_first and round_second are XORed.</li>
+<li><code>target_state:</code> string specifying the target AES state. Supported values are: 'Input', 'Output', 'Sbox', InvSbox', 'AddRoundKey', 'MixColumns', 'InvMixColumns', 'ShiftRows' and 'InvShiftRows'.</li>
+<li><code>target_state_first:</code> string specifying the first target AES state when Hamming distance is set as leakage model. Supported values are: 'Input', 'Output', 'Sbox', InvSbox', 'AddRoundKey', 'MixColumns', 'InvMixColumns', 'ShiftRows' and 'InvShiftRows'.</li>
+<li><code>target_state_second:</code> string specifying the second target AES state when Hamming distance is set as leakage model. Supported values are: 'Input', 'Output', 'Sbox', InvSbox', 'AddRoundKey', 'MixColumns', 'InvMixColumns', 'ShiftRows' and 'InvShiftRows'.</li>
+<li><code>direction:</code> string defining the AES direction. Supported values are "Encryption" and "Decryption".</li>
+<li><code>attack_direction:</code> string defining the attack direction to create the leakage models. Supported values are "input" and "output", both lowercase.</li>
+</ul>
+<h3 id="supported-aes-states-for-leakage-models">Supported AES States for Leakage Models</h3>
+<p>Figure below illustrates the AES states that the user can target in leakage model definitions. </p>
+<p><img alt="Screenshot" src="../images/aes_leakage_models.png" /></p>
+<h3 id="default-values">Default Values</h3>
+<p>The framework set the following as default ones:</p>
+<pre><code class="language-python">leakage_model = {
+    &quot;leakage_model&quot;: &quot;HW&quot;,
+    &quot;bit&quot;: 0,
+    &quot;byte&quot;: 0,
+    &quot;round&quot;: 1,
+    &quot;round_first&quot;: 1,  # for Hamming Distance
+    &quot;round_second&quot;: 1,  # for Hamming Distance
+    &quot;cipher&quot;: &quot;AES128&quot;,
+    &quot;target_state&quot;: &quot;Sbox&quot;,
+    &quot;target_state_first&quot;: &quot;Sbox&quot;,  # for Hamming Distance
+    &quot;target_state_second&quot;: &quot;Sbox&quot;,  # for Hamming Distance
+    &quot;direction&quot;: &quot;Encryption&quot;,
+    &quot;attack_direction&quot;: &quot;input&quot;
+}
+</code></pre>
+<p>If the default values are the same as the user needs to select, the <code>set_aes_leakage_model()</code> method does not need to be set in the main script. </p>
+<h3 id="examples">Examples</h3>
+<h6 id="hamming-weight-model-s-box-output-round-1-aes-encryption">Hamming weight model, S-Box Output Round 1, AES Encryption</h6>
+<pre><code class="language-python">from aisy.sca_aisy_aes import AisyAes
+
+aisy = AisyAes()
+aisy.set_aes_leakage_model(leakage_model=&quot;HW&quot;, byte=0, target_state=&quot;Sbox&quot;, direction=&quot;Encryption&quot;,
+                           cipher=&quot;AES128&quot;)
+</code></pre>
+<h6 id="hamming-weight-model-s-box-input-round-10-aes-encryption">Hamming weight model, S-Box Input Round 10, AES Encryption</h6>
+<pre><code class="language-python">from aisy.sca_aisy_aes import AisyAes
+
+aisy = AisyAes()
+aisy.set_aes_leakage_model(leakage_model=&quot;HW&quot;, byte=0, target_state=&quot;Sbox&quot;, round=10, 
+                           attack_direction=&quot;output&quot;, direction=&quot;Encryption&quot;, cipher=&quot;AES128&quot;)
+</code></pre>
+<h6 id="identity-model-s-box-output-round-1-aes-encryption">Identity model, S-Box Output Round 1, AES Encryption</h6>
+<pre><code class="language-python">from aisy.sca_aisy_aes import AisyAes
+
+aisy = AisyAes()
+aisy.set_aes_leakage_model(leakage_model=&quot;ID&quot;, byte=0, target_state=&quot;Sbox&quot;, direction=&quot;Encryption&quot;,
+                           cipher=&quot;AES128&quot;)
+</code></pre>
+<h6 id="bit-3-byte-5-s-box-output-round-1-aes-encryption">Bit 3, Byte 5,  S-Box Output Round 1, AES Encryption</h6>
+<pre><code class="language-python">from aisy.sca_aisy_aes import AisyAes
+
+aisy = AisyAes()
+aisy.set_aes_leakage_model(leakage_model=&quot;bit&quot;, bit=3, byte=5, target_state=&quot;Sbox&quot;, 
+                           direction=&quot;Encryption&quot;, cipher=&quot;AES128&quot;)
+</code></pre>
+<h6 id="hamming-distance-between-s-box-input-in-round-10-and-output-ciphertext-aes-encryption-byte-0">Hamming distance between S-Box Input in round 10 and output (ciphertext), AES Encryption, byte 0</h6>
+<pre><code class="language-python">from aisy.sca_aisy_aes import AisyAes
+
+aisy = AisyAes()
+aisy.set_aes_leakage_model(leakage_model=&quot;HD&quot;, byte=0, direction=&quot;Encryption&quot;, cipher=&quot;AES128&quot;,
+                           target_state_first=&quot;Output&quot;, round_first=10,
+                           target_state_second=&quot;Sbox&quot;, round_second=10,
+                           attack_direction=&quot;output&quot;)
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../visualization/" class="btn btn-neutral float-right" title="Visualization">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../ciphers/" class="btn btn-neutral" title="Ciphers"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../ciphers/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../visualization/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

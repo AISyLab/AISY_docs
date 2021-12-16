@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Custom Callbacks - AISY Framework v0.1</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Custom Callbacks";
+    var mkdocs_page_input_path = "custom_callbacks.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> AISY Framework v0.1</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../concepts/">Concepts</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../simple_example/">Simple Example</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../datasets/">Datasets</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../custom_dataset/">Custom Dataset</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../databases/">Databases</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../npz/">Saving to .npz files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../neuralnetworks/">Neural Networks</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../ciphers/">Ciphers</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../leakage_models/">Leakage Models</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../visualization/">Visualization</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../hyperparamatersearch/">Hyperparameter Search</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../ensembles/">Ensembles</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../custom_loss/">Custom loss functions</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Custom Callbacks</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#step-1-add-custom-callback">Step 1: Add Custom Callback</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#step-2-using-custom-callback">Step 2: Using Custom Callback</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../custom_metrics/">Custom Early Stopping Metrics</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../data_augmentation/">Data Augmentation</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../generating_scripts/">Automatically Generating Scripts</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../errors/">Errors</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../feature_request/">Feature Request</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">AISY Framework v0.1</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Custom Callbacks</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="custom-callbacks">Custom Callbacks</h1>
+<p>The user can easily add callbacks to the <code>.fit</code> Keras method. The process is done in two steps as explained below.</p>
+<h6 id="step-1-add-custom-callback">Step 1: Add Custom Callback</h6>
+<p>Add a custom callback class following the standard structure from the example below:</p>
+<pre><code class="language-python">class CustomCallback1(Callback):
+    def __init__(self,
+                 x_profiling, y_profiling, plaintexts_profiling,
+                 ciphertext_profiling, key_profiling,
+                 x_validation, y_validation, plaintexts_validation,
+                 ciphertext_validation, key_validaton,
+                 x_attack, y_attack, plaintexts_attack,
+                 ciphertext_attack, key_attack,
+                 param, leakage_model, key_rank_executions, key_rank_report_interval, key_rank_attack_traces,
+                 *args):
+        my_args = args[0]  # this line is mandatory
+        self.param1 = my_args[0]
+        self.param2 = my_args[1]
+
+    def on_epoch_end(self, epoch, logs=None):
+        print(&quot;Processing epoch {}&quot;.format(epoch))
+
+    def on_train_end(self, logs=None):
+        pass
+
+    def get_param1(self):
+        return self.param1
+
+    def get_param2(self):
+        return self.param2
+</code></pre>
+<p>The custom callback can be added to the main script or, as recommened for better code organization, to the file 
+<code>custom/custom_callbacks/callbacks.py</code>.</p>
+<p>In the example above, the <code>CustomCallback1</code> class expects two parameters, <code>param1</code> and <code>param2</code>. In Step 2, we explain how to 
+pass these two parameters in the custom callback.</p>
+<p>Note that the custom callback <strong>must</strong> be provided with the following variables in the <code>__init__</code> function:</p>
+<ul>
+<li><code>x_profiling:</code> profiling trace set.</li>
+<li><code>y_profiling:</code> categorical profiling set labels.</li>
+<li><code>plaintexts_profiling:</code> profiling set plaintext.</li>
+<li><code>ciphertexts_profiling:</code> profiling set ciphertexts.</li>
+<li><code>key_profiling:</code> profiling set key (can be a different key per trace).</li>
+<li><code>x_validation:</code> validation trace set.</li>
+<li><code>y_validation:</code> categorical validation set labels.</li>
+<li><code>plaintexts_validation:</code> validation set plaintexts.</li>
+<li><code>ciphertexts_validation:</code> validation set ciphertexts.</li>
+<li><code>key_validation:</code> validation set key.</li>
+<li><code>x_attack:</code> attack trace set.</li>
+<li><code>y_attack:</code> categorical attack set labels.</li>
+<li><code>plaintexts_attack:</code> attack set plaintexts.</li>
+<li><code>ciphertexts_attack:</code> attack set ciphertexts.</li>
+<li><code>key_attack:</code> attack set key.</li>
+<li><code>param:</code> target parameteres. It is a dictionary as in the example below:</li>
+</ul>
+<pre><code class="language-python">param = {
+            &quot;filename&quot;: &quot;ascad-variable.h5&quot;,
+            &quot;key&quot;: &quot;00112233445566778899AABBCCDDEEFF&quot;,
+            &quot;first_sample&quot;: 0,
+            &quot;number_of_samples&quot;: 1400,
+            &quot;number_of_profiling_traces&quot;: 100000,
+            &quot;number_of_attack_traces&quot;: 2000
+        }
+</code></pre>
+<ul>
+<li><code>leakage_model:</code> leakage model parameters.: </li>
+<li><code>key_rank_executions:</code> number of key rank executions in the guessing entropy calculatioin.</li>
+<li><code>key_rank_report_interval:</code> report trace interval in metric calculations (e.g., guessing entropy, success rate, etc.)</li>
+<li><code>key_rank_attack_traces:</code> number of randomly selected traces from attack trace set to be used in each key rank calculation.</li>
+<li><code>*args:</code> list of additional and optional parameters to be passed with the custom callback and to be treated inside the custom 
+callback. </li>
+</ul>
+<h6 id="step-2-using-custom-callback">Step 2: Using Custom Callback</h6>
+<p>The example below show how to use the custom callback in a script:</p>
+<pre><code class="language-python">import aisy_sca
+from app import *
+from custom.custom_models.neural_networks import *
+
+aisy = aisy_sca.Aisy()
+aisy.set_resources_root_folder(resources_root_folder)
+aisy.set_database_root_folder(databases_root_folder)
+aisy.set_datasets_root_folder(datasets_root_folder)
+aisy.set_database_name(&quot;database_ascad.sqlite&quot;)
+aisy.set_dataset(datasets_dict[&quot;ascad-variable.h5&quot;])
+aisy.set_aes_leakage_model(leakage_model=&quot;HW&quot;, byte=2)
+aisy.set_batch_size(400)
+aisy.set_epochs(10)
+aisy.set_neural_network(mlp)
+
+param1 = [1, 2, 3]
+param2 = &quot;my_string&quot;
+
+custom_callbacks = [
+    {
+        &quot;class&quot;: &quot;custom.custom_callbacks.callbacks.CustomCallback1&quot;,
+        &quot;name&quot;: &quot;CustomCallback1&quot;,
+        &quot;parameters&quot;: [param1, param2]
+    },
+    {
+        &quot;class&quot;: &quot;custom.custom_callbacks.callbacks.CustomCallback2&quot;,
+        &quot;name&quot;: &quot;CustomCallback2&quot;,
+        &quot;parameters&quot;: []
+    }
+]
+
+aisy.run(
+    callbacks=custom_callbacks
+)
+
+custom_callbacks = aisy.get_custom_callbacks()
+
+custom_callback1 = custom_callbacks[&quot;CustomCallback1&quot;]
+print(custom_callback1.get_param1())
+print(custom_callback1.get_param2())
+
+custom_callback2 = custom_callbacks[&quot;CustomCallback2&quot;]
+</code></pre>
+<p>Note how the structure for custom callback is declared (variable <code>custom_callbacks</code>). For each custom callback, a dictionary with the 
+following parameters must be defined:</p>
+<ul>
+<li><code>class:</code> path to custom callback class.
+= <code>name:</code> name for the custom callback.</li>
+<li><code>parameters:</code> list of parameters to be passed to the custom callback. If no parameters are passed, the item <code>parameters</code> in the 
+dictionary of an element of <code>custom_callbacks</code> must be assigned with <code>[]</code> (empty list), as in the example below:</li>
+</ul>
+<pre><code class="language-python">custom_callbacks = [
+    {
+        &quot;class&quot;: &quot;custom.custom_callbacks.callbacks.CustomCallback2&quot;,
+        &quot;name&quot;: &quot;CustomCallback2&quot;,
+        &quot;parameters&quot;: []
+    }
+]
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../custom_metrics/" class="btn btn-neutral float-right" title="Custom Early Stopping Metrics">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../custom_loss/" class="btn btn-neutral" title="Custom loss functions"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../custom_loss/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../custom_metrics/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

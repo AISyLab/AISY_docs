@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Databases - AISY Framework v0.1</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Databases";
+    var mkdocs_page_input_path = "databases.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> AISY Framework v0.1</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../concepts/">Concepts</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../simple_example/">Simple Example</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../datasets/">Datasets</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../custom_dataset/">Custom Dataset</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Databases</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#database-root-folder">Database root folder</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#defining-database-location-inapppy-file">Defining database location inapp.py file</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#defining-database-location-in-script-file">Defining database location in script file</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#skipping-database-usage">Skipping Database Usage</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#tables">Tables</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#analysis">Analysis</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#hyperparameter">HyperParameter</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#neuralnetwork">NeuralNetwork</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#leakagemodel">LeakageModel</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#metric">Metric</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#keyrank">KeyRank</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#successrate">SuccessRate</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#visualization">Visualization</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#hyperparametersearch">HyperParameterSearch</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#confusionmatrix">ConfusionMatrix</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#probabilityrank">ProbabilityRank</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#adding-custom-tables">Adding Custom Tables</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#step-1-define-custom-table-in-customcustom_tablestablespy">Step 1: Define custom table in custom/custom_tables/tables.py</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#step-2-inserting-entries-to-your-custom-table">Step 2: Inserting entries to your custom table</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../npz/">Saving to .npz files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../neuralnetworks/">Neural Networks</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../ciphers/">Ciphers</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../leakage_models/">Leakage Models</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../visualization/">Visualization</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../hyperparamatersearch/">Hyperparameter Search</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../ensembles/">Ensembles</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../custom_loss/">Custom loss functions</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../custom_callbacks/">Custom Callbacks</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../custom_metrics/">Custom Early Stopping Metrics</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../data_augmentation/">Data Augmentation</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../generating_scripts/">Automatically Generating Scripts</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../errors/">Errors</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../feature_request/">Feature Request</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">AISY Framework v0.1</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Databases</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="databases">Databases</h1>
+<h2 id="database-root-folder">Database root folder</h2>
+<p>The root location of databases can be defined in two ways.</p>
+<h5 id="defining-database-location-inapppy-file">Defining database location in<code>app.py</code> file</h5>
+<p>The root location of sqlite database is defined in <code>app.py</code> file as follows:</p>
+<pre><code class="language-python">databases_root_folder = &quot;my_location/databases/&quot;
+</code></pre>
+<p>The user is free to change this location.</p>
+<h5 id="defining-database-location-in-script-file">Defining database location in script file</h5>
+<p>The user can also easily set the database location in the main script, as in the example below:</p>
+<pre><code class="language-python">aisy = AisyAes()
+aisy.set_database_root_folder(&quot;my_location/&quot;)
+aisy.set_database_name(&quot;my_database.sqlite&quot;)
+</code></pre>
+<p>AISY framework makes use of SQLITE database. In the main script, the user enter the name of the <em>sqlite</em> database file. If file already
+exists, then a new entry is stored for the deployed analysis. Otherwise, the <em>sqlite</em> file is created and stored in <code>/databases</code> folder. </p>
+<h2 id="skipping-database-usage">Skipping Database Usage</h2>
+<p>By default, database is automatically set be used in the framework. However, users are free to skip the usage of databases in the AISY 
+framework. To skip or avoid database storage, simply set the parameter <code>save_database=False</code> in the <code>run</code> method:</p>
+<pre><code class="language-python">aisy = AisyAes()
+...
+aisy.run(save_database=False)
+</code></pre>
+<h2 id="tables">Tables</h2>
+<p>Database is based on <a href="https://www.sqlalchemy.org/">SQLAlchemy</a> python package. Here we provide a list of tables and the column types from 
+SQLAlchemy package.</p>
+<h5 id="analysis">Analysis</h5>
+<ul>
+<li><code>id (Integer):</code> primary key id for entry.</li>
+<li><code>datetime (DateTime):</code> data and time for the entry.</li>
+<li><code>settings (JSON):</code> dictionary of analysis settings.</li>
+<li><code>script (String):</code> the name of script (script location: <code>/scripts</code>).</li>
+<li><code>db_filename (String):</code> the name of <em>sqlite</em> file.</li>
+<li><code>dataset (String):</code> the name of evaluated SCA dataset.</li>
+<li><code>elapsed_time (Float):</code> the elapsed time for the analysis.</li>
+</ul>
+<h5 id="hyperparameter">HyperParameter</h5>
+<ul>
+<li><code>id (Integer):</code> primary key id for entry.</li>
+<li><code>hyper_parameters (JSON):</code> dictionary containing list of hyperparameters.</li>
+<li><code>analysis_id (Integer, ForeignKey):</code> id from Analysis Table.</li>
+</ul>
+<h5 id="neuralnetwork">NeuralNetwork</h5>
+<ul>
+<li><code>id (Integer):</code> primary key id for entry.</li>
+<li><code>model_name (String):</code> name of neural network model.</li>
+<li><code>description (String):</code> description of neural network model.</li>
+<li><code>analysis_id (Integer, ForeignKey):</code> id from Analysis Table.</li>
+</ul>
+<h5 id="leakagemodel">LeakageModel</h5>
+<ul>
+<li><code>id (Integer):</code> primary key id for entry.</li>
+<li><code>leakage_model (JSON):</code> dictionary containing list of leakage model attributes.</li>
+<li><code>analysis_id (Integer, ForeignKey):</code> id from Analysis Table.</li>
+</ul>
+<h5 id="metric">Metric</h5>
+<ul>
+<li><code>id (Integer):</code> primary key id for entry.</li>
+<li><code>values (JSON):</code> value of the metric.</li>
+<li><code>label (String):</code> name of the metric.</li>
+<li><code>analysis_id (Integer, ForeignKey):</code> id from Analysis Table.</li>
+</ul>
+<h5 id="keyrank">KeyRank</h5>
+<ul>
+<li><code>id (Integer):</code> primary key id for entry.</li>
+<li><code>values (JSON):</code> list of values.</li>
+<li><code>label (String):</code> name of the key rank result.</li>
+<li><code>report_interval (Intger):</code> report interval (step in the number of side channel traces or measurements) which key rank is stored.</li>
+<li><code>metric (String):</code> name of the metric.</li>
+<li><code>analysis_id (Integer, ForeignKey):</code> id from Analysis Table.</li>
+</ul>
+<h5 id="successrate">SuccessRate</h5>
+<ul>
+<li><code>id (Integer):</code> primary key id for entry.</li>
+<li><code>values (JSON):</code> list of values.</li>
+<li><code>label (String):</code> name of the key rank result.</li>
+<li><code>report_interval (Intger):</code> report interval (step in the number of side channel traces or measurements) which success rate is stored.</li>
+<li><code>metric (String):</code> name of the metric.</li>
+<li><code>analysis_id (Integer, ForeignKey):</code> id from Analysis Table.</li>
+</ul>
+<h5 id="visualization">Visualization</h5>
+<ul>
+<li><code>id (Integer):</code> primary key id for entry.</li>
+<li><code>values (JSON):</code> list of values.</li>
+<li><code>epoch (Integer):</code> epoch value for visualization results. </li>
+<li><code>report_interval (Intger):</code> report interval (step in the number of side channel traces or measurements) which visualization is stored.</li>
+<li><code>metric (String):</code> name of the metric.</li>
+<li><code>analysis_id (Integer, ForeignKey):</code> id from Analysis Table.</li>
+</ul>
+<h5 id="hyperparametersearch">HyperParameterSearch</h5>
+<ul>
+<li><code>id (Integer):</code> primary key id for entry.</li>
+<li><code>search_type (String):</code> type of search. It can <em>grid_search</em> or <em>random_search</em>.</li>
+<li><code>hyper_parameters_settings (JSON):</code> dictionary containing hyperparameters search settings.</li>
+<li><code>best_hyper_parameters (Integer, ForeignKey):</code> id of HyperParameter table.</li>
+<li><code>analysis_id (Integer, ForeignKey):</code> id from Analysis table.</li>
+</ul>
+<h5 id="confusionmatrix">ConfusionMatrix</h5>
+<ul>
+<li><code>id (Integer):</code> primary key id for entry.</li>
+<li><code>y_pred (JSON):</code> list of <code>y_pred</code> values.</li>
+<li><code>y_true (Integer):</code> index of <code>y_true</code> label.</li>
+<li><code>analysis_id (Integer, ForeignKey):</code> id from Analysis Table.</li>
+</ul>
+<h5 id="probabilityrank">ProbabilityRank</h5>
+<ul>
+<li><code>id (Integer):</code> primary key id for entry.</li>
+<li><code>ranks (JSON):</code> list of <code>ranks</code> values (one row per <code>key guess</code>).</li>
+<li><code>classes (Integer):</code> number of classes in the classification.</li>
+<li><code>correct_key_byte (Integer):</code> value of correct key byte.</li>
+<li><code>key_guess (Integer):</code> value of key guess.</li>
+<li><code>analysis_id (Integer, ForeignKey):</code> id from Analysis Table.</li>
+</ul>
+<h2 id="adding-custom-tables">Adding Custom Tables</h2>
+<p>User can also add custom SQLite tables to the analysis. The process is rather simple and requires the following steps:</p>
+<h6 id="step-1-define-custom-table-in-customcustom_tablestablespy">Step 1: Define custom table in <code>custom/custom_tables/tables.py</code></h6>
+<p>In the <code>custom/custom_tables/tables.py</code> file, enter a custom SQLite table structure following the SQLAlchemy package structure. Below, 
+we provide an example of <code>CustomTable</code> class with the following columns:</p>
+<ul>
+<li><code>id (Integer):</code> primary key id for entry.</li>
+<li><code>value1 (Integer):</code> column with an integer value.</li>
+<li><code>value2 (Integer):</code> column with an integer value.</li>
+<li><code>value3 (Integer):</code> column with an integer value.</li>
+<li><code>datetime (DateTime):</code> data and time for the entry.</li>
+<li><code>analysis_id (Integer, ForeignKey):</code> id from Analysis table.</li>
+</ul>
+<p>Here is the code for the table:</p>
+<pre><code class="language-python">class CustomTable(Base):
+    __tablename__ = 'custom_table'
+    id = Column(Integer, primary_key=True)
+    value1 = Column(Integer)
+    value2 = Column(Integer)
+    value3 = Column(Integer)
+    datetime = Column(DateTime, default=datetime.datetime.utcnow)
+    analysis_id = Column(Integer, ForeignKey(Analysis.id))
+    analysis = relationship(Analysis)
+
+    def __repr__(self):
+        return &quot;&lt;CustomTable(id=%d)&gt;&quot; % self.id
+</code></pre>
+<p>The full code for <code>custom/custom_tables/tables.py</code> will look like this:</p>
+<pre><code class="language-python">import datetime
+from sqlalchemy import *
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
+from aisy.sca_tables import Analysis
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
+Base = declarative_base()
+
+
+def base():
+    return Base
+
+
+def start_custom_tables(database_name):
+    engine = create_engine('sqlite:///{}'.format(database_name), echo=False)
+    base().metadata.create_all(engine)
+
+
+def start_custom_tables_session(database_name):
+    engine = create_engine('sqlite:///{}'.format(database_name), echo=False)
+    return sessionmaker(bind=engine)()
+
+
+class CustomTable(Base):
+    __tablename__ = 'custom_table'
+    id = Column(Integer, primary_key=True)
+    value1 = Column(Integer)
+    value2 = Column(Integer)
+    value3 = Column(Integer)
+    datetime = Column(DateTime, default=datetime.datetime.utcnow)
+    analysis_id = Column(Integer, ForeignKey(Analysis.id))
+    analysis = relationship(Analysis)
+
+    def __repr__(self):
+        return &quot;&lt;CustomTable(id=%d)&gt;&quot; % self.id
+
+</code></pre>
+<h6 id="step-2-inserting-entries-to-your-custom-table">Step 2: Inserting entries to your custom table</h6>
+<p>First, in your script file (located at <code>scripts/</code>), create the <code>Aisy()</code> object and set <em>dataset folder</em>, <em>dataset name</em> and 
+<em>database name</em> and run the analysis as usual (look at the imports):</p>
+<pre><code class="language-python">import aisy_sca
+from app import *
+from custom.custom_models.neural_networks import *
+from custom.custom_tables.tables import *
+
+aisy = aisy_sca.Aisy()
+aisy.set_resources_root_folder(resources_root_folder)
+aisy.set_database_root_folder(databases_root_folder)
+aisy.set_datasets_root_folder(datasets_root_folder)
+aisy.set_database_name(&quot;database_ascad.sqlite&quot;)
+aisy.set_dataset(datasets_dict[&quot;ascad-variable.h5&quot;])
+aisy.set_aes_leakage_model(leakage_model=&quot;HW&quot;, byte=2)
+aisy.set_batch_size(400)
+aisy.set_epochs(20)
+aisy.set_neural_network(mlp)
+
+aisy.run()
+</code></pre>
+<p>Next, start the custom table session:</p>
+<pre><code class="language-python">start_custom_tables(databases_root_folder + &quot;database_ascad.sqlite&quot;)
+session = start_custom_tables_session(databases_root_folder + &quot;database_ascad.sqlite&quot;)
+</code></pre>
+<p>Then, insert your entries to your CustomTable as soon as you define the values to be inserted:</p>
+<pre><code class="language-python">new_insert = CustomTable(value1=10, value2=20, value3=30, analysis_id=aisy.get_analysis_id())
+session.add(new_insert)
+session.commit()
+</code></pre>
+<p>A full script example will look like this:</p>
+<pre><code class="language-python">import aisy_sca
+from app import *
+from custom.custom_models.neural_networks import *
+from custom.custom_tables.tables import *
+
+aisy = aisy_sca.Aisy()
+aisy.set_resources_root_folder(resources_root_folder)
+aisy.set_database_root_folder(databases_root_folder)
+aisy.set_datasets_root_folder(datasets_root_folder)
+aisy.set_database_name(&quot;database_ascad.sqlite&quot;)
+aisy.set_dataset(datasets_dict[&quot;ascad-variable.h5&quot;])
+aisy.set_aes_leakage_model(leakage_model=&quot;HW&quot;, byte=2)
+aisy.set_batch_size(400)
+aisy.set_epochs(20)
+aisy.set_neural_network(mlp)
+
+aisy.run()
+
+start_custom_tables(databases_root_folder + &quot;database_ascad.sqlite&quot;)
+session = start_custom_tables_session(databases_root_folder + &quot;database_ascad.sqlite&quot;)
+
+new_insert = CustomTable(value1=10, value2=20, value3=30, analysis_id=aisy.get_analysis_id())
+session.add(new_insert)
+session.commit()
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../npz/" class="btn btn-neutral float-right" title="Saving to .npz files">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../custom_dataset/" class="btn btn-neutral" title="Custom Dataset"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../custom_dataset/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../npz/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
