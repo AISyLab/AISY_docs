@@ -74,7 +74,7 @@
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#h5-datasets">.h5 datasets</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#npz-datasets">.npz datasets</a>
+    <li class="toctree-l3"><a class="reference internal" href="#other-dataset-formats">Other dataset formats</a>
     </li>
         </ul>
     </li>
@@ -223,7 +223,7 @@ to generate <code>.h5</code> datasets according to their specific format. The li
 how to generate <code>.h5</code> datasets. 
 <em>If the user wants to process datasets in the <code>.h5</code> format, AISY Framework expects files generated according to ASCAD database.</em></p>
 <p>The only limitation found in <code>ASCAD_generate.py</code> code is that it does not generate ciphertexts in the metadata field. Therefore, we 
-modified the code in order to overcome this limitation (note that we don't provide <code>masks</code> in the metadata):</p>
+modified the code in order to overcome this limitation.</p>
 <pre><code class="language-python">out_file = h5py.File('new_dataset.h5', 'w')
 
 profiling_traces_group = out_file.create_group(&quot;Profiling_traces&quot;)
@@ -234,18 +234,20 @@ attack_traces_group.create_dataset(name=&quot;traces&quot;, data=test_samples, d
 
 metadata_type_profiling = np.dtype([(&quot;plaintext&quot;, profiling_plaintext.dtype, (len(profiling_plaintext[0]),)),
                           (&quot;ciphertext&quot;, profiling_ciphertext.dtype, (len(profiling_ciphertext[0]),)),
-                          (&quot;key&quot;, profiling_key.dtype, (len(profiling_key[0]),))
+                          (&quot;key&quot;, profiling_key.dtype, (len(profiling_key[0]),)),
+                          (&quot;mask&quot;, profiling_key.dtype, (len(profiling_key[0]),))          
                           ])
 metadata_type_attack = np.dtype([(&quot;plaintext&quot;, attack_plaintext.dtype, (len(attack_plaintext[0]),)),
                           (&quot;ciphertext&quot;, attack_ciphertext.dtype, (len(attack_ciphertext[0]),)),
-                          (&quot;key&quot;, attack_key.dtype, (len(attack_key[0]),))
+                          (&quot;key&quot;, attack_key.dtype, (len(attack_key[0]),)),
+                          (&quot;mask&quot;, attack_key.dtype, (len(attack_key[0]),))       
                           ])
 
-profiling_metadata = np.array([(profiling_plaintext[n], profiling_ciphertext[n], profiling_key[n]) for n, k in
+profiling_metadata = np.array([(profiling_plaintext[n], profiling_ciphertext[n], profiling_key[n], profiling_mask[n]) for n, k in
                                zip(profiling_index, range(0, len(train_samples)))], dtype=metadata_type_profiling)
 profiling_traces_group.create_dataset(&quot;metadata&quot;, data=profiling_metadata, dtype=metadata_type_profiling)
 
-attack_metadata = np.array([(attack_plaintext[n], attack_ciphertext[n], attack_key[n]) for n, k in
+attack_metadata = np.array([(attack_plaintext[n], attack_ciphertext[n], attack_key[n], attack_mask[n]) for n, k in
                             zip(attack_index, range(0, len(test_samples)))], dtype=metadata_type_attack)
 attack_traces_group.create_dataset(&quot;metadata&quot;, data=attack_metadata, dtype=metadata_type_attack)
 
@@ -266,9 +268,12 @@ attack_ciphertext = in_file['Attack_traces/metadata']['ciphertext']
 # reading trace keys
 profiling_key = in_file['Profiling_traces/metadata']['key']
 attack_key = in_file['Attack_traces/metadata']['key']
+# reading trace masks
+profiling_mask = in_file['Profiling_traces/metadata']['mask']
+attack_mask = in_file['Attack_traces/metadata']['mask']
 </code></pre>
-<h4 id="npz-datasets">.npz datasets</h4>
-<p><code>.npz</code> dataset format will be available in future releases.</p>
+<h4 id="other-dataset-formats">Other dataset formats</h4>
+<p><code>.npz</code> and <code>.csv</code> dataset formats will be available in future releases.</p>
 <h2 id="dataset-root-folder">Dataset root folder</h2>
 <p>The root location of datasets can be defined in two ways.</p>
 <h5 id="defining-datasets-location-inapppy-file">Defining datasets location in<code>app.py</code> file</h5>
