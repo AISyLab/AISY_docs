@@ -6,8 +6,8 @@ of several years of research on deep learning and side-channel analysis by AisyL
 ### Example script
 
 AISY Framework allows very easy execution of deep learning in profiled side-channel attacks.
-Here is an example of all the code that is needed to run a profiled SCA attack on key byte 2 of an AES implementation from well-known ASCAD 
-dabatase:
+Here is an example of all the code that is needed to run a profiled SCA attack on the third key byte 
+(index 2) of an AES implementation from well-known ASCAD dabatase:
 
 ```python
 import aisy_sca
@@ -27,6 +27,10 @@ aisy.set_neural_network(mlp)
 aisy.run()
 
 ```
+
+By running the above script, the framework implements automated dataset loading, database 
+configuration, leakage model (labeling) definitions, profiling and attack phases. By default, the 
+framework computes Guessing Entropy and Success Rate metrics.
 
 ### Integrated SQLite Database
 
