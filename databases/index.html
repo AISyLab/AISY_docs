@@ -72,7 +72,7 @@
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#database-root-folder">Database root folder</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#1-by-dfining-database-location-inapppy-file">1. By dfining database location inapp.py file</a>
+    <li class="toctree-l3"><a class="reference internal" href="#1-by-defining-database-location-inapppy-file">1. By defining database location inapp.py file</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#2-by-defining-database-location-in-script-file">2. By defining database location in script file</a>
     </li>
@@ -110,15 +110,11 @@
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#adding-custom-tables">Adding Custom Tables</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#step-1-define-custom-table-in-customcustom_tablestablespy">Step 1: Define custom table in custom/custom_tables/tables.py</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#step-2-inserting-entries-to-your-custom-table">Step 2: Inserting entries to your custom table</a>
-    </li>
-        </ul>
-    </li>
     </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../custom_database_table/">Custom Database Table</a>
                     </li>
                 </ul>
                 <ul>
@@ -214,7 +210,7 @@
 aisy-database <code>aisy-database 0.2.0</code> is already set.</p>
 <h2 id="database-root-folder">Database root folder</h2>
 <p>The root location of databases can be defined in two ways.</p>
-<h5 id="1-by-dfining-database-location-inapppy-file">1. By dfining database location in<code>app.py</code> file</h5>
+<h5 id="1-by-defining-database-location-inapppy-file">1. By defining database location in<code>app.py</code> file</h5>
 <p>The root location of sqlite database is defined in <code>app.py</code> file as follows:</p>
 <pre><code class="language-python">databases_root_folder = &quot;my_location/databases/&quot;
 </code></pre>
@@ -237,7 +233,7 @@ and the column types from SQLAlchemy package) that are generate in each
 <li><code>id (Integer):</code> primary key id for entry.</li>
 <li><code>datetime (DateTime):</code> data and time for the entry.</li>
 <li><code>db_filename (String):</code> the name of <em>sqlite</em> file.</li>
-<li><code>dataset (String):</code> the name of evaluated SCA dataset.  </li>
+<li><code>dataset (String):</code> the name of evaluated SCA dataset.</li>
 <li><code>settings (JSON):</code> dictionary of analysis settings.</li>
 <li><code>elapsed_time (Float):</code> the elapsed time for the analysis.</li>
 <li><code>deleted (Boolean):</code> indicates if entry is deleted by the user.</li>
@@ -293,28 +289,28 @@ and the column types from SQLAlchemy package) that are generate in each
 <li><code>values (JSON):</code> list of values.</li>
 <li><code>epoch (Integer):</code> epoch value for visualization results.</li>
 <li><code>label (String):</code> metric label.</li>
-<li><code>hyperparameters_id (Integer, ForeignKey):</code> id from Hyperparameters Table.  </li>
+<li><code>hyperparameters_id (Integer, ForeignKey):</code> id from Hyperparameters Table.</li>
 <li><code>analysis_id (Integer, ForeignKey):</code> id from Analysis Table.</li>
 </ul>
 <h5 id="hyperparametermetric">HyperparameterMetric</h5>
 <ul>
 <li><code>id (Integer):</code> primary key id for entry.</li>
-<li><code>metric_id (Integer, ForeignKey):</code> id from Metric Table.  </li>
-<li><code>hyperparameters_id (Integer, ForeignKey):</code> id from Hyperparameters Table.  </li>
+<li><code>metric_id (Integer, ForeignKey):</code> id from Metric Table.</li>
+<li><code>hyperparameters_id (Integer, ForeignKey):</code> id from Hyperparameters Table.</li>
 <li><code>analysis_id (Integer, ForeignKey):</code> id from Analysis Table.</li>
 </ul>
 <h5 id="hyperparametersuccessrate">HyperParameterSuccessRate</h5>
 <ul>
 <li><code>id (Integer):</code> primary key id for entry.</li>
-<li><code>success_rate_id (Integer, ForeignKey):</code> id from SuccessRate Table.  </li>
-<li><code>hyperparameters_id (Integer, ForeignKey):</code> id from Hyperparameters Table.  </li>
+<li><code>success_rate_id (Integer, ForeignKey):</code> id from SuccessRate Table.</li>
+<li><code>hyperparameters_id (Integer, ForeignKey):</code> id from Hyperparameters Table.</li>
 <li><code>analysis_id (Integer, ForeignKey):</code> id from Analysis Table.</li>
 </ul>
 <h5 id="hyperparameterguessingentropy">HyperParameterGuessingEntropy</h5>
 <ul>
 <li><code>id (Integer):</code> primary key id for entry.</li>
-<li><code>guessing_entropy_id (Integer, ForeignKey):</code> id from SuccessRate Table.  </li>
-<li><code>hyperparameters_id (Integer, ForeignKey):</code> id from Hyperparameters Table.  </li>
+<li><code>guessing_entropy_id (Integer, ForeignKey):</code> id from SuccessRate Table.</li>
+<li><code>hyperparameters_id (Integer, ForeignKey):</code> id from Hyperparameters Table.</li>
 <li><code>analysis_id (Integer, ForeignKey):</code> id from Analysis Table.</li>
 </ul>
 <h5 id="confusionmatrix">ConfusionMatrix</h5>
@@ -322,7 +318,7 @@ and the column types from SQLAlchemy package) that are generate in each
 <li><code>id (Integer):</code> primary key id for entry.</li>
 <li><code>y_pred (JSON):</code> list of <code>y_pred</code> values.</li>
 <li><code>y_true (Integer):</code> index of <code>y_true</code> label.</li>
-<li><code>hyperparameters_id (Integer, ForeignKey):</code> id from Hyperparameters Table.  </li>
+<li><code>hyperparameters_id (Integer, ForeignKey):</code> id from Hyperparameters Table.</li>
 <li><code>analysis_id (Integer, ForeignKey):</code> id from Analysis Table.</li>
 </ul>
 <h5 id="probabilityrank">ProbabilityRank</h5>
@@ -342,129 +338,6 @@ and the column types from SQLAlchemy package) that are generate in each
 <li><code>index (Integer</code>: random state index.</li>
 <li><code>analysis_id (Integer, ForeignKey):</code> id from Analysis Table.</li>
 </ul>
-<h2 id="adding-custom-tables">Adding Custom Tables</h2>
-<p>User can also add custom SQLite tables to the analysis. The process is rather simple and requires the following steps:</p>
-<h6 id="step-1-define-custom-table-in-customcustom_tablestablespy">Step 1: Define custom table in <code>custom/custom_tables/tables.py</code></h6>
-<p>In the <code>custom/custom_tables/tables.py</code> file, enter a custom SQLite table structure following the SQLAlchemy package structure. Below,
-we provide an example of <code>CustomTable</code> class with the following columns:</p>
-<ul>
-<li><code>id (Integer):</code> primary key id for entry.</li>
-<li><code>value1 (Integer):</code> column with an integer value.</li>
-<li><code>value2 (Integer):</code> column with an integer value.</li>
-<li><code>value3 (Integer):</code> column with an integer value.</li>
-<li><code>datetime (DateTime):</code> data and time for the entry.</li>
-<li><code>analysis_id (Integer, ForeignKey):</code> id from Analysis table.</li>
-</ul>
-<p>Here is the code for the table:</p>
-<pre><code class="language-python">class CustomTable(Base):
-    __tablename__ = 'custom_table'
-    id = Column(Integer, primary_key=True)
-    value1 = Column(Integer)
-    value2 = Column(Integer)
-    value3 = Column(Integer)
-    datetime = Column(DateTime, default=datetime.datetime.utcnow)
-    analysis_id = Column(Integer, ForeignKey(Analysis.id))
-    analysis = relationship(Analysis)
-
-    def __repr__(self):
-        return &quot;&lt;CustomTable(id=%d)&gt;&quot; % self.id
-</code></pre>
-<p>The full code for <code>custom/custom_tables/tables.py</code> will look like this:</p>
-<pre><code class="language-python">import datetime
-from sqlalchemy import *
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
-from aisy.sca_tables import Analysis
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-
-Base = declarative_base()
-
-
-def base():
-    return Base
-
-
-def start_custom_tables(database_name):
-    engine = create_engine('sqlite:///{}'.format(database_name), echo=False)
-    base().metadata.create_all(engine)
-
-
-def start_custom_tables_session(database_name):
-    engine = create_engine('sqlite:///{}'.format(database_name), echo=False)
-    return sessionmaker(bind=engine)()
-
-
-class CustomTable(Base):
-    __tablename__ = 'custom_table'
-    id = Column(Integer, primary_key=True)
-    value1 = Column(Integer)
-    value2 = Column(Integer)
-    value3 = Column(Integer)
-    datetime = Column(DateTime, default=datetime.datetime.utcnow)
-    analysis_id = Column(Integer, ForeignKey(Analysis.id))
-    analysis = relationship(Analysis)
-
-    def __repr__(self):
-        return &quot;&lt;CustomTable(id=%d)&gt;&quot; % self.id
-
-</code></pre>
-<h6 id="step-2-inserting-entries-to-your-custom-table">Step 2: Inserting entries to your custom table</h6>
-<p>First, in your script file (located at <code>scripts/</code>), create the <code>Aisy()</code> object and set <em>dataset folder</em>, <em>dataset name</em> and
-<em>database name</em> and run the analysis as usual (look at the imports):</p>
-<pre><code class="language-python">import aisy_sca
-from app import *
-from custom.custom_models.neural_networks import *
-from custom.custom_tables.tables import *
-
-aisy = aisy_sca.Aisy()
-aisy.set_resources_root_folder(resources_root_folder)
-aisy.set_database_root_folder(databases_root_folder)
-aisy.set_datasets_root_folder(datasets_root_folder)
-aisy.set_database_name(&quot;database_ascad.sqlite&quot;)
-aisy.set_dataset(datasets_dict[&quot;ascad-variable.h5&quot;])
-aisy.set_aes_leakage_model(leakage_model=&quot;HW&quot;, byte=2)
-aisy.set_batch_size(400)
-aisy.set_epochs(20)
-aisy.set_neural_network(mlp)
-
-aisy.run()
-</code></pre>
-<p>Next, start the custom table session:</p>
-<pre><code class="language-python">start_custom_tables(databases_root_folder + &quot;database_ascad.sqlite&quot;)
-session = start_custom_tables_session(databases_root_folder + &quot;database_ascad.sqlite&quot;)
-</code></pre>
-<p>Then, insert your entries to your CustomTable as soon as you define the values to be inserted:</p>
-<pre><code class="language-python">new_insert = CustomTable(value1=10, value2=20, value3=30, analysis_id=aisy.settings[&quot;analysis_id&quot;])
-session.add(new_insert)
-session.commit()
-</code></pre>
-<p>A full script example will look like this:</p>
-<pre><code class="language-python">import aisy_sca
-from app import *
-from custom.custom_models.neural_networks import *
-from custom.custom_tables.tables import *
-
-aisy = aisy_sca.Aisy()
-aisy.set_resources_root_folder(resources_root_folder)
-aisy.set_database_root_folder(databases_root_folder)
-aisy.set_datasets_root_folder(datasets_root_folder)
-aisy.set_database_name(&quot;database_ascad.sqlite&quot;)
-aisy.set_dataset(datasets_dict[&quot;ascad-variable.h5&quot;])
-aisy.set_aes_leakage_model(leakage_model=&quot;HW&quot;, byte=2)
-aisy.set_batch_size(400)
-aisy.set_epochs(20)
-aisy.set_neural_network(mlp)
-
-aisy.run()
-
-start_custom_tables(databases_root_folder + &quot;database_ascad.sqlite&quot;)
-session = start_custom_tables_session(databases_root_folder + &quot;database_ascad.sqlite&quot;)
-
-new_insert = CustomTable(value1=10, value2=20, value3=30, analysis_id=aisy.get_analysis_id())
-session.add(new_insert)
-session.commit()
-</code></pre>
               
             </div>
           </div>
@@ -472,7 +345,7 @@ session.commit()
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../neuralnetworks/" class="btn btn-neutral float-right" title="Neural Networks">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../custom_database_table/" class="btn btn-neutral float-right" title="Custom Database Table">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../custom_dataset/" class="btn btn-neutral" title="Custom Dataset"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -504,7 +377,7 @@ session.commit()
         <span><a href="../custom_dataset/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../neuralnetworks/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../custom_database_table/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
