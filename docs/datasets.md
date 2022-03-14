@@ -13,8 +13,8 @@ The user can download the datasets by running the following commands in a termin
 
 ### Windows 10
 ```
-curl.exe -o aes_hd.h5 http://aisylabdatasets.ewi.tudelft.nl/aes_hd.h5
-curl.exe -o aes_hd_ext.h5 http://aisylabdatasets.ewi.tudelft.nl/aes_hd_ext.h5
+curl.exe -o ASCAD_data.zip https://www.data.gouv.fr/s/resources/ascad/20180530-163000/ASCAD_data.zip
+curl.exe -o ascad-variable.h5 https://static.data.gouv.fr/resources/ascad-atmega-8515-variable-key/20190903-083349/ascad-variable.h5
 curl.exe -o ches_ctf.h5 http://aisylabdatasets.ewi.tudelft.nl/aes_hd.h5
 curl.exe -o ches_ctf.h5 http://aisylabdatasets.ewi.tudelft.nl/aes_hd_ext.h5
 
@@ -22,8 +22,8 @@ curl.exe -o ches_ctf.h5 http://aisylabdatasets.ewi.tudelft.nl/aes_hd_ext.h5
 
 ### Linux
 ```
-wget http://aisylabdatasets.ewi.tudelft.nl/aes_hd.h5
-wget http://aisylabdatasets.ewi.tudelft.nl/aes_hd_ext.h5
+wget https://www.data.gouv.fr/s/resources/ascad/20180530-163000/ASCAD_data.zip
+wget https://static.data.gouv.fr/resources/ascad-atmega-8515-variable-key/20190903-083349/ascad-variable.h5
 wget http://aisylabdatasets.ewi.tudelft.nl/aes_hd.h5
 wget http://aisylabdatasets.ewi.tudelft.nl/aes_hd_ext.h5
 ```
