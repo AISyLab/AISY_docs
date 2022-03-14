@@ -126,7 +126,7 @@
                     </li>
                 </ul>
                 <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="custom_loss/">Custom loss functions</a>
+                    <li class="toctree-l1"><a class="reference internal" href="custom_loss/">Custom Loss Functions</a>
                     </li>
                 </ul>
                 <ul>
@@ -190,8 +190,8 @@
 of several years of research on deep learning and side-channel analysis by AisyLab at TU Delft (The Netherlands).</p>
 <h3 id="example-script">Example script</h3>
 <p>AISY Framework allows very easy execution of deep learning in profiled side-channel attacks.
-Here is an example of all the code that is needed to run a profiled SCA attack on key byte 2 of an AES implementation from well-known ASCAD 
-dabatase:</p>
+Here is an example of all the code that is needed to run a profiled SCA attack on the third key byte 
+(index 2) of an AES implementation from well-known ASCAD dabatase:</p>
 <pre><code class="language-python">import aisy_sca
 from app import *
 from custom.custom_models.neural_networks import *
@@ -209,6 +209,9 @@ aisy.set_neural_network(mlp)
 aisy.run()
 
 </code></pre>
+<p>By running the above script, the framework implements automated dataset loading, database 
+configuration, leakage model (labeling) definitions, profiling and attack phases. By default, the 
+framework computes Guessing Entropy and Success Rate metrics.</p>
 <h3 id="integrated-sqlite-database">Integrated SQLite Database</h3>
 <p>AISY Framework comes with the option to store all analysis results in a SQLite database. Standard libraries are implemented in the framework
 and users can easily add custom tables to the framework. The creation of custom tables does not require any specific background knowlegde on 
@@ -353,5 +356,5 @@ flask run
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2021-12-17 17:28:43.555651+00:00
+Build Date UTC : 2022-03-14 09:57:57.024173+00:00
 -->
