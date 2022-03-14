@@ -6,7 +6,6 @@ nav:
     - Datasets: datasets.md
     - Custom Dataset: custom_dataset.md
     - Databases: databases.md
-    - Saving to .npz files: npz.md
     - Neural Networks: neuralnetworks.md
     - Ciphers: ciphers.md
     - Leakage Models: leakage_models.md
