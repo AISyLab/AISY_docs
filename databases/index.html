@@ -72,13 +72,11 @@
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#database-root-folder">Database root folder</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#defining-database-location-inapppy-file">Defining database location inapp.py file</a>
+    <li class="toctree-l3"><a class="reference internal" href="#1-by-dfining-database-location-inapppy-file">1. By dfining database location inapp.py file</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#defining-database-location-in-script-file">Defining database location in script file</a>
+    <li class="toctree-l3"><a class="reference internal" href="#2-by-defining-database-location-in-script-file">2. By defining database location in script file</a>
     </li>
         </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#skipping-database-usage">Skipping Database Usage</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#tables">Tables</a>
         <ul>
@@ -92,17 +90,23 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#metric">Metric</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#keyrank">KeyRank</a>
+    <li class="toctree-l3"><a class="reference internal" href="#guessingentropy">GuessingEntropy</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#successrate">SuccessRate</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#visualization">Visualization</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#hyperparametersearch">HyperParameterSearch</a>
+    <li class="toctree-l3"><a class="reference internal" href="#hyperparametermetric">HyperparameterMetric</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#hyperparametersuccessrate">HyperParameterSuccessRate</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#hyperparameterguessingentropy">HyperParameterGuessingEntropy</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#confusionmatrix">ConfusionMatrix</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#probabilityrank">ProbabilityRank</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#randomstateshyperparameter">RandomStatesHyperparameter</a>
     </li>
         </ul>
     </li>
@@ -210,40 +214,37 @@
             <div class="section">
               
                 <h1 id="databases">Databases</h1>
+<p>The AISY database package must be installed together with the framework files. In <code>requirements.txt</code>, python package
+aisy-database <code>aisy-database 0.2.0</code> is already set.</p>
 <h2 id="database-root-folder">Database root folder</h2>
 <p>The root location of databases can be defined in two ways.</p>
-<h5 id="defining-database-location-inapppy-file">Defining database location in<code>app.py</code> file</h5>
+<h5 id="1-by-dfining-database-location-inapppy-file">1. By dfining database location in<code>app.py</code> file</h5>
 <p>The root location of sqlite database is defined in <code>app.py</code> file as follows:</p>
 <pre><code class="language-python">databases_root_folder = &quot;my_location/databases/&quot;
 </code></pre>
 <p>The user is free to change this location.</p>
-<h5 id="defining-database-location-in-script-file">Defining database location in script file</h5>
+<h5 id="2-by-defining-database-location-in-script-file">2. By defining database location in script file</h5>
 <p>The user can also easily set the database location in the main script, as in the example below:</p>
-<pre><code class="language-python">aisy = AisyAes()
+<pre><code class="language-python">aisy = aisy_sca.Aisy()
 aisy.set_database_root_folder(&quot;my_location/&quot;)
 aisy.set_database_name(&quot;my_database.sqlite&quot;)
 </code></pre>
-<p>AISY framework makes use of SQLITE database. In the main script, the user enter the name of the <em>sqlite</em> database file. If file already
-exists, then a new entry is stored for the deployed analysis. Otherwise, the <em>sqlite</em> file is created and stored in <code>/databases</code> folder. </p>
-<h2 id="skipping-database-usage">Skipping Database Usage</h2>
-<p>By default, database is automatically set be used in the framework. However, users are free to skip the usage of databases in the AISY 
-framework. To skip or avoid database storage, simply set the parameter <code>save_database=False</code> in the <code>run</code> method:</p>
-<pre><code class="language-python">aisy = AisyAes()
-...
-aisy.run(save_database=False)
-</code></pre>
+<p>AISY framework makes use of SQlite database. In the main script, the user enter the name of the <code>.sqlite</code> database file. If file already
+exists, then new entries from the current analysis are stored for the existing tables. Otherwise, the <code>.sqlite</code> file is created and
+stored in <code>resources/databases</code> folder. Note that <code>resources</code> folder is only generated once the first analysis is executed.</p>
 <h2 id="tables">Tables</h2>
-<p>Database is based on <a href="https://www.sqlalchemy.org/">SQLAlchemy</a> python package. Here we provide a list of tables and the column types from 
-SQLAlchemy package.</p>
+<p>Database code is implemented from open-source <a href="https://www.sqlalchemy.org/">SQLAlchemy</a> python package. Here we provide a list of tables (
+and the column types from SQLAlchemy package) that are generate in each
+<code>.sqlite</code> file.</p>
 <h5 id="analysis">Analysis</h5>
 <ul>
 <li><code>id (Integer):</code> primary key id for entry.</li>
 <li><code>datetime (DateTime):</code> data and time for the entry.</li>
-<li><code>settings (JSON):</code> dictionary of analysis settings.</li>
-<li><code>script (String):</code> the name of script (script location: <code>/scripts</code>).</li>
 <li><code>db_filename (String):</code> the name of <em>sqlite</em> file.</li>
-<li><code>dataset (String):</code> the name of evaluated SCA dataset.</li>
+<li><code>dataset (String):</code> the name of evaluated SCA dataset.  </li>
+<li><code>settings (JSON):</code> dictionary of analysis settings.</li>
 <li><code>elapsed_time (Float):</code> the elapsed time for the analysis.</li>
+<li><code>deleted (Boolean):</code> indicates if entry is deleted by the user.</li>
 </ul>
 <h5 id="hyperparameter">HyperParameter</h5>
 <ul>
@@ -256,6 +257,7 @@ SQLAlchemy package.</p>
 <li><code>id (Integer):</code> primary key id for entry.</li>
 <li><code>model_name (String):</code> name of neural network model.</li>
 <li><code>description (String):</code> description of neural network model.</li>
+<li><code>hyperparameters_id (Integer, ForeignKey):</code> id from Hyperparameters Table.</li>
 <li><code>analysis_id (Integer, ForeignKey):</code> id from Analysis Table.</li>
 </ul>
 <h5 id="leakagemodel">LeakageModel</h5>
@@ -271,11 +273,11 @@ SQLAlchemy package.</p>
 <li><code>label (String):</code> name of the metric.</li>
 <li><code>analysis_id (Integer, ForeignKey):</code> id from Analysis Table.</li>
 </ul>
-<h5 id="keyrank">KeyRank</h5>
+<h5 id="guessingentropy">GuessingEntropy</h5>
 <ul>
 <li><code>id (Integer):</code> primary key id for entry.</li>
 <li><code>values (JSON):</code> list of values.</li>
-<li><code>label (String):</code> name of the key rank result.</li>
+<li><code>label (String):</code> name of the guessing entropy result.</li>
 <li><code>report_interval (Intger):</code> report interval (step in the number of side channel traces or measurements) which key rank is stored.</li>
 <li><code>metric (String):</code> name of the metric.</li>
 <li><code>analysis_id (Integer, ForeignKey):</code> id from Analysis Table.</li>
@@ -284,7 +286,7 @@ SQLAlchemy package.</p>
 <ul>
 <li><code>id (Integer):</code> primary key id for entry.</li>
 <li><code>values (JSON):</code> list of values.</li>
-<li><code>label (String):</code> name of the key rank result.</li>
+<li><code>label (String):</code> name of the success rate result.</li>
 <li><code>report_interval (Intger):</code> report interval (step in the number of side channel traces or measurements) which success rate is stored.</li>
 <li><code>metric (String):</code> name of the metric.</li>
 <li><code>analysis_id (Integer, ForeignKey):</code> id from Analysis Table.</li>
@@ -293,24 +295,38 @@ SQLAlchemy package.</p>
 <ul>
 <li><code>id (Integer):</code> primary key id for entry.</li>
 <li><code>values (JSON):</code> list of values.</li>
-<li><code>epoch (Integer):</code> epoch value for visualization results. </li>
-<li><code>report_interval (Intger):</code> report interval (step in the number of side channel traces or measurements) which visualization is stored.</li>
-<li><code>metric (String):</code> name of the metric.</li>
+<li><code>epoch (Integer):</code> epoch value for visualization results.</li>
+<li><code>label (String):</code> metric label.</li>
+<li><code>hyperparameters_id (Integer, ForeignKey):</code> id from Hyperparameters Table.  </li>
 <li><code>analysis_id (Integer, ForeignKey):</code> id from Analysis Table.</li>
 </ul>
-<h5 id="hyperparametersearch">HyperParameterSearch</h5>
+<h5 id="hyperparametermetric">HyperparameterMetric</h5>
 <ul>
 <li><code>id (Integer):</code> primary key id for entry.</li>
-<li><code>search_type (String):</code> type of search. It can <em>grid_search</em> or <em>random_search</em>.</li>
-<li><code>hyper_parameters_settings (JSON):</code> dictionary containing hyperparameters search settings.</li>
-<li><code>best_hyper_parameters (Integer, ForeignKey):</code> id of HyperParameter table.</li>
-<li><code>analysis_id (Integer, ForeignKey):</code> id from Analysis table.</li>
+<li><code>metric_id (Integer, ForeignKey):</code> id from Metric Table.  </li>
+<li><code>hyperparameters_id (Integer, ForeignKey):</code> id from Hyperparameters Table.  </li>
+<li><code>analysis_id (Integer, ForeignKey):</code> id from Analysis Table.</li>
+</ul>
+<h5 id="hyperparametersuccessrate">HyperParameterSuccessRate</h5>
+<ul>
+<li><code>id (Integer):</code> primary key id for entry.</li>
+<li><code>success_rate_id (Integer, ForeignKey):</code> id from SuccessRate Table.  </li>
+<li><code>hyperparameters_id (Integer, ForeignKey):</code> id from Hyperparameters Table.  </li>
+<li><code>analysis_id (Integer, ForeignKey):</code> id from Analysis Table.</li>
+</ul>
+<h5 id="hyperparameterguessingentropy">HyperParameterGuessingEntropy</h5>
+<ul>
+<li><code>id (Integer):</code> primary key id for entry.</li>
+<li><code>guessing_entropy_id (Integer, ForeignKey):</code> id from SuccessRate Table.  </li>
+<li><code>hyperparameters_id (Integer, ForeignKey):</code> id from Hyperparameters Table.  </li>
+<li><code>analysis_id (Integer, ForeignKey):</code> id from Analysis Table.</li>
 </ul>
 <h5 id="confusionmatrix">ConfusionMatrix</h5>
 <ul>
 <li><code>id (Integer):</code> primary key id for entry.</li>
 <li><code>y_pred (JSON):</code> list of <code>y_pred</code> values.</li>
 <li><code>y_true (Integer):</code> index of <code>y_true</code> label.</li>
+<li><code>hyperparameters_id (Integer, ForeignKey):</code> id from Hyperparameters Table.  </li>
 <li><code>analysis_id (Integer, ForeignKey):</code> id from Analysis Table.</li>
 </ul>
 <h5 id="probabilityrank">ProbabilityRank</h5>
@@ -322,10 +338,18 @@ SQLAlchemy package.</p>
 <li><code>key_guess (Integer):</code> value of key guess.</li>
 <li><code>analysis_id (Integer, ForeignKey):</code> id from Analysis Table.</li>
 </ul>
+<h5 id="randomstateshyperparameter">RandomStatesHyperparameter</h5>
+<ul>
+<li><code>id (Integer):</code> primary key id for entry.</li>
+<li><code>random_states (JSON)</code>: list of random states</li>
+<li><code>label (String):</code> random state label.</li>
+<li><code>index (Integer</code>: random state index.</li>
+<li><code>analysis_id (Integer, ForeignKey):</code> id from Analysis Table.</li>
+</ul>
 <h2 id="adding-custom-tables">Adding Custom Tables</h2>
 <p>User can also add custom SQLite tables to the analysis. The process is rather simple and requires the following steps:</p>
 <h6 id="step-1-define-custom-table-in-customcustom_tablestablespy">Step 1: Define custom table in <code>custom/custom_tables/tables.py</code></h6>
-<p>In the <code>custom/custom_tables/tables.py</code> file, enter a custom SQLite table structure following the SQLAlchemy package structure. Below, 
+<p>In the <code>custom/custom_tables/tables.py</code> file, enter a custom SQLite table structure following the SQLAlchemy package structure. Below,
 we provide an example of <code>CustomTable</code> class with the following columns:</p>
 <ul>
 <li><code>id (Integer):</code> primary key id for entry.</li>
@@ -390,7 +414,7 @@ class CustomTable(Base):
 
 </code></pre>
 <h6 id="step-2-inserting-entries-to-your-custom-table">Step 2: Inserting entries to your custom table</h6>
-<p>First, in your script file (located at <code>scripts/</code>), create the <code>Aisy()</code> object and set <em>dataset folder</em>, <em>dataset name</em> and 
+<p>First, in your script file (located at <code>scripts/</code>), create the <code>Aisy()</code> object and set <em>dataset folder</em>, <em>dataset name</em> and
 <em>database name</em> and run the analysis as usual (look at the imports):</p>
 <pre><code class="language-python">import aisy_sca
 from app import *
@@ -415,7 +439,7 @@ aisy.run()
 session = start_custom_tables_session(databases_root_folder + &quot;database_ascad.sqlite&quot;)
 </code></pre>
 <p>Then, insert your entries to your CustomTable as soon as you define the values to be inserted:</p>
-<pre><code class="language-python">new_insert = CustomTable(value1=10, value2=20, value3=30, analysis_id=aisy.get_analysis_id())
+<pre><code class="language-python">new_insert = CustomTable(value1=10, value2=20, value3=30, analysis_id=aisy.settings[&quot;analysis_id&quot;])
 session.add(new_insert)
 session.commit()
 </code></pre>
