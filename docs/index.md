@@ -32,24 +32,29 @@ By running the above script, the framework implements automated dataset loading,
 configuration, leakage model (labeling) definitions, profiling and attack phases. By default, the 
 framework computes Guessing Entropy and Success Rate metrics.
 
+Next, we list all main advantages of AISY Framework for deep learning-based SCA research.
+
 ### Integrated SQLite Database
 
 AISY Framework comes with the option to store all analysis results in a SQLite database. Standard libraries are implemented in the framework
-and users can easily add custom tables to the framework. The creation of custom tables does not require any specific background knowlegde on 
-databases. 
+and users can easily add custom tables to the project. The creation of custom tables does not require any specific background knowlegde on 
+databases.  
 
 ### Web Application 
 
 AISY Framework is built on top of the [Flask](https://flask.palletsprojects.com/en/1.1.x/) python-based web framework. A web application is 
 integrated with a web-based user interface.
 
-The web application provides a user-friendly way to visualize analysis, plots, results and tables.  
+The web application provides a user-friendly way to visualize analysis, plots, results and tables. Note, 
+however that the interface is only intended to provide an easy way to visualize results and keep them organized
+on databases. From the web interface, the user cannot run scripts or manipulate analysis settings (this will
+appear in future versions of the framework).
 
 ### Reproducible results with one-click script generation
 
 In the Web Application, an user can generate the full script that was used to produce results stored in the database. This is particularly 
-important when the user wishes to reproduce results after he or she changed the script. Another advantage of this feature can be seen when 
-an user shares the database with a second user. The latter generate all the scripts from database.  
+important when the user wishes to reproduce results after he or she changed the script and don't keep track of the changes. Another advantage of this feature can be seen when 
+an user shares the database with a second user. The latter generate all the scripts from original database.  
 
 ### State-of-the-art deep learning-based SCA 
 
@@ -109,7 +114,7 @@ pip install -r requirements.txt
 
 The project structure is provided in a way that all scripts are placed inside ```scripts``` folder. To run a python file script
 (e.g., ```script_aes.py```), the user might use an IDE (like PyCharm, where we simply right-click in the script file and then *run*) or,
-more likely, from command line. To run script from command line, user must follow one of the two options:
+more likely, from command line. To run scripts from command line, user must follow one of the two options:
  
 1) Place the script inside project root folder.
 2) Place the script inside ```scripts``` folder and use **sys** python package to indicate the project root folder, as in the example below:
@@ -136,7 +141,7 @@ aisy.run()
 
 ```
 
-Then, simply put the path location of your AISY_framework project and run the script: ```python scripts/script_aes.py```.
+Then, simply put the root path location of your AISY_framework project and run the script: ```python scripts/script_aes.py```.
  
 
 ## Starting the WebApp

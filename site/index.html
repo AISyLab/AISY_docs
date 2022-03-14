@@ -212,18 +212,22 @@ aisy.run()
 <p>By running the above script, the framework implements automated dataset loading, database 
 configuration, leakage model (labeling) definitions, profiling and attack phases. By default, the 
 framework computes Guessing Entropy and Success Rate metrics.</p>
+<p>Next, we list all main advantages of AISY Framework for deep learning-based SCA research.</p>
 <h3 id="integrated-sqlite-database">Integrated SQLite Database</h3>
 <p>AISY Framework comes with the option to store all analysis results in a SQLite database. Standard libraries are implemented in the framework
-and users can easily add custom tables to the framework. The creation of custom tables does not require any specific background knowlegde on 
-databases. </p>
+and users can easily add custom tables to the project. The creation of custom tables does not require any specific background knowlegde on 
+databases.  </p>
 <h3 id="web-application">Web Application</h3>
 <p>AISY Framework is built on top of the <a href="https://flask.palletsprojects.com/en/1.1.x/">Flask</a> python-based web framework. A web application is 
 integrated with a web-based user interface.</p>
-<p>The web application provides a user-friendly way to visualize analysis, plots, results and tables.  </p>
+<p>The web application provides a user-friendly way to visualize analysis, plots, results and tables. Note, 
+however that the interface is only intended to provide an easy way to visualize results and keep them organized
+on databases. From the web interface, the user cannot run scripts or manipulate analysis settings (this will
+appear in future versions of the framework).</p>
 <h3 id="reproducible-results-with-one-click-script-generation">Reproducible results with one-click script generation</h3>
 <p>In the Web Application, an user can generate the full script that was used to produce results stored in the database. This is particularly 
-important when the user wishes to reproduce results after he or she changed the script. Another advantage of this feature can be seen when 
-an user shares the database with a second user. The latter generate all the scripts from database.  </p>
+important when the user wishes to reproduce results after he or she changed the script and don't keep track of the changes. Another advantage of this feature can be seen when 
+an user shares the database with a second user. The latter generate all the scripts from original database.  </p>
 <h3 id="state-of-the-art-deep-learning-based-sca">State-of-the-art deep learning-based SCA</h3>
 <p>AISY Framework brings state-of-the-art deep learning-based side-channel attacks. We follow recent publications and keep the framework 
 updated accordingly. The current version is 0.2 and it that already provides state-of-the-art features such as custom loss functions, 
@@ -273,7 +277,7 @@ app.py                                # main flask application
 <h2 id="running-scripts">Running Scripts</h2>
 <p>The project structure is provided in a way that all scripts are placed inside <code>scripts</code> folder. To run a python file script
 (e.g., <code>script_aes.py</code>), the user might use an IDE (like PyCharm, where we simply right-click in the script file and then <em>run</em>) or,
-more likely, from command line. To run script from command line, user must follow one of the two options:</p>
+more likely, from command line. To run scripts from command line, user must follow one of the two options:</p>
 <p>1) Place the script inside project root folder.
 2) Place the script inside <code>scripts</code> folder and use <strong>sys</strong> python package to indicate the project root folder, as in the example below:</p>
 <pre><code class="language-python">import sys
@@ -296,7 +300,7 @@ aisy.set_neural_network(mlp)
 aisy.run()
 
 </code></pre>
-<p>Then, simply put the path location of your AISY_framework project and run the script: <code>python scripts/script_aes.py</code>.</p>
+<p>Then, simply put the root path location of your AISY_framework project and run the script: <code>python scripts/script_aes.py</code>.</p>
 <h2 id="starting-the-webapp">Starting the WebApp</h2>
 <p>The Web Application is built on top of Flask web framework. To start the web homepage and visualize project results, simply run the 
 following command on the terminal: </p>
@@ -356,5 +360,5 @@ flask run
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2022-03-14 09:57:52.749479+00:00
+Build Date UTC : 2022-03-14 10:10:15.199396+00:00
 -->
