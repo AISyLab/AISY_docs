@@ -1,6 +1,6 @@
 ## Leakage Models
 
-AISY Framework v0.1 only has support for AES128 leakage models. 
+AISY Framework v0.2 only has support for AES128 leakage models. 
 Future releases will include leakage models support for additional ciphers.
 
 ### Definiting Leakage Models
@@ -55,9 +55,7 @@ If the default values are the same as the user needs to select, the ```set_aes_l
 ###### Hamming weight model, S-Box Output Round 1, AES Encryption
 
 ```python
-from aisy.sca_aisy_aes import AisyAes
-
-aisy = AisyAes()
+aisy = aisy_sca.Aisy()
 aisy.set_aes_leakage_model(leakage_model="HW", byte=0, target_state="Sbox", direction="Encryption",
                            cipher="AES128")
 ```
@@ -65,9 +63,7 @@ aisy.set_aes_leakage_model(leakage_model="HW", byte=0, target_state="Sbox", dire
 ###### Hamming weight model, S-Box Input Round 10, AES Encryption
 
 ```python
-from aisy.sca_aisy_aes import AisyAes
-
-aisy = AisyAes()
+aisy = aisy_sca.Aisy()
 aisy.set_aes_leakage_model(leakage_model="HW", byte=0, target_state="Sbox", round=10, 
                            attack_direction="output", direction="Encryption", cipher="AES128")
 ```
@@ -75,9 +71,7 @@ aisy.set_aes_leakage_model(leakage_model="HW", byte=0, target_state="Sbox", roun
 ###### Identity model, S-Box Output Round 1, AES Encryption
 
 ```python
-from aisy.sca_aisy_aes import AisyAes
-
-aisy = AisyAes()
+aisy = aisy_sca.Aisy()
 aisy.set_aes_leakage_model(leakage_model="ID", byte=0, target_state="Sbox", direction="Encryption",
                            cipher="AES128")
 ```
@@ -85,9 +79,7 @@ aisy.set_aes_leakage_model(leakage_model="ID", byte=0, target_state="Sbox", dire
 ###### Bit 3, Byte 5,  S-Box Output Round 1, AES Encryption
 
 ```python
-from aisy.sca_aisy_aes import AisyAes
-
-aisy = AisyAes()
+aisy = aisy_sca.Aisy()
 aisy.set_aes_leakage_model(leakage_model="bit", bit=3, byte=5, target_state="Sbox", 
                            direction="Encryption", cipher="AES128")
 ```
@@ -95,8 +87,6 @@ aisy.set_aes_leakage_model(leakage_model="bit", bit=3, byte=5, target_state="Sbo
 ###### Hamming distance between S-Box Input in round 10 and output (ciphertext), AES Encryption, byte 0
 
 ```python
-from aisy.sca_aisy_aes import AisyAes
-
 aisy = AisyAes()
 aisy.set_aes_leakage_model(leakage_model="HD", byte=0, direction="Encryption", cipher="AES128",
                            target_state_first="Output", round_first=10,
