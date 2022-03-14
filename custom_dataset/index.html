@@ -175,17 +175,18 @@
               
                 <h1 id="custom-datasets">Custom datasets</h1>
 <h2 id="basic-h5-dataset-format">Basic h5 dataset format</h2>
-<p>The main <strong>Aisy</strong> class framework only supports datasets in .h5 format for the current version. The dataset in .h5 format must be structured
-according to the format createb by ANSSI in ASCAD database. The .h5 file must contain traces and metadata fields, as follows:</p>
+<p>The main <strong>Aisy</strong> class framework only supports datasets in .h5 format for the current version. 
+The dataset in .h5 format must be structured according to the format created by ANSSI in ASCAD database. 
+The .h5 file must contain traces and metadata fields, as follows:</p>
 <ul>
-<li>Profiling traces: [<em>Profiling_traces/traces</em>]: 2D array containing profiling traces. The format of the array must be <em>nb_traces x
+<li>Profiling traces: [<code>Profiling_traces/traces</code>]: 2D array containing profiling traces. The format of the array must be <em>nb_traces x
   nb_samples</em>. Here, <em>samples</em> mean the amount of data points (or features) in a trace.</li>
-<li>Attack traces: [<em>Attack_traces/traces</em>]: this field should contain a 2D array with attack traces. The format of the array must be *
+<li>Attack traces: [<code>Attack_traces/traces</code>]: this field should contain a 2D array with attack traces. The format of the array must be *
   nb_traces x nb_samples*.</li>
-<li>Profiling Metadata: [<em>Profiling_traces/metadata</em>]: metadata contains all 2D arrays for <em>keys</em>, <em>plaintext</em> and <em>ciphertext</em>. Note that,
+<li>Profiling Metadata: [<code>Profiling_traces/metadata</code>]: metadata contains all 2D arrays for <em>keys</em>, <em>plaintext</em> and <em>ciphertext</em>. Note that,
   depending on the leakage model plaintext or ciphertext are not necessary. If metadata contains <em>mask</em> values, they will automatically
-  discarded by the main <strong>Aisy</strong> class when creating labels.</li>
-<li>Attack Metadata: [<em>Attack_traces/metadata</em>]: similarly, this field contains metadata for attack set.</li>
+  ignored by the main <strong>Aisy</strong> class when creating labels.</li>
+<li>Attack Metadata: [<code>Attack_traces/metadata</code>]: similarly, this field contains metadata for attack set.</li>
 </ul>
 <p>Below, user can find an example of how to create a .h5 dataset that can be interpreted by the main <strong>Aisy</strong> class:</p>
 <pre><code class="language-python">import numpy as np
@@ -251,15 +252,17 @@ if &quot;ciphertext&quot; in h5_file['Profiling_traces/metadata'].dtype.fields:
     print(&quot;ciphertext field is in metadata for profiling traces.&quot;)
 </code></pre>
 <h5 id="h5py-package">h5py package</h5>
-<p>To avoid incopatibility issues, AISY framework recommends to use h5py version 2.10.0, as specified in requirements.txt file.</p>
+<p>To avoid incompatibility issues, AISY framework recommends to use h5py version 2.10.0, as specified in requirements.txt file.</p>
 <h2 id="creating-dataset-object">Creating <strong>Dataset</strong> object</h2>
 <p>After reading a .h5 file, AISY framework automatically generates an internal <strong>Dataset</strong> object. 
 This object is manipulated by the classes and functions that uses dataset information.</p>
 <p>As specified in this documentation, AISY framework automatically generates dataset labels from plaintext (or ciphertexts)
 and keys from .h5 metadata. However, the current version of the framework only supports labels generation for AES128-related datasets.
 In case the user wants to label the dataset with an alternative concept (e.g., by taking into consideration <strong>masks</strong> available to the user),
-it is possible to create a <strong>Dataset</strong> object and provided it to the main <strong>Aisy</strong> class before running the analysis.</p>
-<p>The following code provides an example to generate a <strong>Dataset</strong> object:</p>
+it is possible to create a <strong>Dataset</strong> object and provided it to the main <strong>Aisy</strong> class before running the analysis. This way, 
+the analysis is not restricted to AES cipher only.</p>
+<p>The following code provides an example to generate a <strong>Dataset</strong> object. Note that labels are created by the 
+user and passed to the <strong>my_dataset</strong> object.</p>
 <pre><code class="language-python">import aisy_sca
 from app import *
 from custom.custom_models.neural_networks import *
@@ -311,7 +314,7 @@ aisy.set_epochs(10)
 aisy.add_neural_network(mlp)
 aisy.run()
 </code></pre>
-<p>Note in the above example that the labels (<em>y_profiling, y_validation, y_attack</em>) are generated before the method <strong>run()</strong> from main <strong>Aisy</strong> class is
+<p>In the above example, labels (<em>y_profiling, y_validation, y_attack</em>) are generated before the method <strong>run()</strong> from main <strong>Aisy</strong> class is
 called.</p>
               
             </div>
