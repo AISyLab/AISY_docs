@@ -41,7 +41,7 @@ how to generate ```.h5``` datasets.
 *If the user wants to process datasets in the ```.h5``` format, AISY Framework expects files generated according to ASCAD database.*
 
 The only limitation found in ```ASCAD_generate.py``` code is that it does not generate ciphertexts in the metadata field. Therefore, we 
-modified the code in order to overcome this limitation (note that we don't provide ```masks``` in the metadata):
+modified the code in order to overcome this limitation.
 
 ```python
 out_file = h5py.File('new_dataset.h5', 'w')
@@ -54,18 +54,20 @@ attack_traces_group.create_dataset(name="traces", data=test_samples, dtype=test_
 
 metadata_type_profiling = np.dtype([("plaintext", profiling_plaintext.dtype, (len(profiling_plaintext[0]),)),
                           ("ciphertext", profiling_ciphertext.dtype, (len(profiling_ciphertext[0]),)),
-                          ("key", profiling_key.dtype, (len(profiling_key[0]),))
+                          ("key", profiling_key.dtype, (len(profiling_key[0]),)),
+                          ("mask", profiling_key.dtype, (len(profiling_key[0]),))          
                           ])
 metadata_type_attack = np.dtype([("plaintext", attack_plaintext.dtype, (len(attack_plaintext[0]),)),
                           ("ciphertext", attack_ciphertext.dtype, (len(attack_ciphertext[0]),)),
-                          ("key", attack_key.dtype, (len(attack_key[0]),))
+                          ("key", attack_key.dtype, (len(attack_key[0]),)),
+                          ("mask", attack_key.dtype, (len(attack_key[0]),))       
                           ])
 
-profiling_metadata = np.array([(profiling_plaintext[n], profiling_ciphertext[n], profiling_key[n]) for n, k in
+profiling_metadata = np.array([(profiling_plaintext[n], profiling_ciphertext[n], profiling_key[n], profiling_mask[n]) for n, k in
                                zip(profiling_index, range(0, len(train_samples)))], dtype=metadata_type_profiling)
 profiling_traces_group.create_dataset("metadata", data=profiling_metadata, dtype=metadata_type_profiling)
 
-attack_metadata = np.array([(attack_plaintext[n], attack_ciphertext[n], attack_key[n]) for n, k in
+attack_metadata = np.array([(attack_plaintext[n], attack_ciphertext[n], attack_key[n], attack_mask[n]) for n, k in
                             zip(attack_index, range(0, len(test_samples)))], dtype=metadata_type_attack)
 attack_traces_group.create_dataset("metadata", data=attack_metadata, dtype=metadata_type_attack)
 
@@ -89,11 +91,14 @@ attack_ciphertext = in_file['Attack_traces/metadata']['ciphertext']
 # reading trace keys
 profiling_key = in_file['Profiling_traces/metadata']['key']
 attack_key = in_file['Attack_traces/metadata']['key']
+# reading trace masks
+profiling_mask = in_file['Profiling_traces/metadata']['mask']
+attack_mask = in_file['Attack_traces/metadata']['mask']
 ```
 
-#### .npz datasets
+#### Other dataset formats
 
-```.npz``` dataset format will be available in future releases.
+```.npz``` and ```.csv``` dataset formats will be available in future releases.
 
 ## Dataset root folder
 
