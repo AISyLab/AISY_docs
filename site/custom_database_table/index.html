@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Automatically Generating Scripts - AISY Framework v0.2</title>
+  <title>Custom Database Table - AISY Framework v0.2</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../css/theme.css" />
@@ -18,8 +18,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Automatically Generating Scripts";
-    var mkdocs_page_input_path = "generating_scripts.md";
+    var mkdocs_page_name = "Custom Database Table";
+    var mkdocs_page_input_path = "custom_database_table.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -71,8 +71,14 @@
                     <li class="toctree-l1"><a class="reference internal" href="../databases/">Databases</a>
                     </li>
                 </ul>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../custom_database_table/">Custom Database Table</a>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Custom Database Table</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#step-1-define-custom-table-in-customcustom_tablestablespy">Step 1: Define custom table in custom/custom_tables/tables.py</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#step-2-inserting-entries-to-your-custom-table">Step 2: Inserting entries to your custom table</a>
+    </li>
+    </ul>
                     </li>
                 </ul>
                 <ul>
@@ -119,10 +125,8 @@
                     <li class="toctree-l1"><a class="reference internal" href="../data_augmentation/">Data Augmentation</a>
                     </li>
                 </ul>
-                <ul class="current">
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Automatically Generating Scripts</a>
-    <ul class="current">
-    </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../generating_scripts/">Automatically Generating Scripts</a>
                     </li>
                 </ul>
                 <ul>
@@ -154,7 +158,7 @@
     
       
     
-    <li>Automatically Generating Scripts</li>
+    <li>Custom Database Table</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -165,17 +169,129 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="automatically-generating-scripts">Automatically Generating Scripts</h1>
-<p>One of the main features in AISY Framework is the one-click script generation.</p>
-<p>By clicking on <strong>Databases</strong> on the side-bar, the list of analysis separated per database file name is displayed in the screen.</p>
-<p><img alt="Screenshot" src="../images/tables.png" /></p>
-<p>The user then clicks on the chart icon in the <strong>Results</strong> column. The page then displays something similar to the image below:</p>
-<p><img alt="Screenshot" src="../images/result.png" /></p>
-<p>In the top right part of the screen, there is a button called <em>Generate Script</em>. If the user clicks on this button, the script used to 
-produce results displayed in the current page is automatically generated and placed in <code>scripts/</code> folder under the name 
-<code>script_[analysis_id]_[database_name].py</code>.</p>
-<p>The advantage of this feature is the possibility to reproduce results from older analysis when script is updated or even modified by accident.
-Another advantage is that is databases are shared between users, the <em>Generate Script</em> button allows different users to reproduce same analysis.</p>
+                <h1 id="adding-custom-tables-to-the-database">Adding Custom Tables to the Database</h1>
+<p>User can also add custom SQLite tables to the analysis. The process is rather simple and requires the following steps:</p>
+<h6 id="step-1-define-custom-table-in-customcustom_tablestablespy">Step 1: Define custom table in <code>custom/custom_tables/tables.py</code></h6>
+<p>In the <code>custom/custom_tables/tables.py</code> file, enter a custom SQLite table structure following the SQLAlchemy package structure. Below,
+we provide an example of <code>CustomTable</code> class with the following columns:</p>
+<ul>
+<li><code>id (Integer):</code> primary key id for entry.</li>
+<li><code>value1 (Integer):</code> column with an integer value.</li>
+<li><code>value2 (Integer):</code> column with an integer value.</li>
+<li><code>value3 (Integer):</code> column with an integer value.</li>
+<li><code>datetime (DateTime):</code> data and time for the entry.</li>
+<li><code>analysis_id (Integer, ForeignKey):</code> id from Analysis table.</li>
+</ul>
+<p>Here is the code for the table:</p>
+<pre><code class="language-python">class CustomTable(Base):
+    __tablename__ = 'custom_table'
+    id = Column(Integer, primary_key=True)
+    value1 = Column(Integer)
+    value2 = Column(Integer)
+    value3 = Column(Integer)
+    datetime = Column(DateTime, default=datetime.datetime.utcnow)
+    analysis_id = Column(Integer, ForeignKey(Analysis.id))
+    analysis = relationship(Analysis)
+
+    def __repr__(self):
+        return &quot;&lt;CustomTable(id=%d)&gt;&quot; % self.id
+</code></pre>
+<p>The full code for <code>custom/custom_tables/tables.py</code> will look like this:</p>
+<pre><code class="language-python">import datetime
+from sqlalchemy import *
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
+from aisy.sca_tables import Analysis
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
+Base = declarative_base()
+
+
+def base():
+    return Base
+
+
+def start_custom_tables(database_name):
+    engine = create_engine('sqlite:///{}'.format(database_name), echo=False)
+    base().metadata.create_all(engine)
+
+
+def start_custom_tables_session(database_name):
+    engine = create_engine('sqlite:///{}'.format(database_name), echo=False)
+    return sessionmaker(bind=engine)()
+
+
+class CustomTable(Base):
+    __tablename__ = 'custom_table'
+    id = Column(Integer, primary_key=True)
+    value1 = Column(Integer)
+    value2 = Column(Integer)
+    value3 = Column(Integer)
+    datetime = Column(DateTime, default=datetime.datetime.utcnow)
+    analysis_id = Column(Integer, ForeignKey(Analysis.id))
+    analysis = relationship(Analysis)
+
+    def __repr__(self):
+        return &quot;&lt;CustomTable(id=%d)&gt;&quot; % self.id
+
+</code></pre>
+<h6 id="step-2-inserting-entries-to-your-custom-table">Step 2: Inserting entries to your custom table</h6>
+<p>First, in your script file (located at <code>scripts/</code>), create the <code>Aisy()</code> object and set <em>dataset folder</em>, <em>dataset name</em> and
+<em>database name</em> and run the analysis as usual (look at the imports):</p>
+<pre><code class="language-python">import aisy_sca
+from app import *
+from custom.custom_models.neural_networks import *
+from custom.custom_tables.tables import *
+
+aisy = aisy_sca.Aisy()
+aisy.set_resources_root_folder(resources_root_folder)
+aisy.set_database_root_folder(databases_root_folder)
+aisy.set_datasets_root_folder(datasets_root_folder)
+aisy.set_database_name(&quot;database_ascad.sqlite&quot;)
+aisy.set_dataset(datasets_dict[&quot;ascad-variable.h5&quot;])
+aisy.set_aes_leakage_model(leakage_model=&quot;HW&quot;, byte=2)
+aisy.set_batch_size(400)
+aisy.set_epochs(20)
+aisy.set_neural_network(mlp)
+
+aisy.run()
+</code></pre>
+<p>Next, start the custom table session:</p>
+<pre><code class="language-python">start_custom_tables(databases_root_folder + &quot;database_ascad.sqlite&quot;)
+session = start_custom_tables_session(databases_root_folder + &quot;database_ascad.sqlite&quot;)
+</code></pre>
+<p>Then, insert your entries to your CustomTable as soon as you define the values to be inserted:</p>
+<pre><code class="language-python">new_insert = CustomTable(value1=10, value2=20, value3=30, analysis_id=aisy.settings[&quot;analysis_id&quot;])
+session.add(new_insert)
+session.commit()
+</code></pre>
+<p>A full script example will look like this:</p>
+<pre><code class="language-python">import aisy_sca
+from app import *
+from custom.custom_models.neural_networks import *
+from custom.custom_tables.tables import *
+
+aisy = aisy_sca.Aisy()
+aisy.set_resources_root_folder(resources_root_folder)
+aisy.set_database_root_folder(databases_root_folder)
+aisy.set_datasets_root_folder(datasets_root_folder)
+aisy.set_database_name(&quot;database_ascad.sqlite&quot;)
+aisy.set_dataset(datasets_dict[&quot;ascad-variable.h5&quot;])
+aisy.set_aes_leakage_model(leakage_model=&quot;HW&quot;, byte=2)
+aisy.set_batch_size(400)
+aisy.set_epochs(20)
+aisy.set_neural_network(mlp)
+
+aisy.run()
+
+start_custom_tables(databases_root_folder + &quot;database_ascad.sqlite&quot;)
+session = start_custom_tables_session(databases_root_folder + &quot;database_ascad.sqlite&quot;)
+
+new_insert = CustomTable(value1=10, value2=20, value3=30, analysis_id=aisy.get_analysis_id())
+session.add(new_insert)
+session.commit()
+</code></pre>
               
             </div>
           </div>
@@ -183,10 +299,10 @@ Another advantage is that is databases are shared between users, the <em>Generat
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../errors/" class="btn btn-neutral float-right" title="Errors">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../neuralnetworks/" class="btn btn-neutral float-right" title="Neural Networks">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../data_augmentation/" class="btn btn-neutral" title="Data Augmentation"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../databases/" class="btn btn-neutral" title="Databases"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -212,10 +328,10 @@ Another advantage is that is databases are shared between users, the <em>Generat
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../data_augmentation/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../databases/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../errors/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../neuralnetworks/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
