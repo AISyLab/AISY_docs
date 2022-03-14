@@ -186,7 +186,7 @@
             <div class="section">
               
                 <h2 id="leakage-models">Leakage Models</h2>
-<p>AISY Framework v0.1 only has support for AES128 leakage models. 
+<p>AISY Framework v0.2 only has support for AES128 leakage models. 
 Future releases will include leakage models support for additional ciphers.</p>
 <h3 id="definiting-leakage-models">Definiting Leakage Models</h3>
 <p>In the main script, the user needs to call the method <code>set_aes_leakage_model()</code> and pass AES leakage model attributes.
@@ -227,37 +227,27 @@ The attributes are:</p>
 <p>If the default values are the same as the user needs to select, the <code>set_aes_leakage_model()</code> method does not need to be set in the main script. </p>
 <h3 id="examples">Examples</h3>
 <h6 id="hamming-weight-model-s-box-output-round-1-aes-encryption">Hamming weight model, S-Box Output Round 1, AES Encryption</h6>
-<pre><code class="language-python">from aisy.sca_aisy_aes import AisyAes
-
-aisy = AisyAes()
+<pre><code class="language-python">aisy = aisy_sca.Aisy()
 aisy.set_aes_leakage_model(leakage_model=&quot;HW&quot;, byte=0, target_state=&quot;Sbox&quot;, direction=&quot;Encryption&quot;,
                            cipher=&quot;AES128&quot;)
 </code></pre>
 <h6 id="hamming-weight-model-s-box-input-round-10-aes-encryption">Hamming weight model, S-Box Input Round 10, AES Encryption</h6>
-<pre><code class="language-python">from aisy.sca_aisy_aes import AisyAes
-
-aisy = AisyAes()
+<pre><code class="language-python">aisy = aisy_sca.Aisy()
 aisy.set_aes_leakage_model(leakage_model=&quot;HW&quot;, byte=0, target_state=&quot;Sbox&quot;, round=10, 
                            attack_direction=&quot;output&quot;, direction=&quot;Encryption&quot;, cipher=&quot;AES128&quot;)
 </code></pre>
 <h6 id="identity-model-s-box-output-round-1-aes-encryption">Identity model, S-Box Output Round 1, AES Encryption</h6>
-<pre><code class="language-python">from aisy.sca_aisy_aes import AisyAes
-
-aisy = AisyAes()
+<pre><code class="language-python">aisy = aisy_sca.Aisy()
 aisy.set_aes_leakage_model(leakage_model=&quot;ID&quot;, byte=0, target_state=&quot;Sbox&quot;, direction=&quot;Encryption&quot;,
                            cipher=&quot;AES128&quot;)
 </code></pre>
 <h6 id="bit-3-byte-5-s-box-output-round-1-aes-encryption">Bit 3, Byte 5,  S-Box Output Round 1, AES Encryption</h6>
-<pre><code class="language-python">from aisy.sca_aisy_aes import AisyAes
-
-aisy = AisyAes()
+<pre><code class="language-python">aisy = aisy_sca.Aisy()
 aisy.set_aes_leakage_model(leakage_model=&quot;bit&quot;, bit=3, byte=5, target_state=&quot;Sbox&quot;, 
                            direction=&quot;Encryption&quot;, cipher=&quot;AES128&quot;)
 </code></pre>
 <h6 id="hamming-distance-between-s-box-input-in-round-10-and-output-ciphertext-aes-encryption-byte-0">Hamming distance between S-Box Input in round 10 and output (ciphertext), AES Encryption, byte 0</h6>
-<pre><code class="language-python">from aisy.sca_aisy_aes import AisyAes
-
-aisy = AisyAes()
+<pre><code class="language-python">aisy = AisyAes()
 aisy.set_aes_leakage_model(leakage_model=&quot;HD&quot;, byte=0, direction=&quot;Encryption&quot;, cipher=&quot;AES128&quot;,
                            target_state_first=&quot;Output&quot;, round_first=10,
                            target_state_second=&quot;Sbox&quot;, round_second=10,
