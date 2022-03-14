@@ -62,7 +62,7 @@
                 <ul class="current">
                     <li class="toctree-l1 current"><a class="reference internal current" href="./">Datasets</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#downloading-supported-datasets">Downloading supported datasets</a>
+    <li class="toctree-l2"><a class="reference internal" href="#open-source-aes-datasets">Open-source AES datasets</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#windows-10">Windows 10</a>
     </li>
@@ -192,12 +192,11 @@
             <div class="section">
               
                 <h1 id="datasets">Datasets</h1>
-<h2 id="downloading-supported-datasets">Downloading supported datasets</h2>
+<h2 id="open-source-aes-datasets">Open-source AES datasets</h2>
 <p>The standard version of AISY Framework comes with the definitions of open-source side-channel analysis datasets.</p>
 <ul>
 <li><a href="https://github.com/ANSSI-FR/ASCAD/tree/master/ATMEGA_AES_v1/ATM_AES_v1_fixed_key">ASCAD Fixed Key</a>  </li>
 <li><a href="https://github.com/ANSSI-FR/ASCAD/tree/master/ATMEGA_AES_v1/ATM_AES_v1_variable_key">ASCAD Random Keys</a></li>
-<li><a href="http://aisylabdatasets.ewi.tudelft.nl/">CHES CTF 2018</a></li>
 <li><a href="http://aisylabdatasets.ewi.tudelft.nl/">AES_HD</a></li>
 <li><a href="http://aisylabdatasets.ewi.tudelft.nl/">AES_HD_ext</a></li>
 </ul>
@@ -205,12 +204,15 @@
 <h3 id="windows-10">Windows 10</h3>
 <pre><code>curl.exe -o aes_hd.h5 http://aisylabdatasets.ewi.tudelft.nl/aes_hd.h5
 curl.exe -o aes_hd_ext.h5 http://aisylabdatasets.ewi.tudelft.nl/aes_hd_ext.h5
-curl.exe -o ches_ctf.h5 http://aisylabdatasets.ewi.tudelft.nl/ches_ctf.h5
+curl.exe -o ches_ctf.h5 http://aisylabdatasets.ewi.tudelft.nl/aes_hd.h5
+curl.exe -o ches_ctf.h5 http://aisylabdatasets.ewi.tudelft.nl/aes_hd_ext.h5
+
 </code></pre>
 <h3 id="linux">Linux</h3>
 <pre><code>wget http://aisylabdatasets.ewi.tudelft.nl/aes_hd.h5
 wget http://aisylabdatasets.ewi.tudelft.nl/aes_hd_ext.h5
-wget http://aisylabdatasets.ewi.tudelft.nl/ches_ctf.h5
+wget http://aisylabdatasets.ewi.tudelft.nl/aes_hd.h5
+wget http://aisylabdatasets.ewi.tudelft.nl/aes_hd_ext.h5
 </code></pre>
 <h2 id="creating-datasets-for-aisy-framework">Creating datasets for AISY Framework</h2>
 <h4 id="h5-datasets">.h5 datasets</h4>

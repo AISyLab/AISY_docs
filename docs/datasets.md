@@ -1,12 +1,11 @@
 # Datasets
 
-## Downloading supported datasets
+## Open-source AES datasets
 
 The standard version of AISY Framework comes with the definitions of open-source side-channel analysis datasets.
 
 - [ASCAD Fixed Key](https://github.com/ANSSI-FR/ASCAD/tree/master/ATMEGA_AES_v1/ATM_AES_v1_fixed_key)  
 - [ASCAD Random Keys](https://github.com/ANSSI-FR/ASCAD/tree/master/ATMEGA_AES_v1/ATM_AES_v1_variable_key)
-- [CHES CTF 2018](http://aisylabdatasets.ewi.tudelft.nl/)
 - [AES_HD](http://aisylabdatasets.ewi.tudelft.nl/)
 - [AES_HD_ext](http://aisylabdatasets.ewi.tudelft.nl/)
 
@@ -16,14 +15,17 @@ The user can download the datasets by running the following commands in a termin
 ```
 curl.exe -o aes_hd.h5 http://aisylabdatasets.ewi.tudelft.nl/aes_hd.h5
 curl.exe -o aes_hd_ext.h5 http://aisylabdatasets.ewi.tudelft.nl/aes_hd_ext.h5
-curl.exe -o ches_ctf.h5 http://aisylabdatasets.ewi.tudelft.nl/ches_ctf.h5
+curl.exe -o ches_ctf.h5 http://aisylabdatasets.ewi.tudelft.nl/aes_hd.h5
+curl.exe -o ches_ctf.h5 http://aisylabdatasets.ewi.tudelft.nl/aes_hd_ext.h5
+
 ```
 
 ### Linux
 ```
 wget http://aisylabdatasets.ewi.tudelft.nl/aes_hd.h5
 wget http://aisylabdatasets.ewi.tudelft.nl/aes_hd_ext.h5
-wget http://aisylabdatasets.ewi.tudelft.nl/ches_ctf.h5
+wget http://aisylabdatasets.ewi.tudelft.nl/aes_hd.h5
+wget http://aisylabdatasets.ewi.tudelft.nl/aes_hd_ext.h5
 ```
 
 ## Creating datasets for AISY Framework
