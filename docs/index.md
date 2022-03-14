@@ -159,3 +159,4 @@ The user must set the main paths in ```app.py``` file (located in root project f
 databases_root_folder = "my_path/AISY_framework/resources/databases/"
 datasets_root_folder = "my_dataset_folder/"
 resources_root_folder = "my_path/AISY_framework/resources/"
+```
