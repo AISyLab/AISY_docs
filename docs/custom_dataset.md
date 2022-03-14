@@ -6,14 +6,14 @@ The main **Aisy** class framework only supports datasets in .h5 format for the c
 The dataset in .h5 format must be structured according to the format created by ANSSI in ASCAD database. 
 The .h5 file must contain traces and metadata fields, as follows:
 
-- Profiling traces: [```Profiling_traces/traces```]: 2D array containing profiling traces. The format of the array must be *nb_traces x
+- Profiling traces: ```[Profiling_traces/traces]```: 2D array containing profiling traces. The format of the array must be *nb_traces x
   nb_samples*. Here, *samples* mean the amount of data points (or features) in a trace.
-- Attack traces: [```Attack_traces/traces```]: this field should contain a 2D array with attack traces. The format of the array must be *
+- Attack traces: ```[Attack_traces/traces]```: this field should contain a 2D array with attack traces. The format of the array must be *
   nb_traces x nb_samples*.
-- Profiling Metadata: [```Profiling_traces/metadata```]: metadata contains all 2D arrays for *keys*, *plaintext* and *ciphertext*. Note that,
+- Profiling Metadata: ```[Profiling_traces/metadata]```: metadata contains all 2D arrays for *keys*, *plaintext* and *ciphertext*. Note that,
   depending on the leakage model plaintext or ciphertext are not necessary. If metadata contains *mask* values, they will automatically
   ignored by the main **Aisy** class when creating labels.
-- Attack Metadata: [```Attack_traces/metadata```]: similarly, this field contains metadata for attack set.
+- Attack Metadata: ```[Attack_traces/metadata]```: similarly, this field contains metadata for attack set.
 
 Below, user can find an example of how to create a .h5 dataset that can be interpreted by the main **Aisy** class:
 

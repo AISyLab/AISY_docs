@@ -179,14 +179,14 @@
 The dataset in .h5 format must be structured according to the format created by ANSSI in ASCAD database. 
 The .h5 file must contain traces and metadata fields, as follows:</p>
 <ul>
-<li>Profiling traces: [<code>Profiling_traces/traces</code>]: 2D array containing profiling traces. The format of the array must be <em>nb_traces x
+<li>Profiling traces: <code>[Profiling_traces/traces]</code>: 2D array containing profiling traces. The format of the array must be <em>nb_traces x
   nb_samples</em>. Here, <em>samples</em> mean the amount of data points (or features) in a trace.</li>
-<li>Attack traces: [<code>Attack_traces/traces</code>]: this field should contain a 2D array with attack traces. The format of the array must be *
+<li>Attack traces: <code>[Attack_traces/traces]</code>: this field should contain a 2D array with attack traces. The format of the array must be *
   nb_traces x nb_samples*.</li>
-<li>Profiling Metadata: [<code>Profiling_traces/metadata</code>]: metadata contains all 2D arrays for <em>keys</em>, <em>plaintext</em> and <em>ciphertext</em>. Note that,
+<li>Profiling Metadata: <code>[Profiling_traces/metadata]</code>: metadata contains all 2D arrays for <em>keys</em>, <em>plaintext</em> and <em>ciphertext</em>. Note that,
   depending on the leakage model plaintext or ciphertext are not necessary. If metadata contains <em>mask</em> values, they will automatically
   ignored by the main <strong>Aisy</strong> class when creating labels.</li>
-<li>Attack Metadata: [<code>Attack_traces/metadata</code>]: similarly, this field contains metadata for attack set.</li>
+<li>Attack Metadata: <code>[Attack_traces/metadata]</code>: similarly, this field contains metadata for attack set.</li>
 </ul>
 <p>Below, user can find an example of how to create a .h5 dataset that can be interpreted by the main <strong>Aisy</strong> class:</p>
 <pre><code class="language-python">import numpy as np
