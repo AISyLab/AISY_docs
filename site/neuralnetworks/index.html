@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Neural Networks - AISY Framework v0.2</title>
+  <title>Creating Neural Networks - AISY Framework v0.2</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../css/theme.css" />
@@ -18,7 +18,7 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Neural Networks";
+    var mkdocs_page_name = "Creating Neural Networks";
     var mkdocs_page_input_path = "neuralnetworks.md";
     var mkdocs_page_url = null;
   </script>
@@ -76,9 +76,11 @@
                     </li>
                 </ul>
                 <ul class="current">
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Neural Networks</a>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Creating Neural Networks</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#neural-network-file">Neural Network File</a>
+    <li class="toctree-l2"><a class="reference internal" href="#keras-class-support">Keras class support</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#custom-neural-networks-file">Custom Neural Networks File</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#passing-custom-parameters-to-the-neural-network-definition">Passing Custom Parameters to the Neural Network Definition</a>
     </li>
@@ -158,7 +160,7 @@
     
       
     
-    <li>Neural Networks</li>
+    <li>Creating Neural Networks</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -169,12 +171,14 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="neural-network-models">Neural Network Models</h1>
+                <h1 id="creating-neural-network-models">Creating Neural Network Models</h1>
 <p>The AISY Framework is a (Keras/TensorFlow) deep learning-based framework for profiled side-channel analysis.
 One of the main advantages of using our framework is the easy definition and call of neural network models.</p>
-<h3 id="neural-network-file">Neural Network File</h3>
-<p>For better code organization, we recommend to write all your (keras) neural network models in the <code>neural_network/neural_networl.py</code> 
-file. The standard code is provided below:</p>
+<h3 id="keras-class-support">Keras class support</h3>
+<p>The framework support Keras models written using either <code>Sequential</code> or <code>Model</code> classes.</p>
+<h3 id="custom-neural-networks-file">Custom Neural Networks File</h3>
+<p>For better code organization, we recommend writing all your (keras) neural network models in the
+<code>custom/custom_models/neural_network.py</code> file. The standard code is provided below:</p>
 <pre><code class="language-python">from tensorflow.keras.optimizers import *
 from tensorflow.keras.layers import *
 from tensorflow.keras.models import *
@@ -206,9 +210,9 @@ def mlp(classes, number_of_samples):
     model.compile(loss='categorical_crossentropy', optimizer=optimizer, metrics=['accuracy'])
     return model
 </code></pre>
-<p>Note the neural network functions must be defined with two basic parameters:</p>
+<p>Note the neural network functions must be defined with two basic method parameters:</p>
 <ul>
-<li><code>classes:</code> number of classification classes. This is important in order to defined the length of the output layer.</li>
+<li><code>classes:</code> number of classification classes. This is important in order to define the length of the output layer.</li>
 <li><code>number_of_samples:</code> number of samples in each trace. This is important in order to define the length of the input layer.</li>
 </ul>
 <p>Following, the defined neural network models can be easily called from the main script, as in the example below:</p>
@@ -229,11 +233,11 @@ aisy.set_neural_network(mlp)
 aisy.run()
 
 </code></pre>
-<p>The neural network model is defined by setting the method:</p>
+<p>As shown in the above code, the neural network model is defined by setting the method:</p>
 <pre><code class="language-python">aisy.set_neural_network(mlp)
 </code></pre>
 <p>Note, however, that when the neural network model is set as above, the parameters <code>classes</code> and <code>number_of_samples</code> don't need to be 
-passed. They will be automatically set according to the defined dataset parameters.</p>
+passed. They will be automatically set according to the defined dataset and leakage model settings.</p>
 <h3 id="passing-custom-parameters-to-the-neural-network-definition">Passing Custom Parameters to the Neural Network Definition</h3>
 <p>The user is also able to define and set a neural network model with special parameters, as in the example below, where we can create models 
 with flexible hyper-parameters:</p>

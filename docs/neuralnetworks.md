@@ -1,12 +1,16 @@
-# Neural Network Models
+# Creating Neural Network Models
 
 The AISY Framework is a (Keras/TensorFlow) deep learning-based framework for profiled side-channel analysis.
 One of the main advantages of using our framework is the easy definition and call of neural network models.
 
-### Neural Network File
+### Keras class support
 
-For better code organization, we recommend to write all your (keras) neural network models in the ```neural_network/neural_networl.py``` 
-file. The standard code is provided below:
+The framework support Keras models written using either ```Sequential``` or ```Model``` classes.
+
+### Custom Neural Networks File
+
+For better code organization, we recommend writing all your (keras) neural network models in the
+```custom/custom_models/neural_network.py``` file. The standard code is provided below:
 
 ```python
 from tensorflow.keras.optimizers import *
@@ -41,9 +45,9 @@ def mlp(classes, number_of_samples):
     return model
 ``` 
 
-Note the neural network functions must be defined with two basic parameters:
+Note the neural network functions must be defined with two basic method parameters:
 
-- ```classes:``` number of classification classes. This is important in order to defined the length of the output layer.
+- ```classes:``` number of classification classes. This is important in order to define the length of the output layer.
 - ```number_of_samples:``` number of samples in each trace. This is important in order to define the length of the input layer.
 
 Following, the defined neural network models can be easily called from the main script, as in the example below:
@@ -67,14 +71,14 @@ aisy.run()
 
 ```
 
-The neural network model is defined by setting the method:
+As shown in the above code, the neural network model is defined by setting the method:
 
 ```python
 aisy.set_neural_network(mlp)
 ```
 
 Note, however, that when the neural network model is set as above, the parameters ```classes``` and ```number_of_samples``` don't need to be 
-passed. They will be automatically set according to the defined dataset parameters.
+passed. They will be automatically set according to the defined dataset and leakage model settings.
 
 ### Passing Custom Parameters to the Neural Network Definition
 
