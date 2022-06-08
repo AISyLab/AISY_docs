@@ -67,6 +67,24 @@ where parameters are explained below
 - ```model:``` training model.
 - ```args:``` additional dictionary with custom arguments.
 
+The ```dataset``` object contains the following arrays:
+
+- ```dataset.x_profiling``` array with profiling traces
+- ```dataset.x_attack``` array with attack traces
+- ```dataset.x_validation``` array with validation traces
+- ```dataset.y_profiling``` array with profiling categorical labels
+- ```dataset.y_attack``` array with attack categorical labels
+- ```dataset.y_validation``` array with validation categorical labels
+- ```dataset.plaintext_profiling``` array with profiling plaintext
+- ```dataset.plaintext_attack``` array with attack plaintext
+- ```dataset.plaintext_validation``` array with validation plaintext
+- ```dataset.ciphertext_profiling``` array with profiling ciphertext
+- ```dataset.ciphertext_attack``` array with attack ciphertext
+- ```dataset.ciphertext_validation``` array with validation ciphertext
+- ```dataset.key_profiling``` array with profiling key
+- ```dataset.key_attack``` array with attack key
+- ```dataset.key_validation``` array with validation key
+
 The ```settings:``` dictionary has the following structure:
 
 ```python

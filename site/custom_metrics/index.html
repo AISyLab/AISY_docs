@@ -238,6 +238,24 @@ from the above example, we create four python files inside <code>custom/custom_m
 <li><code>model:</code> training model.</li>
 <li><code>args:</code> additional dictionary with custom arguments.</li>
 </ul>
+<p>The <code>dataset</code> object contains the following arrays:</p>
+<ul>
+<li><code>dataset.x_profiling</code> array with profiling traces</li>
+<li><code>dataset.x_attack</code> array with attack traces</li>
+<li><code>dataset.x_validation</code> array with validation traces</li>
+<li><code>dataset.y_profiling</code> array with profiling categorical labels</li>
+<li><code>dataset.y_attack</code> array with attack categorical labels</li>
+<li><code>dataset.y_validation</code> array with validation categorical labels</li>
+<li><code>dataset.plaintext_profiling</code> array with profiling plaintext</li>
+<li><code>dataset.plaintext_attack</code> array with attack plaintext</li>
+<li><code>dataset.plaintext_validation</code> array with validation plaintext</li>
+<li><code>dataset.ciphertext_profiling</code> array with profiling ciphertext</li>
+<li><code>dataset.ciphertext_attack</code> array with attack ciphertext</li>
+<li><code>dataset.ciphertext_validation</code> array with validation ciphertext</li>
+<li><code>dataset.key_profiling</code> array with profiling key</li>
+<li><code>dataset.key_attack</code> array with attack key</li>
+<li><code>dataset.key_validation</code> array with validation key</li>
+</ul>
 <p>The <code>settings:</code> dictionary has the following structure:</p>
 <pre><code class="language-python">settings = {
     &quot;key_rank_attack_traces&quot;: 1000,
