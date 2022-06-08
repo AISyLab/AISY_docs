@@ -174,18 +174,10 @@
 <h6 id="step-1-add-custom-callback">Step 1: Add Custom Callback</h6>
 <p>Add a custom callback class following the standard structure from the example below:</p>
 <pre><code class="language-python">class CustomCallback1(Callback):
-    def __init__(self,
-                 x_profiling, y_profiling, plaintexts_profiling,
-                 ciphertext_profiling, key_profiling,
-                 x_validation, y_validation, plaintexts_validation,
-                 ciphertext_validation, key_validaton,
-                 x_attack, y_attack, plaintexts_attack,
-                 ciphertext_attack, key_attack,
-                 param, leakage_model, key_rank_executions, key_rank_report_interval, key_rank_attack_traces,
-                 *args):
-        my_args = args[0]  # this line is mandatory
-        self.param1 = my_args[0]
-        self.param2 = my_args[1]
+    def __init__(self, dataset, settings, args):
+        super().__init__()
+        self.param1 = args[&quot;param1&quot;]
+        self.param2 = args[&quot;param2&quot;]
 
     def on_epoch_end(self, epoch, logs=None):
         print(&quot;Processing epoch {}&quot;.format(epoch))
@@ -203,42 +195,76 @@
 <code>custom/custom_callbacks/callbacks.py</code>.</p>
 <p>In the example above, the <code>CustomCallback1</code> class expects two parameters, <code>param1</code> and <code>param2</code>. In Step 2, we explain how to 
 pass these two parameters in the custom callback.</p>
-<p>Note that the custom callback <strong>must</strong> be provided with the following variables in the <code>__init__</code> function:</p>
+<p>These are the parameters set in the <em>__init__</em> method:</p>
 <ul>
-<li><code>x_profiling:</code> profiling trace set.</li>
-<li><code>y_profiling:</code> categorical profiling set labels.</li>
-<li><code>plaintexts_profiling:</code> profiling set plaintext.</li>
-<li><code>ciphertexts_profiling:</code> profiling set ciphertexts.</li>
-<li><code>key_profiling:</code> profiling set key (can be a different key per trace).</li>
-<li><code>x_validation:</code> validation trace set.</li>
-<li><code>y_validation:</code> categorical validation set labels.</li>
-<li><code>plaintexts_validation:</code> validation set plaintexts.</li>
-<li><code>ciphertexts_validation:</code> validation set ciphertexts.</li>
-<li><code>key_validation:</code> validation set key.</li>
-<li><code>x_attack:</code> attack trace set.</li>
-<li><code>y_attack:</code> categorical attack set labels.</li>
-<li><code>plaintexts_attack:</code> attack set plaintexts.</li>
-<li><code>ciphertexts_attack:</code> attack set ciphertexts.</li>
-<li><code>key_attack:</code> attack set key.</li>
-<li><code>param:</code> target parameteres. It is a dictionary as in the example below:</li>
+<li><code>dataset:</code> dataset object.</li>
+<li><code>settings:</code> dictionary containing analysis configuratioins.</li>
+<li><code>args:</code> additional dictionary with custom arguments.</li>
 </ul>
-<pre><code class="language-python">param = {
-            &quot;filename&quot;: &quot;ascad-variable.h5&quot;,
-            &quot;key&quot;: &quot;00112233445566778899AABBCCDDEEFF&quot;,
-            &quot;first_sample&quot;: 0,
-            &quot;number_of_samples&quot;: 1400,
-            &quot;number_of_profiling_traces&quot;: 100000,
-            &quot;number_of_attack_traces&quot;: 2000
-        }
+<p>The <code>dataset</code> object contains the following arrays:</p>
+<ul>
+<li><code>dataset.x_profiling</code> array with profiling traces</li>
+<li><code>dataset.x_attack</code> array with attack traces</li>
+<li><code>dataset.x_validation</code> array with validation traces</li>
+<li><code>dataset.y_profiling</code> array with profiling categorical labels</li>
+<li><code>dataset.y_attack</code> array with attack categorical labels</li>
+<li><code>dataset.y_validation</code> array with validation categorical labels</li>
+<li><code>dataset.plaintext_profiling</code> array with profiling plaintext</li>
+<li><code>dataset.plaintext_attack</code> array with attack plaintext</li>
+<li><code>dataset.plaintext_validation</code> array with validation plaintext</li>
+<li><code>dataset.ciphertext_profiling</code> array with profiling ciphertext</li>
+<li><code>dataset.ciphertext_attack</code> array with attack ciphertext</li>
+<li><code>dataset.ciphertext_validation</code> array with validation ciphertext</li>
+<li><code>dataset.key_profiling</code> array with profiling key</li>
+<li><code>dataset.key_attack</code> array with attack key</li>
+<li><code>dataset.key_validation</code> array with validation key</li>
+</ul>
+<p>The <code>settings:</code> dictionary has the following structure:</p>
+<pre><code class="language-python">settings = {
+    &quot;key_rank_attack_traces&quot;: 1000,
+    &quot;key_rank_report_interval&quot;: 1,
+    &quot;key_rank_executions&quot;: 100,
+    &quot;leakage_model&quot;: {
+        &quot;leakage_model&quot;: &quot;HW&quot;,
+        &quot;bit&quot;: 0,
+        &quot;byte&quot;: 0,
+        &quot;round&quot;: 1,
+        &quot;round_first&quot;: 1,  # for Hamming Distance
+        &quot;round_second&quot;: 1,  # for Hamming Distance
+        &quot;cipher&quot;: &quot;AES128&quot;,
+        &quot;target_state&quot;: &quot;Sbox&quot;,
+        &quot;target_state_first&quot;: &quot;Sbox&quot;,  # for Hamming Distance
+        &quot;target_state_second&quot;: &quot;Sbox&quot;,  # for Hamming Distance
+        &quot;direction&quot;: &quot;Encryption&quot;,
+        &quot;attack_direction&quot;: &quot;input&quot;
+    },
+    &quot;datasets_root_folder&quot;: &quot;&quot;,
+    &quot;database_root_folder&quot;: &quot;&quot;,
+    &quot;resources_root_folder&quot;: &quot;&quot;,
+    &quot;database_name&quot;: &quot;&quot;,
+    &quot;filename&quot;: &quot;&quot;,
+    &quot;first_sample&quot;: 0,
+    &quot;number_of_samples&quot;: 700,
+    &quot;number_of_profiling_traces&quot;: 50000,
+    &quot;number_of_attack_traces&quot;: 10000,
+    &quot;key&quot;: &quot;00112233445566778899AABBCCDDEEFF&quot;,
+    &quot;good_key&quot;: 22,
+    &quot;batch_size&quot;: 400,
+    &quot;epochs&quot;: 100,
+    &quot;classes&quot;: 256,
+    &quot;models&quot;: {
+        &quot;0&quot;: {
+            &quot;model_name&quot;: &quot;my_model&quot;,
+            &quot;method_name&quot;: &quot;mlp_best&quot;,
+            &quot;seed&quot;: 123456,
+            &quot;model&quot;: None,
+            &quot;index&quot;: 0
+        } 
+    },
+    ...
+}
 </code></pre>
-<ul>
-<li><code>leakage_model:</code> leakage model parameters.: </li>
-<li><code>key_rank_executions:</code> number of key rank executions in the guessing entropy calculatioin.</li>
-<li><code>key_rank_report_interval:</code> report trace interval in metric calculations (e.g., guessing entropy, success rate, etc.)</li>
-<li><code>key_rank_attack_traces:</code> number of randomly selected traces from attack trace set to be used in each key rank calculation.</li>
-<li><code>*args:</code> list of additional and optional parameters to be passed with the custom callback and to be treated inside the custom 
-callback. </li>
-</ul>
+<p>The <code>settings:</code> dictionary also contain information related to hyperparameters search.</p>
 <h6 id="step-2-using-custom-callback">Step 2: Using Custom Callback</h6>
 <p>The example below show how to use the custom callback in a script:</p>
 <pre><code class="language-python">import aisy_sca
@@ -263,12 +289,15 @@ custom_callbacks = [
     {
         &quot;class&quot;: &quot;custom.custom_callbacks.callbacks.CustomCallback1&quot;,
         &quot;name&quot;: &quot;CustomCallback1&quot;,
-        &quot;parameters&quot;: [param1, param2]
+        &quot;parameters&quot;: {
+            &quot;param1&quot;: [1, 2, 3],
+            &quot;param2&quot;: &quot;my_string&quot;
+        }
     },
     {
         &quot;class&quot;: &quot;custom.custom_callbacks.callbacks.CustomCallback2&quot;,
         &quot;name&quot;: &quot;CustomCallback2&quot;,
-        &quot;parameters&quot;: []
+        &quot;parameters&quot;: {}
     }
 ]
 

@@ -8,18 +8,10 @@ Add a custom callback class following the standard structure from the example be
 
 ```python
 class CustomCallback1(Callback):
-    def __init__(self,
-                 x_profiling, y_profiling, plaintexts_profiling,
-                 ciphertext_profiling, key_profiling,
-                 x_validation, y_validation, plaintexts_validation,
-                 ciphertext_validation, key_validaton,
-                 x_attack, y_attack, plaintexts_attack,
-                 ciphertext_attack, key_attack,
-                 param, leakage_model, key_rank_executions, key_rank_report_interval, key_rank_attack_traces,
-                 *args):
-        my_args = args[0]  # this line is mandatory
-        self.param1 = my_args[0]
-        self.param2 = my_args[1]
+    def __init__(self, dataset, settings, args):
+        super().__init__()
+        self.param1 = args["param1"]
+        self.param2 = args["param2"]
 
     def on_epoch_end(self, epoch, logs=None):
         print("Processing epoch {}".format(epoch))
@@ -40,40 +32,79 @@ The custom callback can be added to the main script or, as recommened for better
 In the example above, the ```CustomCallback1``` class expects two parameters, ```param1``` and ```param2```. In Step 2, we explain how to 
 pass these two parameters in the custom callback.
 
-Note that the custom callback **must** be provided with the following variables in the ```__init__``` function:
+These are the parameters set in the *\_\_init\_\_* method:
 
-- ```x_profiling:``` profiling trace set.
-- ```y_profiling:``` categorical profiling set labels.
-- ```plaintexts_profiling:``` profiling set plaintext.
-- ```ciphertexts_profiling:``` profiling set ciphertexts.
-- ```key_profiling:``` profiling set key (can be a different key per trace).
-- ```x_validation:``` validation trace set.
-- ```y_validation:``` categorical validation set labels.
-- ```plaintexts_validation:``` validation set plaintexts.
-- ```ciphertexts_validation:``` validation set ciphertexts.
-- ```key_validation:``` validation set key.
-- ```x_attack:``` attack trace set.
-- ```y_attack:``` categorical attack set labels.
-- ```plaintexts_attack:``` attack set plaintexts.
-- ```ciphertexts_attack:``` attack set ciphertexts.
-- ```key_attack:``` attack set key.
-- ```param:``` target parameteres. It is a dictionary as in the example below:
+- ```dataset:``` dataset object.
+- ```settings:``` dictionary containing analysis configuratioins.
+- ```args:``` additional dictionary with custom arguments.
+
+The ```dataset``` object contains the following arrays:
+
+- ```dataset.x_profiling``` array with profiling traces
+- ```dataset.x_attack``` array with attack traces
+- ```dataset.x_validation``` array with validation traces
+- ```dataset.y_profiling``` array with profiling categorical labels
+- ```dataset.y_attack``` array with attack categorical labels
+- ```dataset.y_validation``` array with validation categorical labels
+- ```dataset.plaintext_profiling``` array with profiling plaintext
+- ```dataset.plaintext_attack``` array with attack plaintext
+- ```dataset.plaintext_validation``` array with validation plaintext
+- ```dataset.ciphertext_profiling``` array with profiling ciphertext
+- ```dataset.ciphertext_attack``` array with attack ciphertext
+- ```dataset.ciphertext_validation``` array with validation ciphertext
+- ```dataset.key_profiling``` array with profiling key
+- ```dataset.key_attack``` array with attack key
+- ```dataset.key_validation``` array with validation key
+
+The ```settings:``` dictionary has the following structure:
+
 ```python
-param = {
-            "filename": "ascad-variable.h5",
-            "key": "00112233445566778899AABBCCDDEEFF",
-            "first_sample": 0,
-            "number_of_samples": 1400,
-            "number_of_profiling_traces": 100000,
-            "number_of_attack_traces": 2000
-        }
+settings = {
+    "key_rank_attack_traces": 1000,
+    "key_rank_report_interval": 1,
+    "key_rank_executions": 100,
+    "leakage_model": {
+        "leakage_model": "HW",
+        "bit": 0,
+        "byte": 0,
+        "round": 1,
+        "round_first": 1,  # for Hamming Distance
+        "round_second": 1,  # for Hamming Distance
+        "cipher": "AES128",
+        "target_state": "Sbox",
+        "target_state_first": "Sbox",  # for Hamming Distance
+        "target_state_second": "Sbox",  # for Hamming Distance
+        "direction": "Encryption",
+        "attack_direction": "input"
+    },
+    "datasets_root_folder": "",
+    "database_root_folder": "",
+    "resources_root_folder": "",
+    "database_name": "",
+    "filename": "",
+    "first_sample": 0,
+    "number_of_samples": 700,
+    "number_of_profiling_traces": 50000,
+    "number_of_attack_traces": 10000,
+    "key": "00112233445566778899AABBCCDDEEFF",
+    "good_key": 22,
+    "batch_size": 400,
+    "epochs": 100,
+    "classes": 256,
+    "models": {
+        "0": {
+            "model_name": "my_model",
+            "method_name": "mlp_best",
+            "seed": 123456,
+            "model": None,
+            "index": 0
+        } 
+    },
+    ...
+}
 ```
-- ```leakage_model:``` leakage model parameters.: 
-- ```key_rank_executions:``` number of key rank executions in the guessing entropy calculatioin.
-- ```key_rank_report_interval:``` report trace interval in metric calculations (e.g., guessing entropy, success rate, etc.)
-- ```key_rank_attack_traces:``` number of randomly selected traces from attack trace set to be used in each key rank calculation.
-- ```*args:``` list of additional and optional parameters to be passed with the custom callback and to be treated inside the custom 
-callback. 
+
+The ```settings:``` dictionary also contain information related to hyperparameters search.
 
 ###### Step 2: Using Custom Callback
 
@@ -102,12 +133,15 @@ custom_callbacks = [
     {
         "class": "custom.custom_callbacks.callbacks.CustomCallback1",
         "name": "CustomCallback1",
-        "parameters": [param1, param2]
+        "parameters": {
+            "param1": [1, 2, 3],
+            "param2": "my_string"
+        }
     },
     {
         "class": "custom.custom_callbacks.callbacks.CustomCallback2",
         "name": "CustomCallback2",
-        "parameters": []
+        "parameters": {}
     }
 ]
 
