@@ -64,7 +64,7 @@ where parameters are explained below
 
 - ```dataset:``` dataset object.
 - ```settings:``` dictionary containing analysis configuratioins.
-- ```model:``` training model.
+- ```model:``` training (Keras) model object.
 - ```args:``` additional dictionary with custom arguments.
 
 The ```dataset``` object contains the following arrays:
