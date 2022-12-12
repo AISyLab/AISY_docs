@@ -52,21 +52,21 @@ profiling_traces_group.create_dataset(name="traces", data=profiling_traces, dtyp
 attack_traces_group.create_dataset(name="traces", data=attack_traces, dtype=attack_traces.dtype)
 
 """ create metadata fields for profiling and attack sets"""
-metadata_type_profiling = np.dtype([("plaintext", plaintexts_profiling.dtype, (nb_profiling_traces,)),
-                                    ("ciphertext", ciphertexts_profiling.dtype, (nb_profiling_traces,)),
-                                    ("key", keys_profiling.dtype, (nb_profiling_traces,))
+metadata_type_profiling = np.dtype([("plaintext", plaintexts_profiling.dtype, (16,)),
+                                    ("ciphertext", ciphertexts_profiling.dtype, (16,)),
+                                    ("key", keys_profiling.dtype, (16,))
                                     ])
 profiling_metadata = np.array([(plaintexts_profiling[n], ciphertexts_profiling[n], keys_profiling[n]) for n in
-                               zip(profiling_index)], dtype=metadata_type_profiling)
+                               profiling_index], dtype=metadata_type_profiling)
 
-metadata_type_attack = np.dtype([("plaintext", plaintexts_attack.dtype, (nb_attack_traces,)),
-                                 ("ciphertext", ciphertexts_attack.dtype, (nb_attack_traces,)),
-                                 ("key", keys_attack.dtype, (nb_attack_traces,))
+metadata_type_attack = np.dtype([("plaintext", plaintexts_attack.dtype, (16,)),
+                                 ("ciphertext", ciphertexts_attack.dtype, (16,)),
+                                 ("key", keys_attack.dtype, (16,))
                                  ])
 profiling_traces_group.create_dataset("metadata", data=profiling_metadata, dtype=metadata_type_profiling)
 
 attack_metadata = np.array([(plaintexts_attack[n], ciphertexts_attack[n], keys_attack[n]) for n in
-                            zip(attack_index)], dtype=metadata_type_attack)
+                            attack_index], dtype=metadata_type_attack)
 attack_traces_group.create_dataset("metadata", data=attack_metadata, dtype=metadata_type_attack)
 
 out_file.flush()
